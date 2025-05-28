@@ -3,6 +3,8 @@ import '../../color.dart';
 import 'components/traveler_card.dart';
 import 'components/station_dialog.dart';
 import 'components/show_price.dart';
+import '../filtered_travels/filtered_travels.dart';
+import '../../mocks/mock_data.dart';
 
 class DetailledSearch extends StatefulWidget {
   const DetailledSearch({super.key});
@@ -12,23 +14,18 @@ class DetailledSearch extends StatefulWidget {
 }
 
 class _DetailledSearchState extends State<DetailledSearch> {
-  final List<String> gares = [
-    'Paris Montparnasse',
-    'Bordeaux Saint-Jean',
-    'Lyon Part-Dieu',
-    'Marseille Saint-Charles',
-    'Lille Europe',
-    'Strasbourg',
-  ];
+  List<String> get garesList => gares.map((g) => g['name'] as String).toList();
 
   String? gareDepart;
   String? gareArrivee;
   DateTime? dateDepart;
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
+
+    if (dateDepart == null) {
+      dateDepart = DateTime.now();
+    }
 
     return Scaffold(
       backgroundColor: AppColors.primary,
@@ -63,7 +60,7 @@ class _DetailledSearchState extends State<DetailledSearch> {
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
-                                  gares: gares,
+                                  gares: garesList,
                                   onSelected: (gare) => setState(() => gareDepart = gare),
                                   title: 'Sélectionnez la gare de départ',
                                 ),
@@ -101,7 +98,7 @@ class _DetailledSearchState extends State<DetailledSearch> {
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
-                                  gares: gares,
+                                  gares: garesList,
                                   onSelected: (gare) => setState(() => gareArrivee = gare),
                                   title: 'Sélectionnez la gare d\'arrivée',
                                 ),
@@ -195,12 +192,34 @@ class _DetailledSearchState extends State<DetailledSearch> {
               Center(
                 child: ShowPriceButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate() && dateDepart != null) {
-                    } else if (dateDepart == null) {
+                    if (gareDepart == null || gareDepart!.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Veuillez sélectionner une date de départ.')),
+                        SnackBar(content: Text('Veuillez renseigner la gare de départ.')),
                       );
+                      return;
                     }
+                    if (gareArrivee == null || gareArrivee!.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Veuillez renseigner la gare d\'arrivée.')),
+                      );
+                      return;
+                    }
+                    if (dateDepart == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Veuillez renseigner la date de départ.')),
+                      );
+                      return;
+                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FilteredTravels(
+                          gareDepart: gareDepart!,
+                          gareArrivee: gareArrivee!,
+                          dateDepart: dateDepart!,
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),

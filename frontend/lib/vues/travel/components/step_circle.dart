@@ -20,7 +20,6 @@ class StepCircle extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Heure dans bulle
         Container(
           margin: EdgeInsets.only(top: isTop ? 0 : 40),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -37,7 +36,6 @@ class StepCircle extends StatelessWidget {
           ),
         ),
         SizedBox(width: 14),
-        // Cercle noir
         Container(
           margin: EdgeInsets.only(top: isTop ? 0 : 40),
           width: 18,
@@ -49,7 +47,6 @@ class StepCircle extends StatelessWidget {
           ),
         ),
         SizedBox(width: 14),
-        // Infos
         Expanded(
           child: Container(
             margin: EdgeInsets.only(top: isTop ? 0 : 40),

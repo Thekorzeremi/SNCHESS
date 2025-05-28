@@ -12,6 +12,8 @@ class Travel extends StatelessWidget {
   final Map<String, dynamic> travelData;
   final Map<String, dynamic> gareDepart;
   final Map<String, dynamic> gareArrivee;
+  final Map<String, dynamic> gareDepartCoords;
+  final Map<String, dynamic> gareArriveeCoords;
   final Map<String, dynamic> tram;
 
   const Travel({
@@ -20,13 +22,14 @@ class Travel extends StatelessWidget {
     required this.gareDepart,
     required this.gareArrivee,
     required this.tram,
+    required this.gareDepartCoords,
+    required this.gareArriveeCoords,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Fake coordonnées pour exemple
-    final LatLng depart = LatLng(48.8408, 2.3200); // Paris Montparnasse
-    final LatLng arrivee = LatLng(44.8266, -0.5566); // Bordeaux St-Jean
+    final LatLng depart = LatLng(gareDepartCoords['latitude'], gareDepartCoords['longitude']);
+    final LatLng arrivee = LatLng(gareArriveeCoords['latitude'], gareArriveeCoords['longitude']);
     final String arrivalHour = getArrivalHour(travelData['departureHour'], travelData['duration']);
 
     return Scaffold(

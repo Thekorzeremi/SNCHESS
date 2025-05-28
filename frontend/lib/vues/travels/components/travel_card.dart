@@ -19,7 +19,6 @@ class TravelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Calcul de l'heure d'arrivée
     TimeOfDay dep = TimeOfDay(
       hour: int.parse(voyage['departureHour'].split(':')[0]),
       minute: int.parse(voyage['departureHour'].split(':')[1]),
