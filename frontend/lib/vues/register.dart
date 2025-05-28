@@ -140,7 +140,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(40, 60, 40, 40),
+        padding: EdgeInsets.fromLTRB(40, 30, 40, 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -206,7 +206,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "Un identifiant unique pour accéder à tous les espaces SNCF.",
+                    "Un identifiant unique pour accéder à tous les espaces SNCHESS.",
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),

@@ -9,6 +9,7 @@ class MyInputField extends StatefulWidget {
     required this.controller,
     this.textColor = AppColors.white,
     this.borderColor = AppColors.secondary,
+    this.enabled = true,
   });
 
   final String label;
@@ -16,6 +17,7 @@ class MyInputField extends StatefulWidget {
   final TextEditingController controller;
   final Color textColor;
   final Color borderColor;
+  final bool enabled;
 
   @override
   _MyInputFieldState createState() => _MyInputFieldState();
@@ -26,6 +28,7 @@ class _MyInputFieldState extends State<MyInputField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      enabled: widget.enabled,
       cursorColor: widget.borderColor,
       obscureText: widget.obscureText,
       decoration: InputDecoration(
@@ -49,7 +52,7 @@ class _MyInputFieldState extends State<MyInputField> {
           borderSide: BorderSide(color: widget.textColor),
           borderRadius: BorderRadius.circular(10),
         ),
-        suffixIcon: widget.controller.text.isNotEmpty
+        suffixIcon: widget.controller.text.isNotEmpty && widget.enabled
             ? IconButton(
                 icon: Icon(Icons.clear, color: Colors.white),
                 onPressed: () {

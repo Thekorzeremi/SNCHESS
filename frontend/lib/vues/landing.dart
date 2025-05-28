@@ -25,6 +25,7 @@ class LandingPage extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [AppColors.card, AppColors.primary],
+                stops: [0.1, 1.0],
               ),
             ),
             child: Container(
@@ -63,7 +64,7 @@ class LandingPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Compagnons de voyage",
+                          "Compagnons",
                           style: TextStyle(
                             color: AppColors.white,
                             fontSize: 14,
@@ -176,7 +177,7 @@ class LandingPage extends StatelessWidget {
             },
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(AppColors.secondary),
-              fixedSize: WidgetStateProperty.all(Size(160, 40)),
+              fixedSize: WidgetStateProperty.all(Size(180, 40)),
             ),
             child: Text(
               "Créer un compte",
@@ -194,7 +195,7 @@ class LandingPage extends StatelessWidget {
             },
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(AppColors.primary),
-              fixedSize: WidgetStateProperty.all(Size(160, 40)),
+              fixedSize: WidgetStateProperty.all(Size(180, 40)),
               side: WidgetStateProperty.all(
                 BorderSide(color: AppColors.secondary, width: 2),
               ),
