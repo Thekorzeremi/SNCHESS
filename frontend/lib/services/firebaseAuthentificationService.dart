@@ -24,7 +24,7 @@ class FirebaseAuthentificationService {
     });
   }
 
-  void registerWithEmailAndPassword() async {
+  void registerWithEmailAndPassword(String email, String password) async {
     try {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
@@ -39,7 +39,7 @@ class FirebaseAuthentificationService {
     }
   }
 
-  void connectWithEmailAndPassword() async {
+  void connectWithEmailAndPassword(String email, String password) async {
     try {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
