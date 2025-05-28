@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Rentrer votre adresse email pour recevoir lien de réinitialisation",
+                "Rentrer votre adresse email pour recevoir un lien de réinitialisation",
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox(height: 20),

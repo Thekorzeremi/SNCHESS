@@ -161,7 +161,7 @@ class LandingPage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "Avec votre compte Mon identifiant SNCHESS, retrouvez tous vos voyages, abonnements, cartes...",
+                "Avec votre compte SNCHESS, retrouvez tous vos voyages, abonnements et plus encore dans votre poche... Profitez de tous ces avantages en continuant !",
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
             ),
