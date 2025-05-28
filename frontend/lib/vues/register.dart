@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
 import 'package:frontend/vues/components/text_form_field.dart';
+import 'package:frontend/vues/landing.dart';
 import 'package:ionicons/ionicons.dart';
 import '../services/firebaseAuthentificationService.dart';
 
@@ -34,7 +35,49 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
+    if (password.isEmpty || nom.isEmpty || email.isEmpty || confirmPassword.isEmpty || prenom.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Merci de remplir tous les champs !")),
+      );
+      return;
+    };
+
     _authService.registerWithEmailAndPassword(email, password, prenom, nom);
+
+    void showMailConfirmation() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: AppColors.primary,
+            title: Text(
+              "Inscription confirmé",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Votre inscription vient d\'être validée. Merci de cliquer sur "Se connecter".', style: TextStyle(color: Colors.grey),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LandingPage())), 
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.secondary,
+                    foregroundColor: Colors.black
+                  ),
+                  child: Text("J'ai compris"),
+                  )
+              ],
+            ),
+          );
+        }
+      );
+    };
+
+    showMailConfirmation();
   }
 
   @override

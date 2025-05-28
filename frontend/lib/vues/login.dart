@@ -39,6 +39,11 @@ class _LoginPageState extends State<LoginPage> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(
+                "Rentrer votre adresse email pour recevoir lien de réinitialisation",
+                style: TextStyle(color: Colors.grey),
+              ),
+              SizedBox(height: 20),
               MyInputField(
                 label: "Votre adresse email",
                 controller: emailResetController,
