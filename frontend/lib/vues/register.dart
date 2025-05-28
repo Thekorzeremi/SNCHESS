@@ -19,7 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-  final FirebaseAuthentificationService _authService = FirebaseAuthentificationService();
+  final FirebaseAuthentificationService _authService =
+      FirebaseAuthentificationService();
 
   void register() {
     final nom = _nomController.text.trim();
@@ -28,19 +29,55 @@ class _RegisterPageState extends State<RegisterPage> {
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
 
-    if (password != confirmPassword) {
+    if (!(email.contains("@") && email.contains("."))) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Les mots de passe ne correspondent pas !")),
+        SnackBar(
+          content: Text(
+            "Merci de rentrer une adresse email valide !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
       );
       return;
     }
 
-    if (password.isEmpty || nom.isEmpty || email.isEmpty || confirmPassword.isEmpty || prenom.isEmpty) {
+    if (password != confirmPassword) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Merci de remplir tous les champs !")),
+        SnackBar(
+          content: Text(
+            "Les mots de passe ne correspondent pas !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
       );
       return;
-    };
+    }
+
+    if (password.isEmpty ||
+        nom.isEmpty ||
+        email.isEmpty ||
+        confirmPassword.isEmpty ||
+        prenom.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Merci de remplir tous les champs !", style: TextStyle(color: Colors.black)), backgroundColor: AppColors.secondary,),
+      );
+      return;
+    }
+    
+    if (password.length < 12) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Le mot de passe doit faire minimum 12 caractères !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
+      );
+      return;
+    }
 
     _authService.registerWithEmailAndPassword(email, password, prenom, nom);
 
@@ -59,23 +96,29 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Votre inscription vient d\'être validée. Merci de cliquer sur "Se connecter".', style: TextStyle(color: Colors.grey),
+                  'Votre inscription vient d\'être validée. Merci de cliquer sur "Se connecter".',
+                  style: TextStyle(color: Colors.grey),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LandingPage())), 
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LandingPage()),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.secondary,
-                    foregroundColor: Colors.black
+                    foregroundColor: Colors.black,
                   ),
                   child: Text("J'ai compris"),
-                  )
+                ),
               ],
             ),
           );
-        }
+        },
       );
-    };
+    }
+
+    ;
 
     showMailConfirmation();
   }

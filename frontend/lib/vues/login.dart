@@ -21,6 +21,13 @@ class _LoginPageState extends State<LoginPage> {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Merci de remplir tous les champs !")),
+      );
+      return;
+    };
+
     _authService.connectWithEmailAndPassword(email, password);
   }
 
@@ -66,6 +73,14 @@ class _LoginPageState extends State<LoginPage> {
                 if (email.isNotEmpty) {
                   sendNewPassword(email);
                   Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Merci de rentrer votre email !", style: TextStyle(color: Colors.black),),
+                      backgroundColor: AppColors.secondary,
+                    ),
+                  );
+                  return;
                 }
               },
               child: Text("Envoyer", style: TextStyle(color: Colors.black)),
