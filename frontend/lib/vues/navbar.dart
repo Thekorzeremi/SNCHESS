@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/vues/landing_page.dart';
 import '../color.dart';
 import 'trajet.dart';
 import 'profil.dart';
@@ -30,13 +31,20 @@ class _NavbarState extends State<Navbar> {
       _widgetOptions[0] = Voyage(name: 'John Doe');
       _widgetOptions[1] = Trajet();
       _widgetOptions[2] = Profil();
+    } else {
+      _selectedIndex = 3;
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _widgetOptions = <Widget>[Voyage(name: 'John Doe'), Trajet(), Profil()];
+    _widgetOptions = <Widget>[
+      Voyage(name: 'John Doe'),
+      Trajet(),
+      Profil(),
+      LandingPage(),
+    ];
   }
 
   void _onItemTapped(int index) {
@@ -50,7 +58,7 @@ class _NavbarState extends State<Navbar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
-        title: Image.asset('assets/SNCHESS.png', width: 40  , height: 40),
+        title: Image.asset('assets/SNCHESS.png', width: 40, height: 40),
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: _isAuthenticated
@@ -85,10 +93,14 @@ class _NavbarState extends State<Navbar> {
           : null,
     );
   }
-  
-  BottomNavigationBarItem _buildNavItem(int index, IconData icon, String label) {
+
+  BottomNavigationBarItem _buildNavItem(
+    int index,
+    IconData icon,
+    String label,
+  ) {
     bool isSelected = _selectedIndex == index;
-    
+
     return BottomNavigationBarItem(
       icon: Column(
         mainAxisSize: MainAxisSize.min,
@@ -102,8 +114,8 @@ class _NavbarState extends State<Navbar> {
           Text(
             label,
             style: TextStyle(
-              color: isSelected ? AppColors.secondary : AppColors.white, 
-              fontSize: 12
+              color: isSelected ? AppColors.secondary : AppColors.white,
+              fontSize: 12,
             ),
           ),
           if (isSelected)
