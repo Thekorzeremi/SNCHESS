@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/vues/landing_page.dart';
+import 'package:frontend/vues/landing.dart';
 import '../color.dart';
 import 'trajet/trajet.dart';
 import 'profil/profil.dart';
@@ -58,7 +58,9 @@ class _NavbarState extends State<Navbar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
-        title: Image.asset('assets/SNCHESS.png', width: 40, height: 40),
+        title: _isAuthenticated
+            ? Image.asset('assets/SNCHESS.png', width: 40, height: 40)
+            : null,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: _isAuthenticated
