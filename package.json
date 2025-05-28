@@ -1,0 +1,23 @@
+{
+  "name": "snchess",
+  "version": "1.0.0",
+  "description": "A SNCF Connect clone flutter application",
+  "homepage": "https://github.com/Thekorzeremi/SNCHESS#readme",
+  "bugs": {
+    "url": "https://github.com/Thekorzeremi/SNCHESS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thekorzeremi/SNCHESS.git"
+  },
+  "license": "ISC",
+  "author": "Thekorzeremi, Bastien-IPSSI, RaphTPLR",
+  "type": "commonjs",
+  "main": "backend/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "firebase-tools": "^14.4.0"
+  }
+}
