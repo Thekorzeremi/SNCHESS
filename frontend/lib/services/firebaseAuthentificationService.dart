@@ -14,11 +14,12 @@ class FirebaseAuthentificationService {
     });
   }
 
-  void registerWithEmailAndPassword(String email, String password) async {
+  void registerWithEmailAndPassword(String email, String password, String FirstName, String LastName) async {
     try {
-        await FirebaseAuth.instance
+        UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
-        print('User registered successfully : $email');
+        await userCredential.user?.updateDisplayName('$FirstName $LastName');
+        print('User registered successfully : $email. Welcome $FirstName $LastName!');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -32,14 +33,19 @@ class FirebaseAuthentificationService {
 
   void connectWithEmailAndPassword(String email, String password) async {
     try {
-        await FirebaseAuth.instance
+        UserCredential userCredential = await
+         FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-            print('User signed in successfully');
+            final user = userCredential.user;
+            final displayName = user?.displayName ?? '';
+            print('User signed in successfully. Welcome back $displayName !');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+      } else {
+        print('Error: ${e.message}');
       }
     }
   }

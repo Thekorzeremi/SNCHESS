@@ -27,7 +27,14 @@ class _RegisterPageState extends State<RegisterPage> {
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
 
-    _authService.registerWithEmailAndPassword(email, password);
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Les mots de passe ne correspondent pas !")),
+      );
+      return;
+    }
+
+    _authService.registerWithEmailAndPassword(email, password, prenom, nom);
   }
 
   @override
