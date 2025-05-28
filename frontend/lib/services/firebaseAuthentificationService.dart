@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dotenv/dotenv.dart';
 
-FirebaseAuth auth = FirebaseAuth.instance;
-
 class FirebaseAuthentificationService {
   late String email;
   late String password;
 
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   FirebaseAuthentificationService() {
     var env = DotEnv(includePlatformEnvironment: true)..load();
