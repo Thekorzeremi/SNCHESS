@@ -3,7 +3,7 @@ import '../../../color.dart';
 
 class TravelCO2Info extends StatelessWidget {
   final String co2Text;
-  const TravelCO2Info({Key? key, required this.co2Text}) : super(key: key);
+  const TravelCO2Info({super.key, required this.co2Text});
 
   @override
   Widget build(BuildContext context) {

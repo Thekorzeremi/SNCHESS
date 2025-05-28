@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import '../../color.dart';
 import '../travel/travel.dart';
 import './components/search_bar.dart' as travels_components;
-import './components/voyage_card.dart';
+import 'components/travel_card.dart';
+import '../detailled_search/detailled_search.dart';
 
 class Voyage extends StatefulWidget {
   final String name;
-  Voyage({required this.name});
+  const Voyage({super.key, required this.name});
 
   @override
   State<Voyage> createState() => _VoyageState();
@@ -153,14 +154,22 @@ class _VoyageState extends State<Voyage> {
               onSearch: () {},
             ),
             SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Vous souhaitez réaliser une recherche plus précise ?',
-                  style: TextStyle(color: AppColors.secondary),
-                ),
-              ],
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DetailledSearch()),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Vous souhaitez réaliser une recherche plus précise ?',
+                    style: TextStyle(color: AppColors.secondary),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 4),
             Expanded(
@@ -172,7 +181,7 @@ class _VoyageState extends State<Voyage> {
                   final gareDepart = gares.firstWhere((g) => g['id'] == v['fromGareId']);
                   final gareArrivee = gares.firstWhere((g) => g['id'] == v['toGareId']);
 
-                  return VoyageCard(
+                  return TravelCard(
                     voyage: v,
                     gareDepart: gareDepart,
                     gareArrivee: gareArrivee,

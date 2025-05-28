@@ -6,10 +6,10 @@ class StepLine extends StatelessWidget {
   final Color color;
 
   const StepLine({
-    Key? key,
+    super.key,
     this.height,
     this.color = AppColors.secondary,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

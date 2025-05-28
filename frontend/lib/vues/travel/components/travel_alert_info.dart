@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../color.dart';
 
 class TravelAlertInfo extends StatelessWidget {
-  const TravelAlertInfo({Key? key}) : super(key: key);
+  const TravelAlertInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

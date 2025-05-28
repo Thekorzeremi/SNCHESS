@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../color.dart';
 
-class TravelBuyButton extends StatelessWidget {
+class ShowPriceButton extends StatelessWidget {
   final VoidCallback onPressed;
-  const TravelBuyButton({super.key, required this.onPressed});
+  const ShowPriceButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TravelBuyButton extends StatelessWidget {
           ),
           onPressed: onPressed,
           child: Text(
-            'Acheter votre billet de train',
+            'Voir les prix',
             style: TextStyle(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,

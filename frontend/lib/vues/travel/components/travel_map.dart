@@ -9,11 +9,11 @@ class TravelMap extends StatelessWidget {
   final VoidCallback onBack;
 
   const TravelMap({
-    Key? key,
+    super.key,
     required this.depart,
     required this.arrivee,
     required this.onBack,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

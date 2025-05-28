@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import '../../../color.dart';
 
-class VoyageCard extends StatelessWidget {
+class TravelCard extends StatelessWidget {
   final Map<String, dynamic> voyage;
   final Map<String, dynamic> gareDepart;
   final Map<String, dynamic> gareArrivee;
   final Map<String, dynamic> tram;
   final VoidCallback onTap;
 
-  const VoyageCard({
-    Key? key,
+  const TravelCard({
+    super.key,
     required this.voyage,
     required this.gareDepart,
     required this.gareArrivee,
     required this.tram,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

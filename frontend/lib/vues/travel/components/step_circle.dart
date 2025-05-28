@@ -8,12 +8,12 @@ class StepCircle extends StatelessWidget {
   final bool isTop;
 
   const StepCircle({
-    Key? key,
+    super.key,
     required this.time,
     required this.title,
     required this.subtitle,
     required this.isTop,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

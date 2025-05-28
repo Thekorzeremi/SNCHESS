@@ -11,13 +11,13 @@ class TravelDetails extends StatelessWidget {
   final String arrivalHour;
 
   const TravelDetails({
-    Key? key,
+    super.key,
     required this.tram,
     required this.travelData,
     required this.gareDepart,
     required this.gareArrivee,
     required this.arrivalHour,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../../color.dart';
-import './components/step_circle.dart';
-import './components/step_line.dart';
 import './components/travel_map.dart';
 import './components/travel_details.dart';
 import './components/travel_co2_info.dart';
@@ -18,12 +15,12 @@ class Travel extends StatelessWidget {
   final Map<String, dynamic> tram;
 
   const Travel({
-    Key? key,
+    super.key,
     required this.travelData,
     required this.gareDepart,
     required this.gareArrivee,
     required this.tram,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
