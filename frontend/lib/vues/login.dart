@@ -16,19 +16,36 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   final FirebaseAuthentificationService _authService = FirebaseAuthentificationService();
+  bool isLoading = false;
 
-  void login() {
+  void login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Merci de remplir tous les champs !")),
+        SnackBar(content: Text("Merci de remplir tous les champs !", style: TextStyle(color: Colors.black)),backgroundColor: AppColors.secondary),
       );
       return;
-    };
+    }
 
-    _authService.connectWithEmailAndPassword(email, password);
+    setState(() {
+      isLoading = true;
+    });
+
+    bool isConnected = await _authService.connectWithEmailAndPassword(email, password);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (isConnected) {
+      Navigator.of(context).pop();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Email ou mot de passe incorrect", style: TextStyle(color: Colors.black)),backgroundColor: AppColors.secondary,)
+      );
+    }
   }
 
   void showForgotPasswordDialog() {
@@ -98,78 +115,90 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 32),
-        ),
-        title: Text(
-          "Connexion",
-          style: TextStyle(color: Colors.white, fontSize: 22),
-        ),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Ionicons.happy_outline, size: 48, color: Colors.white),
-                SizedBox(height: 16),
-                Text(
-                  "Bon retour parmi nous !",
-                  style: TextStyle(color: Colors.white, fontSize: 24),
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 400),
+      child: isLoading
+          ? Scaffold(
+              key: ValueKey('loader'),
+              backgroundColor: AppColors.primary,
+              body: Center(
+                child: CircularProgressIndicator(color: AppColors.secondary),
+              ),
+            )
+          : Scaffold(
+              key: ValueKey('form'),
+              backgroundColor: AppColors.primary,
+              appBar: AppBar(
+                backgroundColor: AppColors.primary,
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 32),
                 ),
-                SizedBox(height: 60),
-                MyInputField(
-                  label: "Adresse email (exemple@mail.fr)",
-                  controller: _emailController,
-                  textColor: AppColors.white,
-                  borderColor: AppColors.secondary,
+                title: Text(
+                  "Connexion",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
                 ),
-                SizedBox(height: 16),
-                MyInputField(
-                  label: "Mot de passe",
-                  obscureText: true,
-                  controller: _passwordController,
-                  textColor: AppColors.white,
-                  borderColor: AppColors.secondary,
-                ),
-                SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: showForgotPasswordDialog,
-                    child: Text(
-                      "Mot de passe oublié ?",
-                      style: TextStyle(color: AppColors.secondary),
+              ),
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Ionicons.happy_outline, size: 48, color: Colors.white),
+                        SizedBox(height: 16),
+                        Text(
+                          "Bon retour parmi nous !",
+                          style: TextStyle(color: Colors.white, fontSize: 24),
+                        ),
+                        SizedBox(height: 60),
+                        MyInputField(
+                          label: "Adresse email (exemple@mail.fr)",
+                          controller: _emailController,
+                          textColor: AppColors.white,
+                          borderColor: AppColors.secondary,
+                        ),
+                        SizedBox(height: 16),
+                        MyInputField(
+                          label: "Mot de passe",
+                          obscureText: true,
+                          controller: _passwordController,
+                          textColor: AppColors.white,
+                          borderColor: AppColors.secondary,
+                        ),
+                        SizedBox(height: 8),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: showForgotPasswordDialog,
+                            child: Text(
+                              "Mot de passe oublié ?",
+                              style: TextStyle(color: AppColors.secondary),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all(
+                              AppColors.secondary,
+                            ),
+                            fixedSize: WidgetStateProperty.all(Size(140, 40)),
+                          ),
+                          onPressed: login,
+                          child: Text(
+                            "Se connecter",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(height: 32),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                      AppColors.secondary,
-                    ),
-                    fixedSize: WidgetStateProperty.all(Size(140, 40)),
-                  ),
-                  onPressed: login,
-                  child: Text(
-                    "Se connecter",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

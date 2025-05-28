@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/vues/landing.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../color.dart';
 import 'trajet.dart';
 import 'profil.dart';
@@ -15,26 +16,6 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   late List<Widget> _widgetOptions;
   int _selectedIndex = 0;
-  bool _isAuthenticated = false;
-
-  // void _handleAuthentication(bool isAuthenticated) {
-  //   setState(() {
-  //       _widgetOptions[0] = Trajet();
-  //       _widgetOptions[1] = Profil();
-  //   });
-  // }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isAuthenticated) {
-      _widgetOptions[0] = Voyage(name: 'John Doe');
-      _widgetOptions[1] = Trajet();
-      _widgetOptions[2] = Profil();
-    } else {
-      _selectedIndex = 3;
-    }
-  }
 
   @override
   void initState() {
@@ -55,15 +36,19 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final isAuthenticated = FirebaseAuth.instance.currentUser != null;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
-        title: _isAuthenticated
+        title: isAuthenticated
             ? Image.asset('assets/SNCHESS.png', width: 40, height: 40)
             : null,
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: _isAuthenticated
+      body: isAuthenticated
+          ? _widgetOptions.elementAt(_selectedIndex)
+          : LandingPage(),
+      bottomNavigationBar: isAuthenticated
           ? SizedBox(
               height: 80,
               child: Column(
