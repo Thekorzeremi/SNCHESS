@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/vues/landing_page.dart';
+import 'package:frontend/vues/landing.dart';
 import '../color.dart';
 import 'trajet.dart';
 import 'profil.dart';

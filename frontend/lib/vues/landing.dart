@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
+import 'package:frontend/vues/register.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -166,7 +167,12 @@ class LandingPage extends StatelessWidget {
           ),
           SizedBox(height: 45),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RegisterPage()),
+              );
+            },
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(AppColors.secondary),
               fixedSize: WidgetStateProperty.all(Size(160, 40)),
