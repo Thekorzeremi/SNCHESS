@@ -15,10 +15,10 @@ class LandingPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 80),
+          SizedBox(height: 60),
           Container(
-            height: 220,
-            width: 230,
+            height: 280,
+            width: 260,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               gradient: LinearGradient(
@@ -35,14 +35,14 @@ class LandingPage extends StatelessWidget {
                   Text(
                     "Votre compte",
                     style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: AppColors.white,
                     ),
                   ),
                   SizedBox(height: 8),
                   Container(
-                    height: 38,
+                    height: 46,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: AppColors.primary,
@@ -59,14 +59,14 @@ class LandingPage extends StatelessWidget {
                           child: Icon(
                             Icons.person,
                             color: Color.fromARGB(255, 201, 116, 200),
-                            size: 15,
+                            size: 20,
                           ),
                         ),
                         Text(
                           "Compagnons de voyage",
                           style: TextStyle(
                             color: AppColors.white,
-                            fontSize: 12,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -74,7 +74,7 @@ class LandingPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Container(
-                    height: 38,
+                    height: 46,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: AppColors.primary,
@@ -91,14 +91,14 @@ class LandingPage extends StatelessWidget {
                           child: Icon(
                             Icons.train,
                             color: Color.fromARGB(255, 116, 201, 177),
-                            size: 15,
+                            size: 20,
                           ),
                         ),
                         Text(
                           "Voyage à venir",
                           style: TextStyle(
                             color: AppColors.white,
-                            fontSize: 12,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -106,7 +106,7 @@ class LandingPage extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Container(
-                    height: 38,
+                    height: 46,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: AppColors.primary,
@@ -123,14 +123,14 @@ class LandingPage extends StatelessWidget {
                           child: Icon(
                             Icons.star,
                             color: Color.fromARGB(255, 218, 198, 99),
-                            size: 15,
+                            size: 20,
                           ),
                         ),
                         Text(
                           "Itininéraires favoris",
                           style: TextStyle(
                             color: AppColors.white,
-                            fontSize: 12,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -149,7 +149,7 @@ class LandingPage extends StatelessWidget {
                 "Un seul identifiant",
                 style: TextStyle(
                   color: AppColors.white,
-                  fontSize: 24,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -162,11 +162,11 @@ class LandingPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 "Avec votre compte Mon identifiant SNCHESS, retrouvez tous vos voyages, abonnements, cartes...",
-                style: TextStyle(color: AppColors.white, fontSize: 14),
+                style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
             ),
           ),
-          SizedBox(height: 45),
+          SizedBox(height: 60),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -184,7 +184,7 @@ class LandingPage extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           ElevatedButton(
             onPressed: () {
               Navigator.push(

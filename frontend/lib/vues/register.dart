@@ -43,11 +43,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
         title: Text(
           "Création de votre compte",
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: 22),
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: EdgeInsets.fromLTRB(40, 60, 40, 40),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -57,21 +57,21 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: AppColors.white,
               borderColor: AppColors.secondary,
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             MyInputField(
               label: "Prénom",
               controller: _prenomController,
               textColor: AppColors.white,
               borderColor: AppColors.secondary,
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             MyInputField(
               label: "Adresse email (exemple@mail.fr)",
               controller: _emailController,
               textColor: AppColors.white,
               borderColor: AppColors.secondary,
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             MyInputField(
               label: "Mot de passe",
               obscureText: true,
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: AppColors.white,
               borderColor: AppColors.secondary,
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             MyInputField(
               label: "Confirmer le mot de passe",
               obscureText: true,
@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
               textColor: AppColors.white,
               borderColor: AppColors.secondary,
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 24),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(AppColors.secondary),
@@ -96,67 +96,67 @@ class _RegisterPageState extends State<RegisterPage> {
               onPressed: register,
               child: Text("S'inscrire", style: TextStyle(color: Colors.black)),
             ),
-            SizedBox(height: 24),
+            SizedBox(height: 32),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 0),
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: Column(
                 children: [
-                  Icon(Ionicons.key_outline, color: AppColors.white, size: 36),
+                  Icon(Ionicons.key_outline, color: AppColors.white, size: 42),
                   SizedBox(height: 8),
                   Text(
                     "Connexions sécurisées",
                     style: TextStyle(
                       color: AppColors.white,
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     "Un identifiant unique pour accéder à tous les espaces SNCF.",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 30),
                   Icon(
                     Ionicons.alarm_outline,
                     color: AppColors.white,
-                    size: 36,
+                    size: 42,
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Réservations facilitées",
                     style: TextStyle(
                       color: AppColors.white,
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     "Un profil personnalisé pour gagner du temps lors de vos réservations.",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: 30),
                   Icon(
                     Ionicons.laptop_outline,
                     color: AppColors.white,
-                    size: 36,
+                    size: 42,
                   ),
                   SizedBox(height: 8),
                   Text(
                     "Voyages maîtrisés",
                     style: TextStyle(
                       color: AppColors.white,
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.w400,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     "Retrouvez tous vos billets et vos justificatifs où que vous soyez.",
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ],

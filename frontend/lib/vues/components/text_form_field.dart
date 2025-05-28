@@ -30,14 +30,14 @@ class _MyInputFieldState extends State<MyInputField> {
       obscureText: widget.obscureText,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(
-          vertical: 0,
+          vertical: 16,
           horizontal: 12.0,
         ),
         label: Text(
           widget.label,
           style: TextStyle(
             color: Colors.grey,
-            fontSize: 10,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
           ),
         ),

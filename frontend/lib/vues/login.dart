@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         title: Text(
           "Connexion",
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.white, fontSize: 22),
         ),
       ),
       body: Center(
@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(Ionicons.happy_outline, size: 48, color: Colors.white),
-                SizedBox(height: 8),
+                SizedBox(height: 16),
                 Text(
                   "Bon retour parmi nous !",
                   style: TextStyle(color: Colors.white, fontSize: 24),
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: AppColors.white,
                   borderColor: AppColors.secondary,
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 16),
                 MyInputField(
                   label: "Mot de passe",
                   obscureText: true,
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: AppColors.white,
                   borderColor: AppColors.secondary,
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 8),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 32),
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(
