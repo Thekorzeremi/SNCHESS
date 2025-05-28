@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: AppColors.white,
                   borderColor: AppColors.secondary,
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 6),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
