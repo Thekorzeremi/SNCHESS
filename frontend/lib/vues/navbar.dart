@@ -15,7 +15,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   late List<Widget> _widgetOptions;
   int _selectedIndex = 0;
-  bool _isAuthenticated = true;
+  bool _isAuthenticated = false;
 
   // void _handleAuthentication(bool isAuthenticated) {
   //   setState(() {

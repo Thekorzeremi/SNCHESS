@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
 import 'package:frontend/vues/components/text_form_field.dart';
 import 'package:ionicons/ionicons.dart';
+import '../services/firebaseAuthentificationService.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,9 +15,13 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final FirebaseAuthentificationService _authService = FirebaseAuthentificationService();
+
   void login() {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
+
+    _authService.connectWithEmailAndPassword(email, password);
 
     print(email + password);
 

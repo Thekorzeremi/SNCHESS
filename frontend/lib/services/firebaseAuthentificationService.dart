@@ -1,18 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dotenv/dotenv.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
 class FirebaseAuthentificationService {
-  late String email;
-  late String password;
-
-
-  FirebaseAuthentificationService() {
-    var env = DotEnv(includePlatformEnvironment: true)..load();
-    email = env['FIREBASE_TEST_EMAIL'] ?? "";
-    password = env['FIREBASE_TEST_PASSWORD'] ?? "";
-  }
 
   void checkIfUserIsConnected() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
@@ -43,6 +33,7 @@ class FirebaseAuthentificationService {
     try {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
+            print('User signed in successfully');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
