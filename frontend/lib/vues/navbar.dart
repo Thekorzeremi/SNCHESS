@@ -3,7 +3,7 @@ import 'package:frontend/vues/landing_page.dart';
 import '../color.dart';
 import 'trajet.dart';
 import 'profil.dart';
-import 'travel.dart';
+import 'travels.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
