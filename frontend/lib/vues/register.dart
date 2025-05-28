@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
 import 'package:frontend/vues/components/text_form_field.dart';
 import 'package:ionicons/ionicons.dart';
+import '../services/firebaseAuthentificationService.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -17,6 +18,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+  final FirebaseAuthentificationService _authService = FirebaseAuthentificationService();
+
   void register() {
     final nom = _nomController.text.trim();
     final prenom = _prenomController.text.trim();
@@ -24,10 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
 
-    print(nom + prenom + email + password + confirmPassword);
-
-    // TODO: Ajouter la logique pour enregistrer l'utilisateur
-    // userRegister(nom, prenom, email, password, confirmPassword);
+    _authService.registerWithEmailAndPassword(email, password);
   }
 
   @override

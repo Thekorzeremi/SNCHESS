@@ -22,10 +22,6 @@ class _LoginPageState extends State<LoginPage> {
     final password = _passwordController.text;
 
     _authService.connectWithEmailAndPassword(email, password);
-
-    print(email + password);
-
-    // TODO: Ajouter la logique pour se connecter
   }
 
   void showForgotPasswordDialog() {
