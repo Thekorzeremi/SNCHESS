@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'vues/navbar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const SNCHESS());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SNCHESS extends StatelessWidget {
+  const SNCHESS({super.key});
 
   @override
   Widget build(BuildContext context) {
