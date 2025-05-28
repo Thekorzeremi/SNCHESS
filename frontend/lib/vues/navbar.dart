@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/vues/landing.dart';
 import '../color.dart';
-import 'trajet.dart';
-import 'profil.dart';
-import 'travel.dart';
+import 'trajet/trajet.dart';
+import 'profil/profil.dart';
+import 'travels/travels.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});

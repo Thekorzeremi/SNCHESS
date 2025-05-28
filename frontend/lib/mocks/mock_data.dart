@@ -1,0 +1,80 @@
+final List<Map<String, dynamic>> gares = [
+  {'id': '3', 'name': 'Paris', 'latitude': 48.8566, 'longitude': 2.3522},
+  {'id': '4', 'name': 'Lyon', 'latitude': 45.7640, 'longitude': 4.8357},
+  {'id': '5', 'name': 'Marseille', 'latitude': 43.2965, 'longitude': 5.3698},
+  {'id': '6', 'name': 'Toulouse', 'latitude': 43.6043, 'longitude': 1.4437},
+  {'id': '7', 'name': 'Nantes', 'latitude': 47.2184, 'longitude': -1.5536},
+];
+
+final List<Map<String, dynamic>> trams = [
+  {'id': '2', 'name': 'TGV 8412', 'type': 'TGV', 'status': 'En service'},
+  {'id': '3', 'name': 'TGV 8450', 'type': 'TGV', 'status': 'En service'},
+  {'id': '4', 'name': 'TGV 8472', 'type': 'TGV', 'status': 'En service'},
+  {'id': '5', 'name': 'TGV 8500', 'type': 'TGV', 'status': 'En service'},
+];
+
+final List<Map<String, dynamic>> voyages = [
+  {
+    'tramId': '2',
+    'duration': '03:02',
+    'departureHour': '06:00',
+    'departureDate': '2025-05-28',
+    'fromGareId': '3',
+    'toGareId': '4',
+    'price': 39,
+  },
+  {
+    'tramId': '3',
+    'duration': '02:16',
+    'departureHour': '06:32',
+    'departureDate': '2025-05-28',
+    'fromGareId': '4',
+    'toGareId': '5',
+    'price': 55,
+  },
+  {
+    'tramId': '4',
+    'duration': '03:27',
+    'departureHour': '06:44',
+    'departureDate': '2025-05-28',
+    'fromGareId': '5',
+    'toGareId': '6',
+    'price': 43,
+  },
+  {
+    'tramId': '5',
+    'duration': '03:14',
+    'departureHour': '07:03',
+    'departureDate': '2025-05-28',
+    'fromGareId': '6',
+    'toGareId': '7',
+    'price': 60,
+  },
+  {
+    'tramId': '5',
+    'duration': '03:14',
+    'departureHour': '07:03',
+    'departureDate': '2025-05-28',
+    'fromGareId': '7',
+    'toGareId': '3',
+    'price': 60,
+  },
+  {
+    'tramId': '3',
+    'duration': '03:14',
+    'departureHour': '07:03',
+    'departureDate': '2025-05-28',
+    'fromGareId': '3',
+    'toGareId': '4',
+    'price': 60,
+  },
+  {
+    'tramId': '4',
+    'duration': '03:14',
+    'departureHour': '07:03',
+    'departureDate': '2025-05-28',
+    'fromGareId': '4',
+    'toGareId': '5',
+    'price': 60,
+  },
+]; 
