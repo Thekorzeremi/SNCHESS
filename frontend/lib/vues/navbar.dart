@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../color.dart';
 import 'trajet.dart';
 import 'profil.dart';
-import 'voyage.dart';
+import 'travel.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -27,7 +27,7 @@ class _NavbarState extends State<Navbar> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isAuthenticated) {
-      _widgetOptions[0] = Voyage();
+      _widgetOptions[0] = Voyage(name: 'John Doe');
       _widgetOptions[1] = Trajet();
       _widgetOptions[2] = Profil();
     }
@@ -36,7 +36,7 @@ class _NavbarState extends State<Navbar> {
   @override
   void initState() {
     super.initState();
-    _widgetOptions = <Widget>[Voyage(), Trajet(), Profil()];
+    _widgetOptions = <Widget>[Voyage(name: 'John Doe'), Trajet(), Profil()];
   }
 
   void _onItemTapped(int index) {
@@ -48,101 +48,74 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _isAuthenticated
-          ? PreferredSize(
-              preferredSize: Size.fromHeight(kToolbarHeight),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.secondary,
-                  border: Border(
-                    bottom: BorderSide(color: AppColors.primary, width: 2.0),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'Voyage',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          spacing: 8,
-                          children: [
-                            Text(
-                              'Déconnexion',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red,
-                              ),
-                            ),
-                            Icon(Icons.logout, size: 16, color: Colors.red),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : null,
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        title: Image.asset('assets/SNCHESS.png', width: 40  , height: 40),
+      ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: _isAuthenticated
-          ? Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: AppColors.primary, width: 2.0),
-                ),
-              ),
-              child: BottomNavigationBar(
-                backgroundColor: AppColors.secondary,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.dashboard_customize_outlined,
-                      color: _selectedIndex == 0
-                          ? AppColors.primary
-                          : AppColors.black,
+          ? SizedBox(
+              height: 80,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 80,
+                    child: BottomNavigationBar(
+                      backgroundColor: AppColors.primary,
+                      items: <BottomNavigationBarItem>[
+                        _buildNavItem(0, Icons.card_travel, 'Voyage'),
+                        _buildNavItem(1, Icons.qr_code_2, 'Trajet'),
+                        _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
+                      ],
+                      currentIndex: _selectedIndex,
+                      selectedItemColor: AppColors.secondary,
+                      unselectedItemColor: AppColors.white,
+                      selectedFontSize: 12,
+                      unselectedFontSize: 12,
+                      type: BottomNavigationBarType.fixed,
+                      showSelectedLabels: false,
+                      showUnselectedLabels: false,
+                      onTap: _onItemTapped,
                     ),
-                    label: 'Voyage',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.face,
-                      color: _selectedIndex == 1
-                          ? AppColors.primary
-                          : AppColors.black,
-                    ),
-                    label: 'Trajet',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.face,
-                      color: _selectedIndex == 2
-                          ? AppColors.primary
-                          : AppColors.black,
-                    ),
-                      label: 'Mon profil',
                   ),
                 ],
-                currentIndex: _selectedIndex,
-                selectedItemColor: AppColors.primary,
-                unselectedItemColor: AppColors.black,
-                onTap: _onItemTapped,
               ),
             )
           : null,
+    );
+  }
+  
+  BottomNavigationBarItem _buildNavItem(int index, IconData icon, String label) {
+    bool isSelected = _selectedIndex == index;
+    
+    return BottomNavigationBarItem(
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: isSelected ? AppColors.secondary : AppColors.white,
+            size: 22,
+          ),
+          const SizedBox(height: 3),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? AppColors.secondary : AppColors.white, 
+              fontSize: 12
+            ),
+          ),
+          if (isSelected)
+            Container(
+              margin: EdgeInsets.only(top: 4),
+              height: 2,
+              width: 40,
+              color: AppColors.secondary,
+            ),
+        ],
+      ),
+      label: '',
     );
   }
 }
