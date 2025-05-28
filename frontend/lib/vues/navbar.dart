@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/vues/landing_page.dart';
 import '../color.dart';
 import 'trajet.dart';
 import 'profil.dart';
@@ -30,13 +31,15 @@ class _NavbarState extends State<Navbar> {
       _widgetOptions[0] = Voyage();
       _widgetOptions[1] = Trajet();
       _widgetOptions[2] = Profil();
+    } else {
+      _selectedIndex = 3;
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _widgetOptions = <Widget>[Voyage(), Trajet(), Profil()];
+    _widgetOptions = <Widget>[Voyage(), Trajet(), Profil(), LandingPage()];
   }
 
   void _onItemTapped(int index) {
@@ -133,7 +136,7 @@ class _NavbarState extends State<Navbar> {
                           ? AppColors.primary
                           : AppColors.black,
                     ),
-                      label: 'Mon profil',
+                    label: 'Mon profil',
                   ),
                 ],
                 currentIndex: _selectedIndex,
