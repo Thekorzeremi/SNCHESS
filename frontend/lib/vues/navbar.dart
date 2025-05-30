@@ -14,18 +14,26 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
-  late List<Widget> _widgetOptions;
   int _selectedIndex = 0;
+  bool? isAuthenticated;
+
+  final List<Widget> _widgetOptions = [
+    Travels(name: 'John Doe'),
+    Tickets(),
+    Profil(),
+  ];
 
   @override
   void initState() {
     super.initState();
-    _widgetOptions = <Widget>[
-      Travels(name: 'John Doe'),
-      Tickets(),
-      Profil(),
-      LandingPage(),
-    ];
+
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (mounted) {
+        setState(() {
+          isAuthenticated = user != null;
+        });
+      }
+    });
   }
 
   void _onItemTapped(int index) {
@@ -36,46 +44,42 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    final isAuthenticated = FirebaseAuth.instance.currentUser != null;
+    if (isAuthenticated == null) {
+      return Scaffold(
+        backgroundColor: AppColors.primary,
+        body: Center(
+          child: CircularProgressIndicator(color: AppColors.secondary),
+        ),
+      );
+    }
+
+    final isAuth = isAuthenticated!;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
-        title: isAuthenticated
+        title: isAuth
             ? Image.asset('assets/SNCHESS.png', width: 40, height: 40)
             : null,
       ),
-      body: isAuthenticated
-          ? _widgetOptions.elementAt(_selectedIndex)
-          : LandingPage(),
-      bottomNavigationBar: isAuthenticated
-          ? SizedBox(
-              height: 80,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 80,
-                    child: BottomNavigationBar(
-                      backgroundColor: AppColors.primary,
-                      items: <BottomNavigationBarItem>[
-                        _buildNavItem(0, Icons.card_travel, 'Voyage'),
-                        _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
-                        _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
-                      ],
-                      currentIndex: _selectedIndex,
-                      selectedItemColor: AppColors.secondary,
-                      unselectedItemColor: AppColors.white,
-                      selectedFontSize: 12,
-                      unselectedFontSize: 12,
-                      type: BottomNavigationBarType.fixed,
-                      showSelectedLabels: false,
-                      showUnselectedLabels: false,
-                      onTap: _onItemTapped,
-                    ),
-                  ),
-                ],
-              ),
+      body: isAuth ? _widgetOptions[_selectedIndex] : const LandingPage(),
+      bottomNavigationBar: isAuth
+          ? BottomNavigationBar(
+              backgroundColor: AppColors.primary,
+              items: <BottomNavigationBarItem>[
+                _buildNavItem(0, Icons.card_travel, 'Voyage'),
+                _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
+                _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: AppColors.secondary,
+              unselectedItemColor: AppColors.white,
+              selectedFontSize: 12,
+              unselectedFontSize: 12,
+              type: BottomNavigationBarType.fixed,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              onTap: _onItemTapped,
             )
           : null,
     );

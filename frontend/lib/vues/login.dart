@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
 import 'package:frontend/vues/components/text_form_field.dart';
+import 'package:frontend/vues/navbar.dart';
 import 'package:ionicons/ionicons.dart';
 import '../services/firebaseAuthentificationService.dart';
 
@@ -50,7 +51,11 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     if (isConnected) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      if (isConnected) {
+        Navigator.of(
+          context,
+        ).pushReplacement(MaterialPageRoute(builder: (context) => Navbar()));
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
