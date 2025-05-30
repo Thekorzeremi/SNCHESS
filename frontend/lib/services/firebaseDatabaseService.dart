@@ -118,7 +118,7 @@ class FirebaseDatabaseService {
       },
       "users": {
         "1": {
-          "email": "remi@snchess.com",
+          "email": "test@snchess.com",
           "ticket": {
             "1": {
               "seatNb": "12",
