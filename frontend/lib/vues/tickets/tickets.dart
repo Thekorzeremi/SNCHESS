@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import '../../color.dart';
-import '../../mocks/mock_data.dart';
 import 'package:intl/intl.dart';
 import '../ticket/ticket.dart';
 import '../../services/firebaseDatabaseService.dart';
