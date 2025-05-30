@@ -118,7 +118,7 @@ class FirebaseDatabaseService {
       },
       "users": {
         "1": {
-          "email": "korzeremi02@gmail.com",
+          "email": "remi@snchess.com",
           "ticket": {
             "1": {
               "seatNb": "12",
@@ -245,9 +245,7 @@ class FirebaseDatabaseService {
         return MapEntry(key.toString(), castMap(value));
       } else if (value is List) {
         return MapEntry(
-          key.toString(),
-          value.map((e) => e is Map ? castMap(e) : e).toList(),
-        );
+          key.toString(), value.map((e) => e is Map ? castMap(e) : e).toList());
       } else {
         return MapEntry(key.toString(), value);
       }
