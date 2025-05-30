@@ -252,55 +252,65 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                 ],
               ),
               SizedBox(height: 16),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.card,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Color(0xFFFFD580),
-                      child: Text(
-                        'RR',
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (_) => UserCardDialog(),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Color(0xFFFFD580),
+                        child: Text(
+                          'RR',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Raphael Romero',
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Raphael Romero',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            'Carte Avantage Jeune',
-                            style: TextStyle(color: AppColors.white),
-                          ),
-                          Text(
-                            'Sans carte de fidélité',
-                            style: TextStyle(color: AppColors.white),
-                          ),
-                        ],
+                            SizedBox(height: 2),
+                            Text(
+                              'Carte Avantage Jeune',
+                              style: TextStyle(color: AppColors.white),
+                            ),
+                            Text(
+                              'Sans carte de fidélité',
+                              style: TextStyle(color: Colors.white70, fontSize: 14),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: AppColors.white,
-                      size: 18,
-                    ),
-                  ],
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.white,
+                        size: 18,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 24),
@@ -374,5 +384,89 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
       'déc.',
     ];
     return moisNoms[mois];
+  }
+}
+
+class UserCardDialog extends StatelessWidget {
+  const UserCardDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.all(40),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Informations voyageur',
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(Icons.close, color: AppColors.secondary),
+              ),
+            ],
+          ),
+          SizedBox(height: 24),
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Color(0xFFFFD580),
+                radius: 28,
+                child: Text(
+                  'RR',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+              SizedBox(width: 18),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Raphael Romero',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Carte Avantage Jeune',
+                    style: TextStyle(color: AppColors.secondary, fontSize: 15),
+                  ),
+                  Text(
+                    'Sans carte de fidélité',
+                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 30),
+          Text(
+            'Profitez de tous vos avantages et suivez vos statuts de fidélité ici.',
+            style: TextStyle(color: AppColors.white, fontSize: 14),
+          ),
+        ],
+      ),
+    );
   }
 }
