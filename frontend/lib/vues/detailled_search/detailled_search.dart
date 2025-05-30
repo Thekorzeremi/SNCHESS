@@ -13,12 +13,16 @@ class DetailledSearch extends StatefulWidget {
   State<DetailledSearch> createState() => _DetailledSearchState();
 }
 
-class _DetailledSearchState extends State<DetailledSearch> {
+class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProviderStateMixin {
   List<String> get garesList => gares.map((g) => g['name'] as String).toList();
 
   String? gareDepart;
   String? gareArrivee;
   DateTime? dateDepart;
+  double _rotationAngle = 1.5708; // 90° en radians
+  bool isVoyageurSelected = false;
+  bool isAnimalSelected = false;
+  bool isVeloSelected = false;
 
   // TODO: Ajouter la récupération des gares depuis Firebase RDB
 
@@ -98,8 +102,9 @@ class _DetailledSearchState extends State<DetailledSearch> {
                             shape: BoxShape.circle,
                           ),
                           child: IconButton(
-                            icon: Transform.rotate(
-                              angle: 1.5708,
+                            icon: AnimatedRotation(
+                              turns: _rotationAngle / (2 * 3.141592653589793), // OBLIGE DE ROTATE AVEC PI
+                              duration: Duration(milliseconds: 300),
                               child: Icon(
                                 Icons.swap_vert,
                                 color: AppColors.white,
@@ -110,6 +115,7 @@ class _DetailledSearchState extends State<DetailledSearch> {
                                 final tmp = gareDepart;
                                 gareDepart = gareArrivee;
                                 gareArrivee = tmp;
+                                _rotationAngle += 3.141592653589793; // Ajoute 180° (π radians) (OBLIGE DE ROTATE AVEC PI)
                               });
                             },
                           ),
@@ -213,61 +219,98 @@ class _DetailledSearchState extends State<DetailledSearch> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TravelerCard(icon: Icons.person_outline, label: 'Voyageur'),
-                  TravelerCard(icon: Icons.pets, label: 'Animal'),
-                  TravelerCard(icon: Icons.directions_bike, label: 'Vélo'),
+                  TravelerCard(
+                    icon: Icons.person_outline,
+                    label: 'Voyageur',
+                    selected: isVoyageurSelected,
+                    onTap: () {
+                      setState(() {
+                        isVoyageurSelected = !isVoyageurSelected;
+                      });
+                    },
+                  ),
+                  TravelerCard(
+                    icon: Icons.pets,
+                    label: 'Animal',
+                    selected: isAnimalSelected,
+                    onTap: () {
+                      setState(() {
+                        isAnimalSelected = !isAnimalSelected;
+                      });
+                    },
+                  ),
+                  TravelerCard(
+                    icon: Icons.directions_bike,
+                    label: 'Vélo',
+                    selected: isVeloSelected,
+                    onTap: () {
+                      setState(() {
+                        isVeloSelected = !isVeloSelected;
+                      });
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 16),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.card,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Color(0xFFFFD580),
-                      child: Text(
-                        'RR',
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (_) => UserCardDialog(),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Color(0xFFFFD580),
+                        child: Text(
+                          'RR',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Raphael Romero',
-                            style: TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Raphael Romero',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            'Carte Avantage Jeune',
-                            style: TextStyle(color: AppColors.white),
-                          ),
-                          Text(
-                            'Sans carte de fidélité',
-                            style: TextStyle(color: AppColors.white),
-                          ),
-                        ],
+                            SizedBox(height: 2),
+                            Text(
+                              'Carte Avantage Jeune',
+                              style: TextStyle(color: AppColors.white),
+                            ),
+                            Text(
+                              'Sans carte de fidélité',
+                              style: TextStyle(color: Colors.white70, fontSize: 14),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: AppColors.white,
-                      size: 18,
-                    ),
-                  ],
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.white,
+                        size: 18,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 24),
@@ -341,5 +384,89 @@ class _DetailledSearchState extends State<DetailledSearch> {
       'déc.',
     ];
     return moisNoms[mois];
+  }
+}
+
+class UserCardDialog extends StatelessWidget {
+  const UserCardDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.all(40),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Informations voyageur',
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(Icons.close, color: AppColors.secondary),
+              ),
+            ],
+          ),
+          SizedBox(height: 24),
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Color(0xFFFFD580),
+                radius: 28,
+                child: Text(
+                  'RR',
+                  style: TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+              SizedBox(width: 18),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Raphael Romero',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Carte Avantage Jeune',
+                    style: TextStyle(color: AppColors.secondary, fontSize: 15),
+                  ),
+                  Text(
+                    'Sans carte de fidélité',
+                    style: TextStyle(color: Colors.white70, fontSize: 14),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 30),
+          Text(
+            'Profitez de tous vos avantages et suivez vos statuts de fidélité ici.',
+            style: TextStyle(color: AppColors.white, fontSize: 14),
+          ),
+        ],
+      ),
+    );
   }
 }

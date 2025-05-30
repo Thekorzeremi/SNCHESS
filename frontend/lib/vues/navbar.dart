@@ -26,21 +26,17 @@ class _NavbarState extends State<Navbar> {
     super.initState();
 
     FirebaseAuth.instance.authStateChanges().listen((user) {
-      if (mounted) {
-        setState(() {
-          isAuthenticated = user != null;
-        });
+      if (!mounted) return;
 
-        if (user != null) {
-          final userInfo = FirebaseAuthentificationService()
-              .getCurrentUserInformation();
-          final email = userInfo?['email'] ?? '';
-          setState(() {
-            isAdmin = email == 'admin@snchess.com';
-            _buildWidgetOptions();
-          });
-        }
-      }
+      final userInfo = FirebaseAuthentificationService()
+          .getCurrentUserInformation();
+      final email = userInfo?['email'] ?? '';
+
+      setState(() {
+        isAuthenticated = user != null;
+        isAdmin = email == 'admin@snchess.com';
+        _buildWidgetOptions();
+      });
     });
 
     final user = FirebaseAuth.instance.currentUser;

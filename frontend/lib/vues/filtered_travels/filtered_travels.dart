@@ -195,9 +195,20 @@ class _FilteredTravelsState extends State<FilteredTravels> {
             Expanded(
               child: filteredVoyages.isEmpty
                   ? Center(
-                      child: Text(
-                        'Aucun voyage trouvé pour le moment',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.warning,
+                            color: AppColors.secondary,
+                            size: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Aucun voyage disponible pour le $dateStr',
+                            style: TextStyle(color: AppColors.white),
+                          ),
+                        ],
                       ),
                     )
                   : ListView.builder(
