@@ -69,7 +69,7 @@ class _TravelsState extends State<Travels> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                'Bonjour ${FirebaseAuthentificationService().getCurrentUserInformation()?['displayName'] ?? widget.name},',
+              'Bonjour ${FirebaseAuthentificationService().getCurrentUserInformation()?['displayName'] ?? widget.name},',
               style: TextStyle(fontSize: 14, color: AppColors.white),
             ),
             SizedBox(height: 10),
@@ -158,7 +158,10 @@ class _TravelsState extends State<Travels> {
 }
 
 String safeGetHour(dynamic datetime) {
-  if (datetime == null || datetime == "" || !(datetime is String) || !datetime.contains(':')) {
+  if (datetime == null ||
+      datetime == "" ||
+      !(datetime is String) ||
+      !datetime.contains(':')) {
     return "00";
   }
   return datetime.split(':')[0];

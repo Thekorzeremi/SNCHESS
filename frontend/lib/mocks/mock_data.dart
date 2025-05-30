@@ -219,22 +219,22 @@ final Map<String, dynamic> users = {
               "datetime": "28/05/2025 06:00",
               "city": "Paris",
               "country": "FR",
-              "coordinate": {"latitude": "48.8566", "longitude": "2.3522"}
+              "coordinate": {"latitude": "48.8566", "longitude": "2.3522"},
             },
             "toStation": {
               "datetime": "28/05/2025 09:02",
               "city": "Lyon",
               "country": "FR",
-              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"}
-            }
+              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"},
+            },
           },
           "vehicle": {
             "name": "TGV 8412",
             "type": "TGV",
             "status": "En service",
-            "nbOfWagon": "8"
-          }
-        }
+            "nbOfWagon": "8",
+          },
+        },
       },
       "2": {
         "seatNb": "",
@@ -250,22 +250,22 @@ final Map<String, dynamic> users = {
               "datetime": "28/05/2025 06:32",
               "city": "Lyon",
               "country": "FR",
-              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"}
+              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"},
             },
             "toStation": {
               "datetime": "28/05/2025 08:48",
               "city": "Marseille",
               "country": "FR",
-              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"}
-            }
+              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"},
+            },
           },
           "vehicle": {
             "name": "TGV 8450",
             "type": "TGV",
             "status": "En service",
-            "nbOfWagon": "8"
-          }
-        }
+            "nbOfWagon": "8",
+          },
+        },
       },
       "3": {
         "seatNb": "",
@@ -281,22 +281,22 @@ final Map<String, dynamic> users = {
               "datetime": "28/05/2025 06:44",
               "city": "Marseille",
               "country": "FR",
-              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"}
+              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"},
             },
             "toStation": {
               "datetime": "28/05/2025 10:11",
               "city": "Toulouse",
               "country": "FR",
-              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"}
-            }
+              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"},
+            },
           },
           "vehicle": {
             "name": "TGV 8472",
             "type": "TGV",
             "status": "En service",
-            "nbOfWagon": "8"
-          }
-        }
+            "nbOfWagon": "8",
+          },
+        },
       },
       "4": {
         "seatNb": "",
@@ -312,24 +312,24 @@ final Map<String, dynamic> users = {
               "datetime": "28/05/2025 07:03",
               "city": "Toulouse",
               "country": "FR",
-              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"}
+              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"},
             },
             "toStation": {
               "datetime": "28/05/2025 10:17",
               "city": "Nantes",
               "country": "FR",
-              "coordinate": {"latitude": "47.2184", "longitude": "-1.5536"}
-            }
+              "coordinate": {"latitude": "47.2184", "longitude": "-1.5536"},
+            },
           },
           "vehicle": {
             "name": "TGV 8500",
             "type": "TGV",
             "status": "En service",
-            "nbOfWagon": "8"
-          }
-        }
-      }
-    }
+            "nbOfWagon": "8",
+          },
+        },
+      },
+    },
   },
   "1": {
     "email": "fiinnnhh@gmail.com",
@@ -348,28 +348,22 @@ final Map<String, dynamic> users = {
               "datetime": "30/05/2024 08:00",
               "city": "Paris",
               "country": "FR",
-              "coordinate": {
-                "latitude": "48.8566",
-                "longitude": "2.3522"
-              }
+              "coordinate": {"latitude": "48.8566", "longitude": "2.3522"},
             },
             "toStation": {
               "datetime": "30/05/2024 11:00",
               "city": "Lyon",
               "country": "FR",
-              "coordinate": {
-                "latitude": "45.7640",
-                "longitude": "4.8357"
-              }
-            }
+              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"},
+            },
           },
           "vehicle": {
             "name": "TGV 8412",
             "type": "train",
             "status": "service",
-            "nbOfWagon": "8"
-          }
-        }
+            "nbOfWagon": "8",
+          },
+        },
       },
       "2": {
         "seatNb": "36",
@@ -385,28 +379,22 @@ final Map<String, dynamic> users = {
               "datetime": "31/05/2024 09:30",
               "city": "Lyon",
               "country": "FR",
-              "coordinate": {
-                "latitude": "45.7640",
-                "longitude": "4.8357"
-              }
+              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"},
             },
             "toStation": {
               "datetime": "31/05/2024 12:00",
               "city": "Marseille",
               "country": "FR",
-              "coordinate": {
-                "latitude": "43.2965",
-                "longitude": "5.3698"
-              }
-            }
+              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"},
+            },
           },
           "vehicle": {
             "name": "TGV 8450",
             "type": "train",
             "status": "service",
-            "nbOfWagon": "8"
-          }
-        }
+            "nbOfWagon": "8",
+          },
+        },
       },
       "3": {
         "seatNb": "18",
@@ -422,28 +410,22 @@ final Map<String, dynamic> users = {
               "datetime": "01/06/2024 10:00",
               "city": "Marseille",
               "country": "FR",
-              "coordinate": {
-                "latitude": "43.2965",
-                "longitude": "5.3698"
-              }
+              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"},
             },
             "toStation": {
               "datetime": "01/06/2024 13:10",
               "city": "Toulouse",
               "country": "FR",
-              "coordinate": {
-                "latitude": "43.6043",
-                "longitude": "1.4437"
-              }
-            }
+              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"},
+            },
           },
           "vehicle": {
             "name": "TGV 8472",
             "type": "train",
             "status": "service",
-            "nbOfWagon": "8"
-          }
-        }
+            "nbOfWagon": "8",
+          },
+        },
       },
       "4": {
         "seatNb": "22",
@@ -459,29 +441,23 @@ final Map<String, dynamic> users = {
               "datetime": "02/06/2024 11:15",
               "city": "Toulouse",
               "country": "FR",
-              "coordinate": {
-                "latitude": "43.6043",
-                "longitude": "1.4437"
-              }
+              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"},
             },
             "toStation": {
               "datetime": "02/06/2024 14:30",
               "city": "Nantes",
               "country": "FR",
-              "coordinate": {
-                "latitude": "47.2184",
-                "longitude": "-1.5536"
-              }
-            }
+              "coordinate": {"latitude": "47.2184", "longitude": "-1.5536"},
+            },
           },
           "vehicle": {
             "name": "TGV 8500",
             "type": "train",
             "status": "service",
-            "nbOfWagon": "8"
-          }
-        }
-      }
-    }
-  }
+            "nbOfWagon": "8",
+          },
+        },
+      },
+    },
+  },
 };
