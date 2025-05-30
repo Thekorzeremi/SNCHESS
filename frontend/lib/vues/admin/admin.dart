@@ -316,15 +316,16 @@ class _AdminState extends State<Admin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: AppColors.primary,
+                  if (selected != 'users')
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secondary,
+                        foregroundColor: AppColors.primary,
+                      ),
+                      onPressed: handleAdd,
+                      icon: const Icon(Icons.add),
+                      label: Text('Ajouter'),
                     ),
-                    onPressed: handleAdd,
-                    icon: const Icon(Icons.add),
-                    label: Text('Ajouter'),
-                  ),
                 ],
               ),
             ),

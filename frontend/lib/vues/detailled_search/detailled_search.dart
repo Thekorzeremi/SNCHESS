@@ -13,12 +13,16 @@ class DetailledSearch extends StatefulWidget {
   State<DetailledSearch> createState() => _DetailledSearchState();
 }
 
-class _DetailledSearchState extends State<DetailledSearch> {
+class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProviderStateMixin {
   List<String> get garesList => gares.map((g) => g['name'] as String).toList();
 
   String? gareDepart;
   String? gareArrivee;
   DateTime? dateDepart;
+  double _rotationAngle = 1.5708; // 90° en radians
+  bool isVoyageurSelected = false;
+  bool isAnimalSelected = false;
+  bool isVeloSelected = false;
 
   // TODO: Ajouter la récupération des gares depuis Firebase RDB
 
@@ -98,8 +102,9 @@ class _DetailledSearchState extends State<DetailledSearch> {
                             shape: BoxShape.circle,
                           ),
                           child: IconButton(
-                            icon: Transform.rotate(
-                              angle: 1.5708,
+                            icon: AnimatedRotation(
+                              turns: _rotationAngle / (2 * 3.141592653589793), // OBLIGE DE ROTATE AVEC PI
+                              duration: Duration(milliseconds: 300),
                               child: Icon(
                                 Icons.swap_vert,
                                 color: AppColors.white,
@@ -110,6 +115,7 @@ class _DetailledSearchState extends State<DetailledSearch> {
                                 final tmp = gareDepart;
                                 gareDepart = gareArrivee;
                                 gareArrivee = tmp;
+                                _rotationAngle += 3.141592653589793; // Ajoute 180° (π radians) (OBLIGE DE ROTATE AVEC PI)
                               });
                             },
                           ),
@@ -213,9 +219,36 @@ class _DetailledSearchState extends State<DetailledSearch> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TravelerCard(icon: Icons.person_outline, label: 'Voyageur'),
-                  TravelerCard(icon: Icons.pets, label: 'Animal'),
-                  TravelerCard(icon: Icons.directions_bike, label: 'Vélo'),
+                  TravelerCard(
+                    icon: Icons.person_outline,
+                    label: 'Voyageur',
+                    selected: isVoyageurSelected,
+                    onTap: () {
+                      setState(() {
+                        isVoyageurSelected = !isVoyageurSelected;
+                      });
+                    },
+                  ),
+                  TravelerCard(
+                    icon: Icons.pets,
+                    label: 'Animal',
+                    selected: isAnimalSelected,
+                    onTap: () {
+                      setState(() {
+                        isAnimalSelected = !isAnimalSelected;
+                      });
+                    },
+                  ),
+                  TravelerCard(
+                    icon: Icons.directions_bike,
+                    label: 'Vélo',
+                    selected: isVeloSelected,
+                    onTap: () {
+                      setState(() {
+                        isVeloSelected = !isVeloSelected;
+                      });
+                    },
+                  ),
                 ],
               ),
               SizedBox(height: 16),
