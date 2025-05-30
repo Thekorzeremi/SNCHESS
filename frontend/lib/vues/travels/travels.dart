@@ -6,15 +6,15 @@ import 'components/travel_card.dart';
 import '../detailled_search/detailled_search.dart';
 import '../../mocks/mock_data.dart';
 
-class Voyage extends StatefulWidget {
+class Travels extends StatefulWidget {
   final String name;
-  const Voyage({super.key, required this.name});
+  const Travels({super.key, required this.name});
 
   @override
-  State<Voyage> createState() => _VoyageState();
+  State<Travels> createState() => _TravelsState();
 }
 
-class _VoyageState extends State<Voyage> {
+class _TravelsState extends State<Travels> {
   final TextEditingController _searchController = TextEditingController();
   String _search = '';
 
@@ -130,4 +130,11 @@ class _VoyageState extends State<Voyage> {
       ),
     );
   }
+}
+
+String safeGetHour(dynamic datetime) {
+  if (datetime == null || datetime == "" || !(datetime is String) || !datetime.contains(':')) {
+    return "00";
+  }
+  return datetime.split(':')[0];
 }
