@@ -81,12 +81,12 @@ class _AdminEditDialogState extends State<AdminEditDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ...widget.data.entries.where((entry) => widget.nonEditableKeys.contains(entry.key)).map((entry) => Padding(
+              ...widget.data.entries.where((entry) => widget.nonEditableKeys.contains(entry.key)).map((entry) => Container(
                 padding: const EdgeInsets.symmetric(vertical: 6.0),
                 child: Text('${entry.key} : ${entry.value}', style: const TextStyle(color: AppColors.secondary)),
               )),
               if (isVoyage) ...[
-                Padding(
+                Container(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: DropdownButtonFormField<String>(
                     value: tramList.firstWhere((t) => t['id'] == controllers['tramId']?.text, orElse: () => tramList.first)['id'],
@@ -115,7 +115,7 @@ class _AdminEditDialogState extends State<AdminEditDialog> {
                     },
                   ),
                 ),
-                Padding(
+                Container(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: DropdownButtonFormField<String>(
                     value: gareList.firstWhere((g) => g['id'] == controllers['fromGareId']?.text, orElse: () => gareList.first)['id'],
@@ -144,7 +144,7 @@ class _AdminEditDialogState extends State<AdminEditDialog> {
                     },
                   ),
                 ),
-                Padding(
+                Container(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: DropdownButtonFormField<String>(
                     value: gareList.firstWhere((g) => g['id'] == controllers['toGareId']?.text, orElse: () => gareList.first)['id'],
@@ -178,7 +178,7 @@ class _AdminEditDialogState extends State<AdminEditDialog> {
                 final isTimeField = entry.key == 'duration' || entry.key == 'departureHour';
                 final isDateField = entry.key == 'date' || entry.key == 'departureDate';
                 final isTramStatus = widget.entity == 'trams' && entry.key == 'status';
-                return Padding(
+                return Container(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: isTimeField
                       ? GestureDetector(

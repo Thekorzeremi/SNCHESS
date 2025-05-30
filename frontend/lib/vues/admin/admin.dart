@@ -261,6 +261,46 @@ class _AdminState extends State<Admin> {
       entityCards = _buildVoyageCards();
     }
 
+    void handleAdd() {
+      if (selected == 'users') {
+        final newUser = {'email': '', 'ticket': []};
+        _showEditDialog(context, 'users', newUser, onSave: (data) {
+          setState(() {
+            users[DateTime.now().millisecondsSinceEpoch.toString()] = data;
+          });
+        });
+      } else if (selected == 'gares') {
+        final newGare = {'name': '', 'latitude': '', 'longitude': ''};
+        _showEditDialog(context, 'gares', newGare, onSave: (data) {
+          setState(() {
+            gares.add(data);
+          });
+        });
+      } else if (selected == 'trams') {
+        final newTram = {'name': '', 'type': '', 'status': ''};
+        _showEditDialog(context, 'trams', newTram, onSave: (data) {
+          setState(() {
+            trams.add(data);
+          });
+        });
+      } else if (selected == 'voyages') {
+        final newVoyage = {
+          'tramId': '',
+          'fromGareId': '',
+          'toGareId': '',
+          'departureDate': '',
+          'departureHour': '',
+          'duration': '',
+          'price': '',
+        };
+        _showEditDialog(context, 'voyages', newVoyage, onSave: (data) {
+          setState(() {
+            voyages.add(data);
+          });
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin', style: TextStyle(color: AppColors.white)),
@@ -279,6 +319,24 @@ class _AdminState extends State<Admin> {
               onSelect: (key) => setState(() => selected = key),
             ),
             const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.secondary,
+                      foregroundColor: AppColors.primary,
+                    ),
+                    onPressed: handleAdd,
+                    icon: const Icon(Icons.add),
+                    label: Text('Ajouter'),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
             Expanded(
               child: AdminEntityList(children: entityCards),
             ),

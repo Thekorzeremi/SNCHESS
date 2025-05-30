@@ -27,7 +27,7 @@ class Ticket extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         child: SingleChildScrollView(
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

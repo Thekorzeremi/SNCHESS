@@ -40,7 +40,7 @@ class _DetailledSearchState extends State<DetailledSearch> {
         iconTheme: IconThemeData(color: AppColors.white),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

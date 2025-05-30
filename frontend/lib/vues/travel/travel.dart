@@ -74,7 +74,7 @@ class Travel extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
                 backgroundColor: Colors.white,
-                builder: (_) => Padding(
+                builder: (_) => Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
