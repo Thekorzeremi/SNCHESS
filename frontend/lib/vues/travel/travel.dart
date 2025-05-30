@@ -26,6 +26,8 @@ class Travel extends StatelessWidget {
     required this.gareArriveeCoords,
   });
 
+  // TODO : Ajouter la récupération des données de voyage depuis Firebase RDB
+
   @override
   Widget build(BuildContext context) {
     final LatLng depart = LatLng(

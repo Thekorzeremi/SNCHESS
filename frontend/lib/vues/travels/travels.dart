@@ -18,6 +18,8 @@ class _VoyageState extends State<Voyage> {
   final TextEditingController _searchController = TextEditingController();
   String _search = '';
 
+  // TODO : Ajouter la récupération des voyages disponibles depuis firebase RDB
+
   @override
   void initState() {
     super.initState();

@@ -20,6 +20,8 @@ class _DetailledSearchState extends State<DetailledSearch> {
   String? gareArrivee;
   DateTime? dateDepart;
 
+  // TODO: Ajouter la récupération des gares depuis Firebase RDB
+
   @override
   Widget build(BuildContext context) {
     if (dateDepart == null) {

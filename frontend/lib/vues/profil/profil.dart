@@ -275,6 +275,7 @@ class _ProfilState extends State<Profil> {
                 ),
               ),
               SizedBox(height: 10),
+              // TODO : bugfix : stuck on the login after logout
               GestureDetector(
                 onTap: () async {
                   FirebaseAuthentificationService().signOutCurrentUser();
@@ -304,6 +305,7 @@ class _ProfilState extends State<Profil> {
                 ),
               ),
               SizedBox(height: 10),
+              // TODO : Ajouter la logique pour supprimer le compte utilisateur
               GestureDetector(
                 child: Container(
                   height: 50,
