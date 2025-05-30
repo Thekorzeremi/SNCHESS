@@ -42,6 +42,23 @@ class FirebaseAuthentificationService {
     }
   }
 
+  Map<String, String?>? getCurrentUserInformation() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      print('User ID: ${user.uid}');
+      print('User Email: ${user.email}');
+      print('User Name: ${user.displayName}');
+      return {
+        'uid': user.uid,
+        'email': user.email,
+        'displayName': user.displayName,
+      };
+    } else {
+      print('No user is currently signed in.');
+      return null;
+    }
+  }
+
   void signOutCurrentUser() {
     try {
       FirebaseAuth.instance.signOut();

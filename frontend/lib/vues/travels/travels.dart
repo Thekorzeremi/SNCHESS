@@ -5,6 +5,7 @@ import './components/search_bar.dart' as travels_components;
 import 'components/travel_card.dart';
 import '../detailled_search/detailled_search.dart';
 import '../../mocks/mock_data.dart';
+import '../../services/firebaseAuthentificationService.dart';
 
 class Voyage extends StatefulWidget {
   final String name;
@@ -56,7 +57,7 @@ class _VoyageState extends State<Voyage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bonjour ${widget.name},',
+                'Bonjour ${FirebaseAuthentificationService().getCurrentUserInformation()?['displayName'] ?? widget.name},',
               style: TextStyle(fontSize: 14, color: AppColors.white),
             ),
             SizedBox(height: 10),
