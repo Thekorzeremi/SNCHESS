@@ -11,7 +11,6 @@ class Ticket extends StatelessWidget {
     final route = trip['route'];
     final from = route['fromStation'];
     final to = route['toStation'];
-    final vehicle = trip['vehicle'];
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +75,7 @@ class Ticket extends StatelessWidget {
                             const Icon(Icons.access_time, color: AppColors.secondary),
                             const SizedBox(width: 6),
                             Text(
-                              'Durée : ${route['duration']} min',
+                              'Durée : ${formatDuration(route['duration'])}',
                               style: const TextStyle(color: AppColors.white),
                             ),
                           ],
@@ -111,8 +110,8 @@ class Ticket extends StatelessWidget {
                 const SizedBox(height: 32),
                 // QR code en grand
                 Container(
-                  width: size.width - 40, // padding horizontal
-                  height: size.width - 40,
+                  width: size.width - 64, // padding horizontal
+                  height: size.width - 64,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(color: AppColors.secondary),
@@ -134,45 +133,6 @@ class Ticket extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                // CTA sous forme de questions cliquables
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: Text(
-                          'Vous souhaitez changer la date de votre billet ?',
-                          style: const TextStyle(
-                            color: AppColors.secondary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: Text(
-                          'Vous souhaitez changer de billet ?',
-                          style: const TextStyle(
-                            color: AppColors.secondary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
                 const SizedBox(height: 24),
                 GestureDetector(
@@ -199,5 +159,22 @@ class Ticket extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Conversion de la durée
+  String formatDuration(dynamic duration) {
+    int d = 0;
+    if (duration is int) {
+      d = duration;
+    } else if (duration is String) {
+      d = int.tryParse(duration) ?? 0;
+    }
+    if (d >= 60) {
+      int h = d ~/ 60;
+      int m = d % 60;
+      return m == 0 ? '${h}h' : '${h}h${m.toString().padLeft(2, '0')}';
+    } else {
+      return '${d} min';
+    }
   }
 }
