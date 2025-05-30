@@ -6,6 +6,7 @@ import 'components/travel_card.dart';
 import '../detailled_search/detailled_search.dart';
 import '../../mocks/mock_data.dart';
 import '../../services/firebaseAuthentificationService.dart';
+import '../../services/firebaseDatabaseService.dart';
 
 class Voyage extends StatefulWidget {
   final String name;
@@ -16,10 +17,10 @@ class Voyage extends StatefulWidget {
 }
 
 class _VoyageState extends State<Voyage> {
-  final TextEditingController _searchController = TextEditingController();
+   final TextEditingController _searchController = TextEditingController();
   String _search = '';
-
-  // TODO : Ajouter la récupération des voyages disponibles depuis firebase RDB
+  List<Map<String, dynamic>> tickets = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -29,12 +30,23 @@ class _VoyageState extends State<Voyage> {
         _search = _searchController.text.toLowerCase();
       });
     });
+    fetchTickets();
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  Future<void> fetchTickets() async {
+    try {
+      final fetchedTickets = await FirebaseDatabaseService()
+          .fetchAvailableTickets();
+      setState(() {
+        tickets = fetchedTickets;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching tickets: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override

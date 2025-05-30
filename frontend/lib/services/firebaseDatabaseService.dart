@@ -195,10 +195,42 @@ class FirebaseDatabaseService {
               },
             },
           },
-        }
+        },
       },
     };
 
     await FirebaseDatabase.instance.ref("fixtures").set(firebaseDbFixtures);
+  }
+
+  Map<String, dynamic> castMap(Map original) {
+    return original.map((key, value) {
+      if (value is Map) {
+        return MapEntry(key.toString(), castMap(value));
+      } else if (value is List) {
+        return MapEntry(
+          key.toString(),
+          value.map((e) => e is Map ? castMap(e) : e).toList(),
+        );
+      } else {
+        return MapEntry(key.toString(), value);
+      }
+    });
+  }
+
+  Future<List<Map<String, dynamic>>> fetchAvailableTickets() async {
+    final ref = FirebaseDatabase.instance.ref("fixtures/available_tickets");
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      final value = snapshot.value;
+      if (value is Map) {
+        return value.values.map((e) => castMap(e as Map)).toList();
+      } else if (value is List) {
+        return value
+            .where((e) => e != null)
+            .map((e) => castMap(e as Map))
+            .toList();
+      }
+    }
+    return [];
   }
 }
