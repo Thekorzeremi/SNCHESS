@@ -6,7 +6,7 @@ import './components/travel_details.dart';
 import './components/travel_co2_info.dart';
 import './components/travel_alert_info.dart';
 import './components/travel_buy_button.dart';
-import '../../services/getArrivalHourService.dart';
+import '../../services/formatDateService.dart';
 
 class Travel extends StatelessWidget {
   final Map<String, dynamic> travelData;

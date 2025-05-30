@@ -169,12 +169,22 @@ class _DetailledSearchState extends State<DetailledSearch> {
                               ),
                             ),
                             onTap: () async {
-                              DateTime? picked = await showDatePicker(
+                              final picked = await showDatePicker(
                                 context: context,
                                 initialDate: dateDepart ?? DateTime.now(),
                                 firstDate: DateTime.now(),
-                                lastDate: DateTime.now().add(
-                                  Duration(days: 365),
+                                lastDate: DateTime.now().add(Duration(days: 365)),
+                                builder: (context, child) => Theme(
+                                  data: ThemeData.dark().copyWith(
+                                    colorScheme: const ColorScheme.dark(
+                                      primary: AppColors.secondary,
+                                      onPrimary: AppColors.white,
+                                      surface: AppColors.card,
+                                      onSurface: AppColors.white,
+                                    ),
+                                    dialogBackgroundColor: AppColors.card,
+                                  ),
+                                  child: child!,
                                 ),
                               );
                               if (picked != null) {
