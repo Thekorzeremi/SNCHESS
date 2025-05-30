@@ -15,7 +15,8 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final FirebaseAuthentificationService _authService = FirebaseAuthentificationService();
+  final FirebaseAuthentificationService _authService =
+      FirebaseAuthentificationService();
   bool isLoading = false;
 
   void login() async {
@@ -24,7 +25,13 @@ class _LoginPageState extends State<LoginPage> {
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Merci de remplir tous les champs !", style: TextStyle(color: Colors.black)),backgroundColor: AppColors.secondary),
+        SnackBar(
+          content: Text(
+            "Merci de remplir tous les champs !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
       );
       return;
     }
@@ -33,17 +40,26 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
 
-    bool isConnected = await _authService.connectWithEmailAndPassword(email, password);
+    bool isConnected = await _authService.connectWithEmailAndPassword(
+      email,
+      password,
+    );
 
     setState(() {
       isLoading = false;
     });
 
     if (isConnected) {
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil((route) => route.isFirst);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Email ou mot de passe incorrect", style: TextStyle(color: Colors.black)),backgroundColor: AppColors.secondary,)
+        SnackBar(
+          content: Text(
+            "Email ou mot de passe incorrect",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
       );
     }
   }
@@ -93,7 +109,10 @@ class _LoginPageState extends State<LoginPage> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text("Merci de rentrer votre email !", style: TextStyle(color: Colors.black),),
+                      content: Text(
+                        "Merci de rentrer votre email !",
+                        style: TextStyle(color: Colors.black),
+                      ),
                       backgroundColor: AppColors.secondary,
                     ),
                   );
@@ -132,7 +151,11 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundColor: AppColors.primary,
                 leading: IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 32),
+                  icon: Icon(
+                    Icons.keyboard_arrow_left,
+                    color: Colors.white,
+                    size: 32,
+                  ),
                 ),
                 title: Text(
                   "Connexion",
@@ -147,7 +170,11 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Ionicons.happy_outline, size: 48, color: Colors.white),
+                        Icon(
+                          Ionicons.happy_outline,
+                          size: 48,
+                          color: Colors.white,
+                        ),
                         SizedBox(height: 16),
                         Text(
                           "Bon retour parmi nous !",
