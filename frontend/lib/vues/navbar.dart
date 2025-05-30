@@ -87,6 +87,7 @@ class _NavbarState extends State<Navbar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
+        automaticallyImplyLeading: false,
         title: isAuth
             ? Image.asset('assets/SNCHESS.png', width: 40, height: 40)
             : null,
