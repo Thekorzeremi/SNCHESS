@@ -3,14 +3,14 @@ import '../../../color.dart';
 
 class AdminEntityCard extends StatelessWidget {
   final List<Widget> infoWidgets;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   const AdminEntityCard({
     super.key,
     required this.infoWidgets,
-    required this.onEdit,
-    required this.onDelete,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
@@ -29,16 +29,18 @@ class AdminEntityCard extends StatelessWidget {
                 children: infoWidgets,
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.edit, color: AppColors.secondary, size: 20),
-              onPressed: onEdit,
-              tooltip: 'Editer',
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete, color: Colors.redAccent, size: 20),
-              onPressed: onDelete,
-              tooltip: 'Supprimer',
-            ),
+            if (onEdit != null)
+              IconButton(
+                icon: const Icon(Icons.edit, color: AppColors.secondary, size: 20),
+                onPressed: onEdit,
+                tooltip: 'Editer',
+              ),
+            if (onDelete != null)
+              IconButton(
+                icon: const Icon(Icons.delete, color: Colors.redAccent, size: 20),
+                onPressed: onDelete,
+                tooltip: 'Supprimer',
+              ),
           ],
         ),
       ),

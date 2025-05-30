@@ -241,17 +241,21 @@ class _AdminEditDialogState extends State<AdminEditDialog> {
                       : isDateField
                           ? GestureDetector(
                               onTap: () async {
+                                DateTime firstDate = DateTime.now();
                                 DateTime initialDate;
                                 try {
                                   initialDate = DateTime.parse(entry.value.text);
                                 } catch (_) {
-                                  initialDate = DateTime.now();
+                                  initialDate = firstDate;
+                                }
+                                if (initialDate.isBefore(firstDate)) {
+                                  initialDate = firstDate;
                                 }
                                 final picked = await showDatePicker(
                                   context: context,
                                   initialDate: initialDate,
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime.now().add(Duration(days: 365)),
+                                  firstDate: firstDate,
+                                  lastDate: firstDate.add(Duration(days: 365)),
                                   builder: (context, child) => Theme(
                                     data: ThemeData.dark().copyWith(
                                       colorScheme: const ColorScheme.dark(
@@ -266,13 +270,8 @@ class _AdminEditDialogState extends State<AdminEditDialog> {
                                   ),
                                 );
                                 if (picked != null) {
-                                  final moisNoms = [
-                                    '', 'janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'
-                                  ];
-                                  final formatted = '${picked.day.toString().padLeft(2, '0')} ${moisNoms[picked.month]} ${picked.year}';
                                   setState(() {
                                     entry.value.text = picked.toIso8601String().split('T').first;
-                                    entry.value.selection = TextSelection.collapsed(offset: entry.value.text.length);
                                   });
                                 }
                               },

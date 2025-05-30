@@ -62,9 +62,7 @@ class _AdminState extends State<Admin> {
 
   List<Widget> _buildUserCards() {
     return users.entries.map((entry) {
-
       final user = entry.value;
-      
       return AdminEntityCard(
         infoWidgets: [
           Row(
@@ -87,14 +85,8 @@ class _AdminState extends State<Admin> {
               ],
             ),
         ],
-        onEdit: () { _showEditDialog(context, 'users', user); },
-        onDelete: () {
-          _showDeleteDialog(context, 'users', user, () {
-            setState(() {
-              users.remove(entry.key);
-            });
-          });
-        },
+        onEdit: null,
+        onDelete: null,
       );
     }).toList();
   }
@@ -324,15 +316,16 @@ class _AdminState extends State<Admin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: AppColors.primary,
+                  if (selected != 'users')
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.secondary,
+                        foregroundColor: AppColors.primary,
+                      ),
+                      onPressed: handleAdd,
+                      icon: const Icon(Icons.add),
+                      label: Text('Ajouter'),
                     ),
-                    onPressed: handleAdd,
-                    icon: const Icon(Icons.add),
-                    label: Text('Ajouter'),
-                  ),
                 ],
               ),
             ),
