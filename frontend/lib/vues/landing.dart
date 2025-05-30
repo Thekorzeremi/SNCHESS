@@ -141,7 +141,7 @@ class LandingPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 50),
+          SizedBox(height: 80),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
@@ -150,7 +150,7 @@ class LandingPage extends StatelessWidget {
                 "Un seul identifiant",
                 style: TextStyle(
                   color: AppColors.white,
-                  fontSize: 28,
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -167,7 +167,7 @@ class LandingPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 60),
+          SizedBox(height: 80),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -177,7 +177,7 @@ class LandingPage extends StatelessWidget {
             },
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(AppColors.secondary),
-              fixedSize: WidgetStateProperty.all(Size(180, 40)),
+              fixedSize: WidgetStateProperty.all(Size(220, 50)),
             ),
             child: Text(
               "Créer un compte",
@@ -195,7 +195,7 @@ class LandingPage extends StatelessWidget {
             },
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(AppColors.primary),
-              fixedSize: WidgetStateProperty.all(Size(180, 40)),
+              fixedSize: WidgetStateProperty.all(Size(220, 50)),
               side: WidgetStateProperty.all(
                 BorderSide(color: AppColors.secondary, width: 2),
               ),
