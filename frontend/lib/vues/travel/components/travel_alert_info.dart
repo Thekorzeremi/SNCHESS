@@ -18,16 +18,10 @@ class TravelAlertInfo extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-              ),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
               child: Column(
                 children: [
-                  Icon(
-                    Icons.sms_failed,
-                    color: Colors.pinkAccent,
-                    size: 28,
-                  ),
+                  Icon(Icons.sms_failed, color: Colors.pinkAccent, size: 28),
                   Text(
                     '3117',
                     style: TextStyle(
@@ -54,22 +48,15 @@ class TravelAlertInfo extends StatelessWidget {
                   SizedBox(height: 2),
                   Text(
                     'Un risque pour votre sécurité ou celle des autres ?',
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 13,
-                    ),
+                    style: TextStyle(color: AppColors.white, fontSize: 13),
                   ),
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: AppColors.secondary,
-              size: 28,
-            ),
+            Icon(Icons.chevron_right, color: AppColors.secondary, size: 28),
           ],
         ),
       ),
     );
   }
-} 
+}

@@ -72,4 +72,4 @@ class StepCircle extends StatelessWidget {
       ],
     );
   }
-} 
+}

@@ -11,4 +11,4 @@ String getArrivalHour(String departure, String duration) {
   int arrH = dep.hour + addH + ((dep.minute + addM) ~/ 60);
   int arrM = (dep.minute + addM) % 60;
   return '${arrH.toString().padLeft(2, '0')}:${arrM.toString().padLeft(2, '0')}';
-} 
+}

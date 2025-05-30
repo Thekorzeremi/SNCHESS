@@ -28,7 +28,8 @@ class TravelCard extends StatelessWidget {
     int addM = int.parse(d[1]);
     int arrH = dep.hour + addH + ((dep.minute + addM) ~/ 60);
     int arrM = (dep.minute + addM) % 60;
-    String heureArrivee = '${arrH.toString().padLeft(2, '0')}:${arrM.toString().padLeft(2, '0')}';
+    String heureArrivee =
+        '${arrH.toString().padLeft(2, '0')}:${arrM.toString().padLeft(2, '0')}';
 
     return GestureDetector(
       onTap: onTap,
@@ -38,11 +39,7 @@ class TravelCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: Icon(
-                Icons.train,
-                color: AppColors.secondary,
-                size: 42,
-              ),
+              leading: Icon(Icons.train, color: AppColors.secondary, size: 42),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -50,18 +47,12 @@ class TravelCard extends StatelessWidget {
                     children: [
                       Text(
                         voyage['departureHour'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.white,
-                        ),
+                        style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                       SizedBox(width: 12),
                       Text(
                         gareDepart['name'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.white,
-                        ),
+                        style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                     ],
                   ),
@@ -69,18 +60,12 @@ class TravelCard extends StatelessWidget {
                     children: [
                       Text(
                         heureArrivee,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.white,
-                        ),
+                        style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                       SizedBox(width: 12),
                       Text(
                         gareArrivee['name'],
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: AppColors.white,
-                        ),
+                        style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                     ],
                   ),
@@ -100,26 +85,16 @@ class TravelCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 28),
               child: Row(
                 children: [
-                  Icon(
-                    Icons.schedule,
-                    size: 18,
-                    color: AppColors.secondary,
-                  ),
+                  Icon(Icons.schedule, size: 18, color: AppColors.secondary),
                   SizedBox(width: 8),
                   Text(
                     voyage['duration'],
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.white,
-                    ),
+                    style: TextStyle(fontSize: 14, color: AppColors.white),
                   ),
                   SizedBox(width: 16),
                   Text(
                     tram['type'],
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.white,
-                    ),
+                    style: TextStyle(fontSize: 14, color: AppColors.white),
                   ),
                 ],
               ),

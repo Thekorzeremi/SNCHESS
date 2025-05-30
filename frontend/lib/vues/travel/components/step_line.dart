@@ -5,11 +5,7 @@ class StepLine extends StatelessWidget {
   final double? height;
   final Color color;
 
-  const StepLine({
-    super.key,
-    this.height,
-    this.color = AppColors.secondary,
-  });
+  const StepLine({super.key, this.height, this.color = AppColors.secondary});
 
   @override
   Widget build(BuildContext context) {
@@ -22,4 +18,4 @@ class StepLine extends StatelessWidget {
       ),
     );
   }
-} 
+}

@@ -56,7 +56,8 @@ class DefaultFirebaseOptions {
     projectId: 'snchess-mstclass',
     authDomain: 'snchess-mstclass.firebaseapp.com',
     storageBucket: 'snchess-mstclass.firebasestorage.app',
-    databaseURL: 'https://snchess-mstclass-default-rtdb.europe-west1.firebasedatabase.app/'
+    databaseURL:
+        'https://snchess-mstclass-default-rtdb.europe-west1.firebasedatabase.app/',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -65,6 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '437932690274',
     projectId: 'snchess-mstclass',
     storageBucket: 'snchess-mstclass.firebasestorage.app',
-    databaseURL: 'https://snchess-mstclass-default-rtdb.europe-west1.firebasedatabase.app/'
+    databaseURL:
+        'https://snchess-mstclass-default-rtdb.europe-west1.firebasedatabase.app/',
   );
 }

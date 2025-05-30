@@ -33,7 +33,8 @@ class DatePriceCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('$weekDay $dayNum',
+            Text(
+              '$weekDay $dayNum',
               style: TextStyle(
                 color: isSelected ? AppColors.primary : AppColors.white,
                 fontWeight: FontWeight.bold,
@@ -42,16 +43,23 @@ class DatePriceCard extends StatelessWidget {
             ),
             SizedBox(height: 8),
             minPrice != null
-                ? Text('${minPrice!.toStringAsFixed(2).replaceAll('.00', '')} €',
+                ? Text(
+                    '${minPrice!.toStringAsFixed(2).replaceAll('.00', '')} €',
                     style: TextStyle(
                       color: isSelected ? AppColors.primary : AppColors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                    ))
-                : Text('-', style: TextStyle(color: isSelected ? AppColors.primary : AppColors.white)),
+                    ),
+                  )
+                : Text(
+                    '-',
+                    style: TextStyle(
+                      color: isSelected ? AppColors.primary : AppColors.white,
+                    ),
+                  ),
           ],
         ),
       ),
     );
   }
-} 
+}

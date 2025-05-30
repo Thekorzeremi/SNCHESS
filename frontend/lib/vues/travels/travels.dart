@@ -5,18 +5,22 @@ import './components/search_bar.dart' as travels_components;
 import 'components/travel_card.dart';
 import '../detailled_search/detailled_search.dart';
 import '../../mocks/mock_data.dart';
+import '../../services/firebaseAuthentificationService.dart';
+import '../../services/firebaseDatabaseService.dart';
 
-class Voyage extends StatefulWidget {
+class Travels extends StatefulWidget {
   final String name;
-  const Voyage({super.key, required this.name});
+  const Travels({super.key, required this.name});
 
   @override
-  State<Voyage> createState() => _VoyageState();
+  State<Travels> createState() => _TravelsState();
 }
 
-class _VoyageState extends State<Voyage> {
+class _TravelsState extends State<Travels> {
   final TextEditingController _searchController = TextEditingController();
   String _search = '';
+  List<Map<String, dynamic>> tickets = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -26,12 +30,23 @@ class _VoyageState extends State<Voyage> {
         _search = _searchController.text.toLowerCase();
       });
     });
+    fetchTickets();
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  Future<void> fetchTickets() async {
+    try {
+      final fetchedTickets = await FirebaseDatabaseService()
+          .fetchAvailableTickets();
+      setState(() {
+        tickets = fetchedTickets;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching tickets: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -54,7 +69,7 @@ class _VoyageState extends State<Voyage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Bonjour ${widget.name},',
+                'Bonjour ${FirebaseAuthentificationService().getCurrentUserInformation()?['displayName'] ?? widget.name},',
               style: TextStyle(fontSize: 14, color: AppColors.white),
             ),
             SizedBox(height: 10),
@@ -76,7 +91,9 @@ class _VoyageState extends State<Voyage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const DetailledSearch()),
+                  MaterialPageRoute(
+                    builder: (context) => const DetailledSearch(),
+                  ),
                 );
               },
               child: Row(
@@ -96,10 +113,18 @@ class _VoyageState extends State<Voyage> {
                 itemBuilder: (context, index) {
                   final v = filteredVoyages[index];
                   final tram = trams.firstWhere((t) => t['id'] == v['tramId']);
-                  final gareDepart = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-                  final gareArrivee = gares.firstWhere((g) => g['id'] == v['toGareId']);
-                  final gareDepartCoords = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-                  final gareArriveeCoords = gares.firstWhere((g) => g['id'] == v['toGareId']);
+                  final gareDepart = gares.firstWhere(
+                    (g) => g['id'] == v['fromGareId'],
+                  );
+                  final gareArrivee = gares.firstWhere(
+                    (g) => g['id'] == v['toGareId'],
+                  );
+                  final gareDepartCoords = gares.firstWhere(
+                    (g) => g['id'] == v['fromGareId'],
+                  );
+                  final gareArriveeCoords = gares.firstWhere(
+                    (g) => g['id'] == v['toGareId'],
+                  );
 
                   return TravelCard(
                     voyage: v,
@@ -130,4 +155,11 @@ class _VoyageState extends State<Voyage> {
       ),
     );
   }
+}
+
+String safeGetHour(dynamic datetime) {
+  if (datetime == null || datetime == "" || !(datetime is String) || !datetime.contains(':')) {
+    return "00";
+  }
+  return datetime.split(':')[0];
 }

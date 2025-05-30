@@ -13,7 +13,7 @@ class FirebaseAuthentificationService {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await userCredential.user?.updateDisplayName('$firstName $lastName');
-      await userCredential.user?.sendEmailVerification();
+      await userCredential.user?.verifyBeforeUpdateEmail(userCredential.user!.email!);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -25,15 +25,37 @@ class FirebaseAuthentificationService {
     }
   }
 
-  Future<bool> connectWithEmailAndPassword(String email, String password) async {
+  Future<bool> connectWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       print('User connected successfully');
       return true;
     } on FirebaseAuthException catch (e) {
       print(e.message);
       return false;
+    }
+  }
+
+  Map<String, String?>? getCurrentUserInformation() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      print('User ID: ${user.uid}');
+      print('User Email: ${user.email}');
+      print('User Name: ${user.displayName}');
+      return {
+        'uid': user.uid,
+        'email': user.email,
+        'displayName': user.displayName,
+      };
+    } else {
+      print('No user is currently signed in.');
+      return null;
     }
   }
 

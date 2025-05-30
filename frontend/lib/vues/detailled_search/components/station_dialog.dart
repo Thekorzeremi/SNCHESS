@@ -5,7 +5,12 @@ class StationDialog extends StatelessWidget {
   final List<String> gares;
   final void Function(String) onSelected;
   final String title;
-  const StationDialog({super.key, required this.gares, required this.onSelected, required this.title});
+  const StationDialog({
+    super.key,
+    required this.gares,
+    required this.onSelected,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,4 +35,4 @@ class StationDialog extends StatelessWidget {
       ),
     );
   }
-} 
+}

@@ -20,4 +20,4 @@ class InitialSearchButton extends StatelessWidget {
       ),
     );
   }
-} 
+}

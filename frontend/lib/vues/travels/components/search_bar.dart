@@ -26,7 +26,10 @@ class SearchBar extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Où voulez-vous partir ?',
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 16,
+                ),
               ),
               style: TextStyle(fontSize: 20, color: Colors.grey[600]),
             ),
@@ -46,4 +49,4 @@ class SearchBar extends StatelessWidget {
       ),
     );
   }
-} 
+}
