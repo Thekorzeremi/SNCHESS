@@ -23,7 +23,7 @@ class _NavbarState extends State<Navbar> {
   void initState() {
     super.initState();
     final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
-    final isAdmin = userInfo != null && userInfo['email'] == 'fiinnnhh@gmail.com';
+    final isAdmin = userInfo != null && userInfo['email'] == 'admin@snchess.com';
     _widgetOptions = <Widget>[
       Travels(name: 'John Doe'),
       Tickets(),
@@ -36,7 +36,7 @@ class _NavbarState extends State<Navbar> {
   Widget build(BuildContext context) {
     final isAuthenticated = FirebaseAuth.instance.currentUser != null;
     final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
-    final isAdmin = userInfo != null && userInfo['email'] == 'fiinnnhh@gmail.com';
+    final isAdmin = userInfo != null && userInfo['email'] == 'admin@snchess.com';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
