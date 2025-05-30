@@ -24,7 +24,7 @@ class SearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               decoration: InputDecoration(
-                hintText: 'Où voulez-vous partir ?',
+                hintText: 'Où allez-vous partir ?',
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 20,

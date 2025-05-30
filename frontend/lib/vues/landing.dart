@@ -156,7 +156,7 @@ class LandingPage extends StatelessWidget {
                 SizedBox(height: 80),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Padding(
+                  child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       "Un seul identifiant",
@@ -171,7 +171,7 @@ class LandingPage extends StatelessWidget {
                 SizedBox(height: 15),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Padding(
+                  child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       "Avec votre compte SNCHESS, retrouvez tous vos voyages, abonnements et plus encore dans votre poche... Profitez de tous ces avantages en continuant !",

@@ -118,7 +118,7 @@ class FirebaseDatabaseService {
       },
       "users": {
         "1": {
-          "email": "remi@remi.remi",
+          "email": "test@snchess.com",
           "ticket": {
             "1": {
               "seatNb": "12",
@@ -194,6 +194,43 @@ class FirebaseDatabaseService {
                 },
               },
             },
+            "3": {
+              "seatNb": "36",
+              "wagonNb": "6",
+              "qr_code": "HDUZADKNKN32",
+              "trip": {
+                "name": "TGV de Feur à Quoi",
+                "price": "88",
+                "route": {
+                  "name": "Marseille à Paris",
+                  "duration": "199",
+                  "fromStation": {
+                    "datetime": "29/06/2025 15:29",
+                    "city": "Marseille",
+                    "country": "FR",
+                    "coordinate": {
+                      "latitude": "43.2961743",
+                      "longitude": "5.3699525",
+                    },
+                  },
+                  "toStation": {
+                    "datetime": "29/06/2025 18:48",
+                    "city": "Paris",
+                    "country": "FR",
+                    "coordinate": {
+                      "latitude": "48.8534951",
+                      "longitude": "2.3483915",
+                    },
+                  },
+                },
+                "vehicle": {
+                  "name": "TGV 6495",
+                  "type": "train",
+                  "status": "service",
+                  "nbOfWagon": "8",
+                },
+              },
+            },
           },
         },
       },
@@ -208,9 +245,7 @@ class FirebaseDatabaseService {
         return MapEntry(key.toString(), castMap(value));
       } else if (value is List) {
         return MapEntry(
-          key.toString(),
-          value.map((e) => e is Map ? castMap(e) : e).toList(),
-        );
+          key.toString(), value.map((e) => e is Map ? castMap(e) : e).toList());
       } else {
         return MapEntry(key.toString(), value);
       }
@@ -221,14 +256,36 @@ class FirebaseDatabaseService {
     final ref = FirebaseDatabase.instance.ref("fixtures/available_tickets");
     final snapshot = await ref.get();
     if (snapshot.exists) {
-      final value = snapshot.value;
-      if (value is Map) {
-        return value.values.map((e) => castMap(e as Map)).toList();
-      } else if (value is List) {
-        return value
-            .where((e) => e != null)
-            .map((e) => castMap(e as Map))
-            .toList();
+      final tickets = snapshot.value;
+      if (tickets is List) {
+        for (final ticket in tickets) {
+          if (ticket == null) continue;
+          final ticketMap = castMap(ticket as Map);
+          print(ticketMap);
+        }
+      } 
+    }
+    return [];
+  }
+
+  Future<List<Map<String, dynamic>>> fetchUserTickets(String email) async {
+    final ref = FirebaseDatabase.instance.ref("fixtures/users");
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      final users = snapshot.value;
+      if (users is List) {
+        for (final user in users) {
+          if (user == null) continue;
+          final userMap = castMap(user as Map);
+          if ((userMap['email']?.toLowerCase()?.trim() ?? '') == email.toLowerCase().trim()) {
+            final tickets = userMap['ticket'];
+            if (tickets is List) {
+              return tickets.where((t) => t != null).map((e) => castMap(e as Map)).toList();
+            } else if (tickets is Map) {
+              return tickets.values.map((e) => castMap(e as Map)).toList();
+            }
+          }
+        }
       }
     }
     return [];

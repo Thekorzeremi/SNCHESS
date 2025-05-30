@@ -5,6 +5,8 @@ import '../color.dart';
 import 'tickets/tickets.dart';
 import 'profil/profil.dart';
 import 'travels/travels.dart';
+import 'admin/admin.dart';
+import '../services/firebaseAuthentificationService.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -16,12 +18,8 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedIndex = 0;
   bool? isAuthenticated;
-
-  final List<Widget> _widgetOptions = [
-    Travels(name: 'John Doe'),
-    Tickets(),
-    Profil(),
-  ];
+  bool isAdmin = false;
+  List<Widget> _widgetOptions = [];
 
   @override
   void initState() {
@@ -32,8 +30,39 @@ class _NavbarState extends State<Navbar> {
         setState(() {
           isAuthenticated = user != null;
         });
+
+        if (user != null) {
+          final userInfo = FirebaseAuthentificationService()
+              .getCurrentUserInformation();
+          final email = userInfo?['email'] ?? '';
+          setState(() {
+            isAdmin = email == 'admin@snchess.com';
+            _buildWidgetOptions();
+          });
+        }
       }
     });
+
+    final user = FirebaseAuth.instance.currentUser;
+    isAuthenticated = user != null;
+
+    if (user != null) {
+      final userInfo = FirebaseAuthentificationService()
+          .getCurrentUserInformation();
+      final email = userInfo?['email'] ?? '';
+      isAdmin = email == 'admin@snchess.com';
+    }
+
+    _buildWidgetOptions();
+  }
+
+  void _buildWidgetOptions() {
+    _widgetOptions = [
+      Travels(name: 'John Doe'),
+      Tickets(),
+      Profil(),
+      if (isAdmin) Admin(),
+    ];
   }
 
   void _onItemTapped(int index) {
@@ -64,22 +93,27 @@ class _NavbarState extends State<Navbar> {
       ),
       body: isAuth ? _widgetOptions[_selectedIndex] : const LandingPage(),
       bottomNavigationBar: isAuth
-          ? BottomNavigationBar(
-              backgroundColor: AppColors.primary,
-              items: <BottomNavigationBarItem>[
-                _buildNavItem(0, Icons.card_travel, 'Voyage'),
-                _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
-                _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: AppColors.secondary,
-              unselectedItemColor: AppColors.white,
-              selectedFontSize: 12,
-              unselectedFontSize: 12,
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              onTap: _onItemTapped,
+          ? SizedBox(
+              height: 80,
+              child: BottomNavigationBar(
+                backgroundColor: AppColors.primary,
+                items: [
+                  _buildNavItem(0, Icons.card_travel, 'Voyage'),
+                  _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
+                  _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
+                  if (isAdmin)
+                    _buildNavItem(3, Icons.admin_panel_settings, 'Admin'),
+                ],
+                currentIndex: _selectedIndex,
+                selectedItemColor: AppColors.secondary,
+                unselectedItemColor: AppColors.white,
+                selectedFontSize: 12,
+                unselectedFontSize: 12,
+                type: BottomNavigationBarType.fixed,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                onTap: _onItemTapped,
+              ),
             )
           : null,
     );
@@ -90,8 +124,7 @@ class _NavbarState extends State<Navbar> {
     IconData icon,
     String label,
   ) {
-    bool isSelected = _selectedIndex == index;
-
+    final isSelected = _selectedIndex == index;
     return BottomNavigationBarItem(
       icon: Column(
         mainAxisSize: MainAxisSize.min,
@@ -111,7 +144,7 @@ class _NavbarState extends State<Navbar> {
           ),
           if (isSelected)
             Container(
-              margin: EdgeInsets.only(top: 4),
+              margin: const EdgeInsets.only(top: 4),
               height: 2,
               width: 40,
               color: AppColors.secondary,
