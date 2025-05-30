@@ -22,13 +22,12 @@ class _TicketsState extends State<Tickets> {
     final tickets = user['ticket'] as Map<String, dynamic>;
     final ticketList = tickets.values.toList().cast<Map<String, dynamic>>();
 
-    // Filtrage selon le bouton sélectionné
     final now = DateTime.now();
     List<Map<String, dynamic>> filteredTickets = ticketList.where((ticket) {
       final trip = ticket['trip'];
       final route = trip['route'];
       final from = route['fromStation'];
-      final dateStr = from['datetime']; // ex: "30/05/2024 08:00"
+      final dateStr = from['datetime'];
       final date = DateFormat('dd/MM/yyyy HH:mm').parse(dateStr);
       return showUpcoming ? date.isAfter(now) : date.isBefore(now);
     }).toList();
@@ -50,7 +49,6 @@ class _TicketsState extends State<Tickets> {
               ),
             ),
             const SizedBox(height: 16),
-            // Onglets personnalisés
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -153,7 +151,7 @@ class _TicketsState extends State<Tickets> {
                           child: Card(
                             color: AppColors.card,
                             margin: const EdgeInsets.symmetric(vertical: 8),
-                            child: Padding(
+                            child: Container(
                               padding: const EdgeInsets.all(16.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
