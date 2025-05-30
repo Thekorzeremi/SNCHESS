@@ -5,41 +5,116 @@ class FirebaseDatabaseService {
     final firebaseDbFixtures = {
       "0": {
         "email": "",
-        "ticket": {},
-        "1": {
-          "seatNb": "12",
-          "wagonNb": "3",
-          "qr_code": "BUB3E2OBE32OE",
-          "trip": {
-            "name": "TGV de Paris à Marseille",
-            "price": "88",
-            "route": {
-              "name": "Paris à Marseille",
-              "duration": "199",
-              "fromStation": {
-                "datetime": "28/05/2025 15:29",
-                "city": "Paris",
-                "country": "FR",
-                "coordinate": {
-                  "latitude": "48.8534951",
-                  "longitude": "2.3483915",
+        "ticket": {
+          "1": {
+            "seatNb": "",
+            "wagonNb": "",
+            "qr_code": "",
+            "trip": {
+              "name": "TGV de Paris à Marseille",
+              "price": "88",
+              "route": {
+                "name": "Paris à Marseille",
+                "duration": "199",
+                "fromStation": {
+                  "datetime": "28/05/2025 15:29",
+                  "city": "Paris",
+                  "country": "FR",
+                  "coordinate": {
+                    "latitude": "48.8534951",
+                    "longitude": "2.3483915",
+                  },
+                },
+                "toStation": {
+                  "datetime": "28/05/2025 18:48",
+                  "city": "Marseille",
+                  "country": "FR",
+                  "coordinate": {
+                    "latitude": "43.2961743",
+                    "longitude": "5.3699525",
+                  },
                 },
               },
-              "toStation": {
-                "datetime": "28/05/2025 18:48",
-                "city": "Marseille",
-                "country": "FR",
-                "coordinate": {
-                  "latitude": "43.2961743",
-                  "longitude": "5.3699525",
-                },
+              "vehicle": {
+                "name": "TGV 3501",
+                "type": "train",
+                "status": "service",
+                "nbOfWagon": "8",
               },
             },
-            "vehicle": {
-              "name": "TGV 3501",
-              "type": "train",
-              "status": "service",
-              "nbOfWagon": "8",
+          },
+          "2": {
+            "seatNb": "",
+            "wagonNb": "",
+            "qr_code": "",
+            "trip": {
+              "name": "TGV de Paris à Marseille",
+              "price": "88",
+              "route": {
+                "name": "Paris à Marseille",
+                "duration": "199",
+                "fromStation": {
+                  "datetime": "28/05/2025 15:29",
+                  "city": "Paris",
+                  "country": "FR",
+                  "coordinate": {
+                    "latitude": "48.8534951",
+                    "longitude": "2.3483915",
+                  },
+                },
+                "toStation": {
+                  "datetime": "28/05/2025 18:48",
+                  "city": "Marseille",
+                  "country": "FR",
+                  "coordinate": {
+                    "latitude": "43.2961743",
+                    "longitude": "5.3699525",
+                  },
+                },
+              },
+              "vehicle": {
+                "name": "TGV 3501",
+                "type": "train",
+                "status": "service",
+                "nbOfWagon": "8",
+              },
+            },
+          },
+          "3": {
+            "seatNb": "",
+            "wagonNb": "",
+            "qr_code": "",
+            "trip": {
+              "name": "TGV de Paris à Marseille",
+              "price": "88",
+              "route": {
+                "name": "Paris à Marseille",
+                "duration": "199",
+                "fromStation": {
+                  "datetime": "28/05/2025 15:29",
+                  "city": "Paris",
+                  "country": "FR",
+                  "coordinate": {
+                    "latitude": "48.8534951",
+                    "longitude": "2.3483915",
+                  },
+                },
+                "toStation": {
+                  "datetime": "28/05/2025 18:48",
+                  "city": "Marseille",
+                  "country": "FR",
+                  "coordinate": {
+                    "latitude": "43.2961743",
+                    "longitude": "5.3699525",
+                  },
+                },
+              },
+              "vehicle": {
+                "name": "TGV 3501",
+                "type": "train",
+                "status": "service",
+                "nbOfWagon": "8",
+              },
             },
           },
         },
