@@ -32,7 +32,10 @@ class _FilteredTravelsState extends State<FilteredTravels> {
   void initState() {
     super.initState();
     selectedDate = widget.dateDepart;
-    visibleDays = List.generate(10, (i) => widget.dateDepart.add(Duration(days: i)));
+    visibleDays = List.generate(
+      10,
+      (i) => widget.dateDepart.add(Duration(days: i)),
+    );
   }
 
   @override
@@ -43,38 +46,51 @@ class _FilteredTravelsState extends State<FilteredTravels> {
 
   @override
   Widget build(BuildContext context) {
-    final gareDepartId = gares.firstWhere((g) => g['name'].toLowerCase() == widget.gareDepart.toLowerCase(), orElse: () => <String, dynamic>{})['id'];
-    final gareArriveeId = gares.firstWhere((g) => g['name'].toLowerCase() == widget.gareArrivee.toLowerCase(), orElse: () => <String, dynamic>{})['id'];
+    final gareDepartId = gares.firstWhere(
+      (g) => g['name'].toLowerCase() == widget.gareDepart.toLowerCase(),
+      orElse: () => <String, dynamic>{},
+    )['id'];
+    final gareArriveeId = gares.firstWhere(
+      (g) => g['name'].toLowerCase() == widget.gareArrivee.toLowerCase(),
+      orElse: () => <String, dynamic>{},
+    )['id'];
 
     final List<DateTime> days = visibleDays;
 
     List<Map<String, dynamic>> daysWithPrice = days.map((date) {
       final dateStr = DateFormat('yyyy-MM-dd').format(date);
-      final voyagesOfDay = voyages.where((v) => v['fromGareId'] == gareDepartId && v['toGareId'] == gareArriveeId && v['departureDate'] == dateStr).toList();
+      final voyagesOfDay = voyages
+          .where(
+            (v) =>
+                v['fromGareId'] == gareDepartId &&
+                v['toGareId'] == gareArriveeId &&
+                v['departureDate'] == dateStr,
+          )
+          .toList();
       double? minPrice;
       if (voyagesOfDay.isNotEmpty) {
-        minPrice = voyagesOfDay.map((v) => v['price'] as num).reduce((a, b) => a < b ? a : b).toDouble();
+        minPrice = voyagesOfDay
+            .map((v) => v['price'] as num)
+            .reduce((a, b) => a < b ? a : b)
+            .toDouble();
       }
-      return {
-        'date': date,
-        'minPrice': minPrice,
-      };
+      return {'date': date, 'minPrice': minPrice};
     }).toList();
 
     final selectedDateStr = DateFormat('yyyy-MM-dd').format(selectedDate);
-    final filteredVoyages = voyages.where((v) {
-      return v['fromGareId'] == gareDepartId &&
-             v['toGareId'] == gareArriveeId &&
-             v['departureDate'] == selectedDateStr;
-    }).toList()
-      ..sort((a, b) {
-        final aHour = int.parse(a['departureHour'].split(':')[0]);
-        final aMin = int.parse(a['departureHour'].split(':')[1]);
-        final bHour = int.parse(b['departureHour'].split(':')[0]);
-        final bMin = int.parse(b['departureHour'].split(':')[1]);
-        if (aHour != bHour) return aHour.compareTo(bHour);
-        return aMin.compareTo(bMin);
-      });
+    final filteredVoyages =
+        voyages.where((v) {
+          return v['fromGareId'] == gareDepartId &&
+              v['toGareId'] == gareArriveeId &&
+              v['departureDate'] == selectedDateStr;
+        }).toList()..sort((a, b) {
+          final aHour = int.parse(a['departureHour'].split(':')[0]);
+          final aMin = int.parse(a['departureHour'].split(':')[1]);
+          final bHour = int.parse(b['departureHour'].split(':')[0]);
+          final bMin = int.parse(b['departureHour'].split(':')[1]);
+          if (aHour != bHour) return aHour.compareTo(bHour);
+          return aMin.compareTo(bMin);
+        });
 
     final dateStr = DateFormat('yyyy-MM-dd').format(selectedDate);
 
@@ -87,10 +103,18 @@ class _FilteredTravelsState extends State<FilteredTravels> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('De ${widget.gareDepart} à ${widget.gareArrivee}', 
-              style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18)),
-            Text('Le $dateStr', 
-              style: TextStyle(color: AppColors.white, fontSize: 12)),
+            Text(
+              'De ${widget.gareDepart} à ${widget.gareArrivee}',
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              'Le $dateStr',
+              style: TextStyle(color: AppColors.white, fontSize: 12),
+            ),
           ],
         ),
         iconTheme: IconThemeData(color: AppColors.white),
@@ -111,7 +135,10 @@ class _FilteredTravelsState extends State<FilteredTravels> {
                 itemBuilder: (context, i) {
                   final d = daysWithPrice[i]['date'] as DateTime;
                   final minPrice = daysWithPrice[i]['minPrice'];
-                  final isSelected = d.year == selectedDate.year && d.month == selectedDate.month && d.day == selectedDate.day;
+                  final isSelected =
+                      d.year == selectedDate.year &&
+                      d.month == selectedDate.month &&
+                      d.day == selectedDate.day;
                   final weekDay = DateFormat('E', 'fr_FR').format(d);
                   final dayNum = d.day;
                   return DatePriceCard(
@@ -129,7 +156,10 @@ class _FilteredTravelsState extends State<FilteredTravels> {
                       );
                       setState(() {
                         selectedDate = d;
-                        visibleDays = List.generate(10, (j) => d.add(Duration(days: j)));
+                        visibleDays = List.generate(
+                          10,
+                          (j) => d.add(Duration(days: j)),
+                        );
                       });
                       await Future.delayed(Duration(milliseconds: 50));
                       _scrollController.jumpTo(0);
@@ -143,30 +173,53 @@ class _FilteredTravelsState extends State<FilteredTravels> {
               onTap: () async {
                 setState(() {
                   selectedDate = initialDate;
-                  visibleDays = List.generate(10, (j) => initialDate.add(Duration(days: j)));
+                  visibleDays = List.generate(
+                    10,
+                    (j) => initialDate.add(Duration(days: j)),
+                  );
                 });
                 await Future.delayed(Duration(milliseconds: 50));
                 _scrollController.jumpTo(0);
               },
             ),
             SizedBox(height: 20),
-            Text('Voyages disponibles', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+            Text(
+              'Voyages disponibles',
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
             SizedBox(height: 20),
             Expanded(
               child: filteredVoyages.isEmpty
                   ? Center(
-                      child: Text('Aucun voyage trouvé pour le moment', style: TextStyle(color: Colors.white, fontSize: 18)),
+                      child: Text(
+                        'Aucun voyage trouvé pour le moment',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     )
                   : ListView.builder(
                       itemCount: filteredVoyages.length,
                       itemBuilder: (context, index) {
                         final v = filteredVoyages[index];
-                        final tram = trams.firstWhere((t) => t['id'] == v['tramId']);
-                        final gareDep = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-                        final gareArr = gares.firstWhere((g) => g['id'] == v['toGareId']);
-                        final gareDepCoords = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-                        final gareArrCoords = gares.firstWhere((g) => g['id'] == v['toGareId']);
-                        
+                        final tram = trams.firstWhere(
+                          (t) => t['id'] == v['tramId'],
+                        );
+                        final gareDep = gares.firstWhere(
+                          (g) => g['id'] == v['fromGareId'],
+                        );
+                        final gareArr = gares.firstWhere(
+                          (g) => g['id'] == v['toGareId'],
+                        );
+                        final gareDepCoords = gares.firstWhere(
+                          (g) => g['id'] == v['fromGareId'],
+                        );
+                        final gareArrCoords = gares.firstWhere(
+                          (g) => g['id'] == v['toGareId'],
+                        );
+
                         return TravelCard(
                           voyage: v,
                           gareDepart: gareDep,

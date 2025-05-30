@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/vues/landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../color.dart';
-import 'trajet/trajet.dart';
+import 'tickets/tickets.dart';
 import 'profil/profil.dart';
 import 'travels/travels.dart';
 
@@ -21,8 +21,8 @@ class _NavbarState extends State<Navbar> {
   void initState() {
     super.initState();
     _widgetOptions = <Widget>[
-      Voyage(name: 'John Doe'),
-      Trajet(),
+      Travels(name: 'John Doe'),
+      Tickets(),
       Profil(),
       LandingPage(),
     ];
@@ -60,7 +60,7 @@ class _NavbarState extends State<Navbar> {
                       backgroundColor: AppColors.primary,
                       items: <BottomNavigationBarItem>[
                         _buildNavItem(0, Icons.card_travel, 'Voyage'),
-                        _buildNavItem(1, Icons.qr_code_2, 'Trajet'),
+                        _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
                         _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
                       ],
                       currentIndex: _selectedIndex,

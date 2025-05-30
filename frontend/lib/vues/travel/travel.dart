@@ -6,7 +6,7 @@ import './components/travel_details.dart';
 import './components/travel_co2_info.dart';
 import './components/travel_alert_info.dart';
 import './components/travel_buy_button.dart';
-import '../../services/get_arrival_hour_service.dart';
+import '../../services/getArrivalHourService.dart';
 
 class Travel extends StatelessWidget {
   final Map<String, dynamic> travelData;
@@ -26,11 +26,22 @@ class Travel extends StatelessWidget {
     required this.gareArriveeCoords,
   });
 
+  // TODO : Ajouter la récupération des données de voyage depuis Firebase RDB
+
   @override
   Widget build(BuildContext context) {
-    final LatLng depart = LatLng(gareDepartCoords['latitude'], gareDepartCoords['longitude']);
-    final LatLng arrivee = LatLng(gareArriveeCoords['latitude'], gareArriveeCoords['longitude']);
-    final String arrivalHour = getArrivalHour(travelData['departureHour'], travelData['duration']);
+    final LatLng depart = LatLng(
+      gareDepartCoords['latitude'],
+      gareDepartCoords['longitude'],
+    );
+    final LatLng arrivee = LatLng(
+      gareArriveeCoords['latitude'],
+      gareArriveeCoords['longitude'],
+    );
+    final String arrivalHour = getArrivalHour(
+      travelData['departureHour'],
+      travelData['duration'],
+    );
 
     return Scaffold(
       backgroundColor: AppColors.primary,
