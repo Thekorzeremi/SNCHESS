@@ -256,15 +256,14 @@ class FirebaseDatabaseService {
     final ref = FirebaseDatabase.instance.ref("fixtures/available_tickets");
     final snapshot = await ref.get();
     if (snapshot.exists) {
-      final value = snapshot.value;
-      if (value is Map) {
-        return value.values.map((e) => castMap(e as Map)).toList();
-      } else if (value is List) {
-        return value
-            .where((e) => e != null)
-            .map((e) => castMap(e as Map))
-            .toList();
-      }
+      final tickets = snapshot.value;
+      if (tickets is List) {
+        for (final ticket in tickets) {
+          if (ticket == null) continue;
+          final ticketMap = castMap(ticket as Map);
+          print(ticketMap);
+        }
+      } 
     }
     return [];
   }
@@ -276,19 +275,6 @@ class FirebaseDatabaseService {
       final users = snapshot.value;
       if (users is List) {
         for (final user in users) {
-          if (user == null) continue;
-          final userMap = castMap(user as Map);
-          if ((userMap['email']?.toLowerCase()?.trim() ?? '') == email.toLowerCase().trim()) {
-            final tickets = userMap['ticket'];
-            if (tickets is List) {
-              return tickets.where((t) => t != null).map((e) => castMap(e as Map)).toList();
-            } else if (tickets is Map) {
-              return tickets.values.map((e) => castMap(e as Map)).toList();
-            }
-          }
-        }
-      } else if (users is Map) {
-        for (final user in users.values) {
           if (user == null) continue;
           final userMap = castMap(user as Map);
           if ((userMap['email']?.toLowerCase()?.trim() ?? '') == email.toLowerCase().trim()) {
