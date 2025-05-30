@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/vues/travel/components/fake_google_pay_button.dart';
 import 'package:latlong2/latlong.dart';
 import '../../color.dart';
 import './components/travel_map.dart';
@@ -6,7 +7,7 @@ import './components/travel_details.dart';
 import './components/travel_co2_info.dart';
 import './components/travel_alert_info.dart';
 import './components/travel_buy_button.dart';
-import '../../services/getArrivalHourService.dart';
+import '../../services/formatDateService.dart';
 
 class Travel extends StatelessWidget {
   final Map<String, dynamic> travelData;
@@ -65,7 +66,34 @@ class Travel extends StatelessWidget {
           SizedBox(height: 14),
           TravelAlertInfo(),
           SizedBox(height: 10),
-          TravelBuyButton(onPressed: () {}),
+          TravelBuyButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                backgroundColor: Colors.white,
+                builder: (_) => Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Paiement du billet',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      FakeGooglePayButton(context: context),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

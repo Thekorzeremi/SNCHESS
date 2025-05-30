@@ -68,4 +68,61 @@ class FirebaseAuthentificationService {
       print(e);
     }
   }
+
+  Future<void> updateUserProfile({
+    String? newEmail,
+    String? newPassword,
+    String? firstName,
+    String? lastName,
+  }) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (newEmail != null && newEmail.isNotEmpty) {
+        await user?.verifyBeforeUpdateEmail(newEmail);
+      }
+
+      if (newPassword != null && newPassword.isNotEmpty) {
+        await user?.updatePassword(newPassword);
+      }
+
+      if (firstName != null &&
+          lastName != null &&
+          (firstName.isNotEmpty || lastName.isNotEmpty)) {
+        await user?.updateDisplayName('$firstName $lastName');
+      }
+
+      await user?.reload();
+      print('User profile updated');
+    } on FirebaseAuthException catch (e) {
+      print('Error updating profile: ${e.code} - ${e.message}');
+    } catch (e) {
+      print('Unexpected error: $e');
+    }
+  }
+
+  Future<void> reauthenticate(String email, String password) async {
+    final user = FirebaseAuth.instance.currentUser;
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+    await user?.reauthenticateWithCredential(credential);
+  }
+
+  Future<void> deleteCurrentUserWithReauth({
+    required String email,
+    required String password,
+  }) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final credential = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+      await user.reauthenticateWithCredential(credential);
+      await user.delete();
+    }
+  }
 }

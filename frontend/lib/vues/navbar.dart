@@ -5,6 +5,8 @@ import '../color.dart';
 import 'tickets/tickets.dart';
 import 'profil/profil.dart';
 import 'travels/travels.dart';
+import 'admin/admin.dart';
+import '../services/firebaseAuthentificationService.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -20,24 +22,21 @@ class _NavbarState extends State<Navbar> {
   @override
   void initState() {
     super.initState();
+    final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+    final isAdmin = userInfo != null && userInfo['email'] == 'fiinnnhh@gmail.com';
     _widgetOptions = <Widget>[
       Travels(name: 'John Doe'),
       Tickets(),
       Profil(),
-      LandingPage(),
+      if (isAdmin) Admin(),
     ];
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final isAuthenticated = FirebaseAuth.instance.currentUser != null;
-
+    final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+    final isAdmin = userInfo != null && userInfo['email'] == 'fiinnnhh@gmail.com';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
@@ -62,6 +61,7 @@ class _NavbarState extends State<Navbar> {
                         _buildNavItem(0, Icons.card_travel, 'Voyage'),
                         _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
                         _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
+                        if (isAdmin) _buildNavItem(3, Icons.admin_panel_settings, 'Admin'),
                       ],
                       currentIndex: _selectedIndex,
                       selectedItemColor: AppColors.secondary,
@@ -71,7 +71,11 @@ class _NavbarState extends State<Navbar> {
                       type: BottomNavigationBarType.fixed,
                       showSelectedLabels: false,
                       showUnselectedLabels: false,
-                      onTap: _onItemTapped,
+                      onTap: (index) {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      },
                     ),
                   ),
                 ],

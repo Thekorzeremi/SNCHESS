@@ -185,7 +185,7 @@ class _TicketsState extends State<Tickets> {
                               child: Card(
                                 color: AppColors.card,
                                 margin: const EdgeInsets.symmetric(vertical: 8),
-                                child: Padding(
+                                child: Container(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,

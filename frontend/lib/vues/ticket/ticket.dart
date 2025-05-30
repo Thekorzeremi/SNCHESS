@@ -27,7 +27,7 @@ class Ticket extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         child: SingleChildScrollView(
-          child: Padding(
+          child: Container(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,9 +114,8 @@ class Ticket extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 32),
-                // QR code en grand
                 Container(
-                  width: size.width - 64, // padding horizontal
+                  width: size.width - 64,
                   height: size.width - 64,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
@@ -162,7 +161,6 @@ class Ticket extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32),
-                // Ajoute ici d'autres infos ou images si besoin
               ],
             ),
           ),
@@ -171,7 +169,6 @@ class Ticket extends StatelessWidget {
     );
   }
 
-  // Conversion de la durée
   String formatDuration(dynamic duration) {
     int d = 0;
     if (duration is int) {
