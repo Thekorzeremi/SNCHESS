@@ -72,7 +72,10 @@ class Ticket extends StatelessWidget {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.access_time, color: AppColors.secondary),
+                            const Icon(
+                              Icons.access_time,
+                              color: AppColors.secondary,
+                            ),
                             const SizedBox(width: 6),
                             Text(
                               'Durée : ${formatDuration(route['duration'])}',
@@ -83,7 +86,10 @@ class Ticket extends StatelessWidget {
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.airline_seat_recline_normal, color: AppColors.secondary),
+                            const Icon(
+                              Icons.airline_seat_recline_normal,
+                              color: AppColors.secondary,
+                            ),
                             const SizedBox(width: 6),
                             Text(
                               'Wagon : ${ticket['wagonNb']}  Place : ${ticket['seatNb']}',
@@ -119,7 +125,11 @@ class Ticket extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.qr_code, color: AppColors.secondary, size: size.width / 1.7),
+                        Icon(
+                          Icons.qr_code,
+                          color: AppColors.secondary,
+                          size: size.width / 1.7,
+                        ),
                         const SizedBox(height: 12),
                         Text(
                           ticket['qr_code'] ?? '',

@@ -164,8 +164,12 @@ class _ProfilState extends State<Profil> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Modifier votre Profil',
-                    style: TextStyle(color: Colors.white, fontSize: 22),
+                    'Mon profil',
+                    style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: AppColors.white,
+              ),
                   ),
                   if (isEditing)
                     Row(
