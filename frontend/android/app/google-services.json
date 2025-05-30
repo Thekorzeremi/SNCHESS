@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "437932690274",
+    "firebase_url": "https://snchess-mstclass-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "snchess-mstclass",
+    "storage_bucket": "snchess-mstclass.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437932690274:android:de63ce81fe5527647cfa3b",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsUFNMCOyPe-HVZ-aa4c5o4hAcV__4ZJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437932690274:android:f0a42c98eb17823f7cfa3b",
+        "android_client_info": {
+          "package_name": "com.snchess.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsUFNMCOyPe-HVZ-aa4c5o4hAcV__4ZJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
