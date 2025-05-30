@@ -77,4 +77,4 @@ final List<Map<String, dynamic>> voyages = [
     'toGareId': '5',
     'price': 60,
   },
-]; 
+];

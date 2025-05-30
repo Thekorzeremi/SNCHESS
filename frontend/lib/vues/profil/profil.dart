@@ -279,8 +279,8 @@ class _ProfilState extends State<Profil> {
                 onTap: () async {
                   FirebaseAuthentificationService().signOutCurrentUser();
                   Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => LandingPage()),
-                  (route) => false,
+                    MaterialPageRoute(builder: (context) => LandingPage()),
+                    (route) => false,
                   );
                 },
                 child: Container(

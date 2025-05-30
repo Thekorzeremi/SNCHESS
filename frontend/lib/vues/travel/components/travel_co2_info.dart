@@ -31,4 +31,4 @@ class TravelCO2Info extends StatelessWidget {
       ),
     );
   }
-} 
+}

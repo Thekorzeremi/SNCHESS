@@ -76,7 +76,9 @@ class _VoyageState extends State<Voyage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const DetailledSearch()),
+                  MaterialPageRoute(
+                    builder: (context) => const DetailledSearch(),
+                  ),
                 );
               },
               child: Row(
@@ -96,10 +98,18 @@ class _VoyageState extends State<Voyage> {
                 itemBuilder: (context, index) {
                   final v = filteredVoyages[index];
                   final tram = trams.firstWhere((t) => t['id'] == v['tramId']);
-                  final gareDepart = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-                  final gareArrivee = gares.firstWhere((g) => g['id'] == v['toGareId']);
-                  final gareDepartCoords = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-                  final gareArriveeCoords = gares.firstWhere((g) => g['id'] == v['toGareId']);
+                  final gareDepart = gares.firstWhere(
+                    (g) => g['id'] == v['fromGareId'],
+                  );
+                  final gareArrivee = gares.firstWhere(
+                    (g) => g['id'] == v['toGareId'],
+                  );
+                  final gareDepartCoords = gares.firstWhere(
+                    (g) => g['id'] == v['fromGareId'],
+                  );
+                  final gareArriveeCoords = gares.firstWhere(
+                    (g) => g['id'] == v['toGareId'],
+                  );
 
                   return TravelCard(
                     voyage: v,

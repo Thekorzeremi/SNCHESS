@@ -22,7 +22,6 @@ class _DetailledSearchState extends State<DetailledSearch> {
 
   @override
   Widget build(BuildContext context) {
-
     if (dateDepart == null) {
       dateDepart = DateTime.now();
     }
@@ -32,7 +31,10 @@ class _DetailledSearchState extends State<DetailledSearch> {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,
-        title: Text('Recherche', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+        title: Text(
+          'Recherche',
+          style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold),
+        ),
         iconTheme: IconThemeData(color: AppColors.white),
       ),
       body: SingleChildScrollView(
@@ -52,16 +54,35 @@ class _DetailledSearchState extends State<DetailledSearch> {
                       children: [
                         Expanded(
                           child: ListTile(
-                            title: Text('Départ', style: TextStyle(color: AppColors.white, fontSize: 14)),
+                            title: Text(
+                              'Départ',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                              ),
+                            ),
                             subtitle: gareDepart == null
-                                ? Text('Choisissez...', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold))
-                                : Text(gareDepart!, style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+                                ? Text(
+                                    'Choisissez...',
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text(
+                                    gareDepart!,
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                             onTap: () async {
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
                                   gares: garesList,
-                                  onSelected: (gare) => setState(() => gareDepart = gare),
+                                  onSelected: (gare) =>
+                                      setState(() => gareDepart = gare),
                                   title: 'Sélectionnez la gare de départ',
                                 ),
                               );
@@ -77,7 +98,10 @@ class _DetailledSearchState extends State<DetailledSearch> {
                           child: IconButton(
                             icon: Transform.rotate(
                               angle: 1.5708,
-                              child: Icon(Icons.swap_vert, color: AppColors.white),
+                              child: Icon(
+                                Icons.swap_vert,
+                                color: AppColors.white,
+                              ),
                             ),
                             onPressed: () {
                               setState(() {
@@ -90,16 +114,35 @@ class _DetailledSearchState extends State<DetailledSearch> {
                         ),
                         Expanded(
                           child: ListTile(
-                            title: Text('Arrivée', style: TextStyle(color: AppColors.white, fontSize: 14)),
+                            title: Text(
+                              'Arrivée',
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontSize: 14,
+                              ),
+                            ),
                             subtitle: gareArrivee == null
-                                ? Text('Choisissez...', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold))
-                                : Text(gareArrivee!, style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+                                ? Text(
+                                    'Choisissez...',
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text(
+                                    gareArrivee!,
+                                    style: TextStyle(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                             onTap: () async {
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
                                   gares: garesList,
-                                  onSelected: (gare) => setState(() => gareArrivee = gare),
+                                  onSelected: (gare) =>
+                                      setState(() => gareArrivee = gare),
                                   title: 'Sélectionnez la gare d\'arrivée',
                                 ),
                               );
@@ -117,14 +160,20 @@ class _DetailledSearchState extends State<DetailledSearch> {
                               dateDepart == null
                                   ? 'Date de départ'
                                   : '${dateDepart!.day.toString().padLeft(2, '0')} ${_mois(dateDepart!.month)} ${dateDepart!.year}',
-                              style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                              style: TextStyle(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
                             onTap: () async {
                               DateTime? picked = await showDatePicker(
                                 context: context,
                                 initialDate: dateDepart ?? DateTime.now(),
                                 firstDate: DateTime.now(),
-                                lastDate: DateTime.now().add(Duration(days: 365)),
+                                lastDate: DateTime.now().add(
+                                  Duration(days: 365),
+                                ),
                               );
                               if (picked != null) {
                                 setState(() {
@@ -140,23 +189,21 @@ class _DetailledSearchState extends State<DetailledSearch> {
                 ),
               ),
               SizedBox(height: 24),
-              Text('Qui voyage ?', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+              Text(
+                'Qui voyage ?',
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
               SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TravelerCard(
-                    icon: Icons.person_outline,
-                    label: 'Voyageur',
-                  ),
-                  TravelerCard(
-                    icon: Icons.pets,
-                    label: 'Animal',
-                  ),
-                  TravelerCard(
-                    icon: Icons.directions_bike,
-                    label: 'Vélo',
-                  ),
+                  TravelerCard(icon: Icons.person_outline, label: 'Voyageur'),
+                  TravelerCard(icon: Icons.pets, label: 'Animal'),
+                  TravelerCard(icon: Icons.directions_bike, label: 'Vélo'),
                 ],
               ),
               SizedBox(height: 16),
@@ -170,21 +217,44 @@ class _DetailledSearchState extends State<DetailledSearch> {
                   children: [
                     CircleAvatar(
                       backgroundColor: Color(0xFFFFD580),
-                      child: Text('RR', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                      child: Text(
+                        'RR',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Raphael Romero', style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                          Text(
+                            'Raphael Romero',
+                            style: TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                           SizedBox(height: 2),
-                          Text('Carte Avantage Jeune', style: TextStyle(color: AppColors.white)),
-                          Text('Sans carte de fidélité', style: TextStyle(color: AppColors.white)),
+                          Text(
+                            'Carte Avantage Jeune',
+                            style: TextStyle(color: AppColors.white),
+                          ),
+                          Text(
+                            'Sans carte de fidélité',
+                            style: TextStyle(color: AppColors.white),
+                          ),
                         ],
                       ),
                     ),
-                    Icon(Icons.arrow_forward_ios, color: AppColors.white, size: 18),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: AppColors.white,
+                      size: 18,
+                    ),
                   ],
                 ),
               ),
@@ -194,19 +264,31 @@ class _DetailledSearchState extends State<DetailledSearch> {
                   onPressed: () {
                     if (gareDepart == null || gareDepart!.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Veuillez renseigner la gare de départ.')),
+                        SnackBar(
+                          content: Text(
+                            'Veuillez renseigner la gare de départ.',
+                          ),
+                        ),
                       );
                       return;
                     }
                     if (gareArrivee == null || gareArrivee!.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Veuillez renseigner la gare d\'arrivée.')),
+                        SnackBar(
+                          content: Text(
+                            'Veuillez renseigner la gare d\'arrivée.',
+                          ),
+                        ),
                       );
                       return;
                     }
                     if (dateDepart == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Veuillez renseigner la date de départ.')),
+                        SnackBar(
+                          content: Text(
+                            'Veuillez renseigner la date de départ.',
+                          ),
+                        ),
                       );
                       return;
                     }
@@ -232,8 +314,19 @@ class _DetailledSearchState extends State<DetailledSearch> {
 
   String _mois(int mois) {
     const moisNoms = [
-      '', 'janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin',
-      'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'
+      '',
+      'janv.',
+      'févr.',
+      'mars',
+      'avr.',
+      'mai',
+      'juin',
+      'juil.',
+      'août',
+      'sept.',
+      'oct.',
+      'nov.',
+      'déc.',
     ];
     return moisNoms[mois];
   }

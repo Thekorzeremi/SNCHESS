@@ -61,11 +61,17 @@ class _RegisterPageState extends State<RegisterPage> {
         confirmPassword.isEmpty ||
         prenom.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Merci de remplir tous les champs !", style: TextStyle(color: Colors.black)), backgroundColor: AppColors.secondary,),
+        SnackBar(
+          content: Text(
+            "Merci de remplir tous les champs !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
       );
       return;
     }
-    
+
     if (password.length < 12) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

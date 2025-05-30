@@ -41,4 +41,4 @@ class TravelerCard extends StatelessWidget {
       ),
     );
   }
-} 
+}

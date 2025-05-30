@@ -33,4 +33,4 @@ class TravelBuyButton extends StatelessWidget {
       ),
     );
   }
-} 
+}

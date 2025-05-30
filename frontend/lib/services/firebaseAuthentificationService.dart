@@ -25,10 +25,15 @@ class FirebaseAuthentificationService {
     }
   }
 
-  Future<bool> connectWithEmailAndPassword(String email, String password) async {
+  Future<bool> connectWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       print('User connected successfully');
       return true;
     } on FirebaseAuthException catch (e) {

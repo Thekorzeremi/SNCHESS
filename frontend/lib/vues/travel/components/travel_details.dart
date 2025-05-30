@@ -42,10 +42,7 @@ class TravelDetails extends StatelessWidget {
               Spacer(),
               Container(
                 margin: EdgeInsets.only(top: 40),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: AppColors.card,
                   borderRadius: BorderRadius.circular(12),
@@ -65,12 +62,7 @@ class TravelDetails extends StatelessWidget {
             height: 300,
             child: Stack(
               children: [
-                Positioned(
-                  left: 66,
-                  top: 0,
-                  bottom: 32,
-                  child: StepLine(),
-                ),
+                Positioned(left: 66, top: 0, bottom: 32, child: StepLine()),
                 Positioned(
                   top: 4,
                   left: 0,
@@ -100,4 +92,4 @@ class TravelDetails extends StatelessWidget {
       ),
     );
   }
-} 
+}
