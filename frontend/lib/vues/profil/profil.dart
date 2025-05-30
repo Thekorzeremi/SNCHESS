@@ -63,6 +63,7 @@ class _ProfilState extends State<Profil> {
     final firstName = _firstNameController.text.trim();
     final lastName = _lastNameController.text.trim();
     final currentPassword = _currentPasswordController.text.trim();
+    final emailIsModified = email != FirebaseAuth.instance.currentUser?.email;
 
     if (newPassword != confirmPassword) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,7 +91,6 @@ class _ProfilState extends State<Profil> {
 
     try {
       final authService = FirebaseAuthentificationService();
-
       final currentEmail = FirebaseAuth.instance.currentUser?.email ?? '';
       await authService.reauthenticate(currentEmail, currentPassword);
 
@@ -103,9 +103,19 @@ class _ProfilState extends State<Profil> {
 
       Navigator.of(context).pop();
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Profil mis à jour avec succès.")));
+      if (emailIsModified) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Profil mis à jour avec succès, veuillez valider votre nouvelle adresse email en cliquant sur le lien envoyé par mail.",
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Profil mis à jour avec succès.")),
+        );
+      }
 
       // On vide les champs de mot de passe apres la mise à jour
       _currentPasswordController.clear();

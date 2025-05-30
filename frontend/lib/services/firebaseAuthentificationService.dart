@@ -85,4 +85,20 @@ class FirebaseAuthentificationService {
     );
     await user?.reauthenticateWithCredential(credential);
   }
+
+  Future<void> deleteCurrentUserWithReauth({
+    required String email,
+    required String password,
+  }) async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final credential = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+      await user.reauthenticateWithCredential(credential);
+      await user.delete();
+    }
+  }
 }
