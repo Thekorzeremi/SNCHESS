@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
 import 'package:frontend/vues/components/text_form_field.dart';
+import 'package:frontend/vues/profil/components/block_benefits.dart';
+import 'package:frontend/vues/profil/components/block_helps.dart';
+import 'package:frontend/vues/profil/components/block_other_functionalities.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../services/firebaseAuthentificationService.dart';
-import '../../vues/landing.dart';
 
 class Profil extends StatefulWidget {
   const Profil({super.key});
@@ -16,19 +19,35 @@ class _ProfilState extends State<Profil> {
   final _lastNameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _currentPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool isEditing = false;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    // TODO: Ajouter la logique pour récupérer les données de l'utilisateur
-    _lastNameController.text = 'Doe';
-    _firstNameController.text = 'John';
-    _emailController.text = 'johndoe@ex.com';
-    _passwordController.text = 'password123';
-    _confirmPasswordController.text = 'password123';
+    _loadUserData();
+  }
+
+  void _loadUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final displayName = user.displayName ?? '';
+      final parts = displayName.split(' ');
+
+      setState(() {
+        _firstNameController.text = parts.isNotEmpty ? parts.first : '';
+        _lastNameController.text = parts.length > 1
+            ? parts.sublist(1).join(' ')
+            : '';
+        _emailController.text = user.email ?? '';
+        _passwordController.text = '';
+        _confirmPasswordController.text = '';
+      });
+    }
   }
 
   void toggleEditMode() {
@@ -37,18 +56,97 @@ class _ProfilState extends State<Profil> {
     });
   }
 
-  void saveChanges() {
-    // TODO: Ajouter la logique pour enregistrer les modifications de l'utilisateur
-    print(
-      _firstNameController.text +
-          _lastNameController.text +
-          _emailController.text +
-          _passwordController.text +
-          _confirmPasswordController.text,
-    );
+  void saveChanges() async {
+    final email = _emailController.text.trim();
+    final newPassword = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+    final currentPassword = _currentPasswordController.text.trim();
+    final emailIsModified = email != FirebaseAuth.instance.currentUser?.email;
 
-    // IF update is ok (pour rebasculer l'icon en edit)
-    toggleEditMode();
+    if (newPassword != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Les mots de passe ne correspondent pas.")),
+      );
+      return;
+    }
+
+    if (currentPassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Merci de rentrer votre mot de passe actuel pour modifier le profil.",
+          ),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    _showLoadingDialog();
+
+    try {
+      final authService = FirebaseAuthentificationService();
+      final currentEmail = FirebaseAuth.instance.currentUser?.email ?? '';
+      await authService.reauthenticate(currentEmail, currentPassword);
+
+      await authService.updateUserProfile(
+        newEmail: email,
+        newPassword: newPassword.isNotEmpty ? newPassword : null,
+        firstName: firstName,
+        lastName: lastName,
+      );
+
+      Navigator.of(context).pop();
+
+      if (emailIsModified) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Profil mis à jour avec succès, veuillez valider votre nouvelle adresse email en cliquant sur le lien envoyé par mail.",
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Profil mis à jour avec succès.")),
+        );
+      }
+
+      // On vide les champs de mot de passe apres la mise à jour
+      _currentPasswordController.clear();
+      _passwordController.clear();
+      _confirmPasswordController.clear();
+
+      toggleEditMode();
+    } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Erreur Firebase : ${e.message}")));
+    } catch (e) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Erreur : ${e.toString()}")));
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) =>
+          Center(child: CircularProgressIndicator(color: AppColors.secondary)),
+    );
   }
 
   @override
@@ -70,9 +168,25 @@ class _ProfilState extends State<Profil> {
                     style: TextStyle(color: Colors.white, fontSize: 22),
                   ),
                   if (isEditing)
-                    IconButton(
-                      onPressed: saveChanges,
-                      icon: Icon(Icons.save, color: AppColors.white, size: 24),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: saveChanges,
+                          icon: Icon(
+                            Icons.save,
+                            color: AppColors.white,
+                            size: 24,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: toggleEditMode,
+                          icon: Icon(
+                            Ionicons.close,
+                            color: AppColors.white,
+                            size: 24,
+                          ),
+                        ),
+                      ],
                     )
                   else
                     IconButton(
@@ -106,227 +220,41 @@ class _ProfilState extends State<Profil> {
                 enabled: isEditing,
               ),
               SizedBox(height: 8),
-              MyInputField(
-                label: "Mot de passe",
-                controller: _passwordController,
-                textColor: AppColors.white,
-                borderColor: AppColors.secondary,
-                enabled: isEditing,
-                obscureText: true,
-              ),
-              SizedBox(height: 8),
-              MyInputField(
-                label: "Confirmer le mot de passe",
-                controller: _confirmPasswordController,
-                textColor: AppColors.white,
-                borderColor: AppColors.secondary,
-                enabled: isEditing,
-                obscureText: true,
-              ),
+              if (isEditing) ...[
+                MyInputField(
+                  label: "Mot de passe actuel",
+                  controller: _currentPasswordController,
+                  textColor: AppColors.white,
+                  borderColor: AppColors.secondary,
+                  obscureText: true,
+                  enabled: true,
+                ),
+                SizedBox(height: 8),
+
+                MyInputField(
+                  label: "Mot de passe",
+                  controller: _passwordController,
+                  textColor: AppColors.white,
+                  borderColor: AppColors.secondary,
+                  enabled: isEditing,
+                  obscureText: true,
+                ),
+                SizedBox(height: 8),
+                MyInputField(
+                  label: "Confirmer le mot de passe",
+                  controller: _confirmPasswordController,
+                  textColor: AppColors.white,
+                  borderColor: AppColors.secondary,
+                  enabled: isEditing,
+                  obscureText: true,
+                ),
+              ],
               SizedBox(height: 24),
-              Container(
-                width: double.infinity,
-                child: Text(
-                  "Vos avantages",
-                  style: TextStyle(color: AppColors.white, fontSize: 22),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                height: 65,
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.card,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Commander votre Navigros",
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          "Recevez la gratuitement chez vous !",
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_right,
-                      color: AppColors.secondary,
-                    ),
-                  ],
-                ),
-              ),
+              BlockBenefits(),
               SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                child: Text(
-                  "Aide",
-                  style: TextStyle(color: AppColors.white, fontSize: 22),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                height: 50,
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.card,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Compensation en cas de retard",
-                      style: TextStyle(color: AppColors.white, fontSize: 16),
-                    ),
-                    Icon(
-                      Ionicons.arrow_redo_outline,
-                      color: AppColors.secondary,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                height: 50,
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.card,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Bulletin de retard",
-                      style: TextStyle(color: AppColors.white, fontSize: 16),
-                    ),
-                    Icon(
-                      Ionicons.arrow_redo_outline,
-                      color: AppColors.secondary,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                height: 50,
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.card,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Contacter le service client",
-                      style: TextStyle(color: AppColors.white, fontSize: 16),
-                    ),
-                    Icon(Ionicons.call_outline, color: AppColors.secondary),
-                  ],
-                ),
-              ),
+              BlockHelps(),
               SizedBox(height: 20),
-              Container(
-                width: double.infinity,
-                child: Text(
-                  "Autres fonctionnalités",
-                  style: TextStyle(color: AppColors.white, fontSize: 22),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              SizedBox(height: 10),
-              GestureDetector(
-                onTap: () => {},
-                child: Container(
-                  height: 50,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.card,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Reporter un bug",
-                        style: TextStyle(color: AppColors.white, fontSize: 16),
-                      ),
-                      Icon(Icons.bug_report, color: AppColors.secondary),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              // TODO : bugfix : stuck on the login after logout
-              GestureDetector(
-                onTap: () async {
-                  FirebaseAuthentificationService().signOutCurrentUser();
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => LandingPage()),
-                    (route) => false,
-                  );
-                },
-                child: Container(
-                  height: 50,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.card,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Me déconnecter",
-                        style: TextStyle(color: AppColors.white, fontSize: 16),
-                      ),
-                      Icon(Icons.logout, color: AppColors.secondary),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              // TODO : Ajouter la logique pour supprimer le compte utilisateur
-              GestureDetector(
-                child: Container(
-                  height: 50,
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.card,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Supprimer mon compte",
-                        style: TextStyle(color: AppColors.white, fontSize: 16),
-                      ),
-                      Icon(Icons.delete_outlined, color: AppColors.secondary),
-                    ],
-                  ),
-                ),
-              ),
+              BlockOtherFunctionalities(),
             ],
           ),
         ),
