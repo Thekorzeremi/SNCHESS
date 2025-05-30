@@ -77,4 +77,411 @@ final List<Map<String, dynamic>> voyages = [
     'toGareId': '5',
     'price': 60,
   },
+  {
+    'tramId': '2',
+    'duration': '03:10',
+    'departureHour': '08:00',
+    'departureDate': '2024-06-07',
+    'fromGareId': '3',
+    'toGareId': '4',
+    'price': 42,
+  },
+  {
+    'tramId': '3',
+    'duration': '02:45',
+    'departureHour': '09:15',
+    'departureDate': '2024-06-07',
+    'fromGareId': '4',
+    'toGareId': '5',
+    'price': 50,
+  },
+  {
+    'tramId': '4',
+    'duration': '03:05',
+    'departureHour': '10:30',
+    'departureDate': '2024-06-08',
+    'fromGareId': '5',
+    'toGareId': '6',
+    'price': 47,
+  },
+  // Voyages du 30 mai
+  {
+    'tramId': '2',
+    'duration': '03:00',
+    'departureHour': '08:00',
+    'departureDate': '2024-05-30',
+    'fromGareId': '3',
+    'toGareId': '4',
+    'price': 40,
+  },
+  {
+    'tramId': '3',
+    'duration': '02:30',
+    'departureHour': '09:30',
+    'departureDate': '2024-05-30',
+    'fromGareId': '4',
+    'toGareId': '5',
+    'price': 52,
+  },
+  // Voyages du 31 mai
+  {
+    'tramId': '4',
+    'duration': '03:10',
+    'departureHour': '10:00',
+    'departureDate': '2024-05-31',
+    'fromGareId': '5',
+    'toGareId': '6',
+    'price': 45,
+  },
+  {
+    'tramId': '5',
+    'duration': '03:20',
+    'departureHour': '11:15',
+    'departureDate': '2024-05-31',
+    'fromGareId': '6',
+    'toGareId': '7',
+    'price': 58,
+  },
+  // Voyages du 1er juin
+  {
+    'tramId': '2',
+    'duration': '03:05',
+    'departureHour': '08:45',
+    'departureDate': '2024-06-01',
+    'fromGareId': '7',
+    'toGareId': '3',
+    'price': 41,
+  },
+  {
+    'tramId': '3',
+    'duration': '02:50',
+    'departureHour': '09:50',
+    'departureDate': '2024-06-01',
+    'fromGareId': '3',
+    'toGareId': '4',
+    'price': 53,
+  },
+  // Voyages du 2 juin
+  {
+    'tramId': '4',
+    'duration': '03:15',
+    'departureHour': '10:20',
+    'departureDate': '2024-06-02',
+    'fromGareId': '4',
+    'toGareId': '5',
+    'price': 46,
+  },
+  {
+    'tramId': '5',
+    'duration': '03:25',
+    'departureHour': '11:40',
+    'departureDate': '2024-06-02',
+    'fromGareId': '5',
+    'toGareId': '6',
+    'price': 59,
+  },
+  // Voyages du 3 juin
+  {
+    'tramId': '2',
+    'duration': '03:08',
+    'departureHour': '08:10',
+    'departureDate': '2024-06-03',
+    'fromGareId': '6',
+    'toGareId': '7',
+    'price': 44,
+  },
+  {
+    'tramId': '3',
+    'duration': '02:55',
+    'departureHour': '09:55',
+    'departureDate': '2024-06-03',
+    'fromGareId': '7',
+    'toGareId': '3',
+    'price': 54,
+  },
 ];
+
+final Map<String, dynamic> users = {
+  "0": {
+    "email": "",
+    "ticket": {
+      "1": {
+        "seatNb": "",
+        "wagonNb": "",
+        "qr_code": "",
+        "trip": {
+          "name": "TGV 8412 de Paris à Lyon",
+          "price": "39",
+          "route": {
+            "name": "Paris à Lyon",
+            "duration": "03:02",
+            "fromStation": {
+              "datetime": "28/05/2025 06:00",
+              "city": "Paris",
+              "country": "FR",
+              "coordinate": {"latitude": "48.8566", "longitude": "2.3522"}
+            },
+            "toStation": {
+              "datetime": "28/05/2025 09:02",
+              "city": "Lyon",
+              "country": "FR",
+              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"}
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8412",
+            "type": "TGV",
+            "status": "En service",
+            "nbOfWagon": "8"
+          }
+        }
+      },
+      "2": {
+        "seatNb": "",
+        "wagonNb": "",
+        "qr_code": "",
+        "trip": {
+          "name": "TGV 8450 de Lyon à Marseille",
+          "price": "55",
+          "route": {
+            "name": "Lyon à Marseille",
+            "duration": "02:16",
+            "fromStation": {
+              "datetime": "28/05/2025 06:32",
+              "city": "Lyon",
+              "country": "FR",
+              "coordinate": {"latitude": "45.7640", "longitude": "4.8357"}
+            },
+            "toStation": {
+              "datetime": "28/05/2025 08:48",
+              "city": "Marseille",
+              "country": "FR",
+              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"}
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8450",
+            "type": "TGV",
+            "status": "En service",
+            "nbOfWagon": "8"
+          }
+        }
+      },
+      "3": {
+        "seatNb": "",
+        "wagonNb": "",
+        "qr_code": "",
+        "trip": {
+          "name": "TGV 8472 de Marseille à Toulouse",
+          "price": "43",
+          "route": {
+            "name": "Marseille à Toulouse",
+            "duration": "03:27",
+            "fromStation": {
+              "datetime": "28/05/2025 06:44",
+              "city": "Marseille",
+              "country": "FR",
+              "coordinate": {"latitude": "43.2965", "longitude": "5.3698"}
+            },
+            "toStation": {
+              "datetime": "28/05/2025 10:11",
+              "city": "Toulouse",
+              "country": "FR",
+              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"}
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8472",
+            "type": "TGV",
+            "status": "En service",
+            "nbOfWagon": "8"
+          }
+        }
+      },
+      "4": {
+        "seatNb": "",
+        "wagonNb": "",
+        "qr_code": "",
+        "trip": {
+          "name": "TGV 8500 de Toulouse à Nantes",
+          "price": "60",
+          "route": {
+            "name": "Toulouse à Nantes",
+            "duration": "03:14",
+            "fromStation": {
+              "datetime": "28/05/2025 07:03",
+              "city": "Toulouse",
+              "country": "FR",
+              "coordinate": {"latitude": "43.6043", "longitude": "1.4437"}
+            },
+            "toStation": {
+              "datetime": "28/05/2025 10:17",
+              "city": "Nantes",
+              "country": "FR",
+              "coordinate": {"latitude": "47.2184", "longitude": "-1.5536"}
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8500",
+            "type": "TGV",
+            "status": "En service",
+            "nbOfWagon": "8"
+          }
+        }
+      }
+    }
+  },
+  "1": {
+    "email": "fiinnnhh@gmail.com",
+    "ticket": {
+      "1": {
+        "seatNb": "12",
+        "wagonNb": "3",
+        "qr_code": "BUB3E2OBE32OE",
+        "trip": {
+          "name": "TGV de Paris à Lyon",
+          "price": "40",
+          "route": {
+            "name": "Paris à Lyon",
+            "duration": "180",
+            "fromStation": {
+              "datetime": "30/05/2024 08:00",
+              "city": "Paris",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "48.8566",
+                "longitude": "2.3522"
+              }
+            },
+            "toStation": {
+              "datetime": "30/05/2024 11:00",
+              "city": "Lyon",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "45.7640",
+                "longitude": "4.8357"
+              }
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8412",
+            "type": "train",
+            "status": "service",
+            "nbOfWagon": "8"
+          }
+        }
+      },
+      "2": {
+        "seatNb": "36",
+        "wagonNb": "6",
+        "qr_code": "HDUZADKNKN32",
+        "trip": {
+          "name": "TGV de Lyon à Marseille",
+          "price": "52",
+          "route": {
+            "name": "Lyon à Marseille",
+            "duration": "150",
+            "fromStation": {
+              "datetime": "31/05/2024 09:30",
+              "city": "Lyon",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "45.7640",
+                "longitude": "4.8357"
+              }
+            },
+            "toStation": {
+              "datetime": "31/05/2024 12:00",
+              "city": "Marseille",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "43.2965",
+                "longitude": "5.3698"
+              }
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8450",
+            "type": "train",
+            "status": "service",
+            "nbOfWagon": "8"
+          }
+        }
+      },
+      "3": {
+        "seatNb": "18",
+        "wagonNb": "2",
+        "qr_code": "QRCODE123456",
+        "trip": {
+          "name": "TGV de Marseille à Toulouse",
+          "price": "45",
+          "route": {
+            "name": "Marseille à Toulouse",
+            "duration": "190",
+            "fromStation": {
+              "datetime": "01/06/2024 10:00",
+              "city": "Marseille",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "43.2965",
+                "longitude": "5.3698"
+              }
+            },
+            "toStation": {
+              "datetime": "01/06/2024 13:10",
+              "city": "Toulouse",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "43.6043",
+                "longitude": "1.4437"
+              }
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8472",
+            "type": "train",
+            "status": "service",
+            "nbOfWagon": "8"
+          }
+        }
+      },
+      "4": {
+        "seatNb": "22",
+        "wagonNb": "4",
+        "qr_code": "QRCODE654321",
+        "trip": {
+          "name": "TGV de Toulouse à Nantes",
+          "price": "58",
+          "route": {
+            "name": "Toulouse à Nantes",
+            "duration": "195",
+            "fromStation": {
+              "datetime": "02/06/2024 11:15",
+              "city": "Toulouse",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "43.6043",
+                "longitude": "1.4437"
+              }
+            },
+            "toStation": {
+              "datetime": "02/06/2024 14:30",
+              "city": "Nantes",
+              "country": "FR",
+              "coordinate": {
+                "latitude": "47.2184",
+                "longitude": "-1.5536"
+              }
+            }
+          },
+          "vehicle": {
+            "name": "TGV 8500",
+            "type": "train",
+            "status": "service",
+            "nbOfWagon": "8"
+          }
+        }
+      }
+    }
+  }
+};
