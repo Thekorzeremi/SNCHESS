@@ -5,6 +5,7 @@ import 'components/station_dialog.dart';
 import 'components/show_price.dart';
 import '../filtered_travels/filtered_travels.dart';
 import '../../mocks/mock_data.dart';
+import '../../services/firebaseAuthentificationService.dart';
 
 class DetailledSearch extends StatefulWidget {
   const DetailledSearch({super.key});
@@ -272,7 +273,7 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                       CircleAvatar(
                         backgroundColor: Color(0xFFFFD580),
                         child: Text(
-                          'RR',
+                          FirebaseAuthentificationService().getUserInitial(),
                           style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -284,8 +285,7 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Raphael Romero',
+                            Text('${FirebaseAuthentificationService().getCurrentUserInformation()?["displayName"]}',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
@@ -294,7 +294,7 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                             ),
                             SizedBox(height: 2),
                             Text(
-                              'Carte Avantage Jeune',
+                              'Carte Avantage',
                               style: TextStyle(color: AppColors.white),
                             ),
                             Text(
@@ -427,7 +427,7 @@ class UserCardDialog extends StatelessWidget {
                 backgroundColor: Color(0xFFFFD580),
                 radius: 28,
                 child: Text(
-                  'RR',
+                  FirebaseAuthentificationService().getUserInitial(),
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.bold,
@@ -440,7 +440,7 @@ class UserCardDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Raphael Romero',
+                    FirebaseAuthentificationService().getCurrentUserInformation()?['displayName'] ?? '',
                     style: TextStyle(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,
@@ -449,7 +449,7 @@ class UserCardDialog extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'Carte Avantage Jeune',
+                    'Carte Avantage',
                     style: TextStyle(color: AppColors.secondary, fontSize: 15),
                   ),
                   Text(

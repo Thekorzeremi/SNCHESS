@@ -61,6 +61,15 @@ class FirebaseAuthentificationService {
     }
   }
 
+  String getUserInitial() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.displayName != null && user.displayName!.isNotEmpty) {
+      return user.displayName![0];
+    } else {
+      return '??';
+    }
+  }
+
   void signOutCurrentUser() {
     try {
       FirebaseAuth.instance.signOut();

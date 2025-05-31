@@ -22,6 +22,7 @@ class _AdminState extends State<Admin> {
     {'key': 'gares', 'label': 'Gares'},
     {'key': 'trams', 'label': 'Trams'},
     {'key': 'voyages', 'label': 'Voyages'},
+    {'key': 'verif', 'label': 'Verif'},
   ];
 
   void _showEditDialog(BuildContext context, String entity, Map<String, dynamic> data, {void Function(Map<String, dynamic>)? onSave}) {
