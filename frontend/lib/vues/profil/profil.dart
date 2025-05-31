@@ -166,10 +166,10 @@ class _ProfilState extends State<Profil> {
                   Text(
                     'Mon profil',
                     style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppColors.white,
-              ),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white,
+                    ),
                   ),
                   if (isEditing)
                     Row(

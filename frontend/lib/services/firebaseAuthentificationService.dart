@@ -36,10 +36,8 @@ class FirebaseAuthentificationService {
         email: email,
         password: password,
       );
-      print('User connected successfully');
       return true;
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
+    } on FirebaseAuthException {
       return false;
     }
   }
@@ -47,23 +45,21 @@ class FirebaseAuthentificationService {
   Map<String, String?>? getCurrentUserInformation() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      print('User ID: ${user.uid}');
-      print('User Email: ${user.email}');
-      print('User Name: ${user.displayName}');
       return {
         'uid': user.uid,
         'email': user.email,
         'displayName': user.displayName,
       };
     } else {
-      print('No user is currently signed in.');
       return null;
     }
   }
 
   String getUserInitial() {
     User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && user.displayName != null && user.displayName!.isNotEmpty) {
+    if (user != null &&
+        user.displayName != null &&
+        user.displayName!.isNotEmpty) {
       return user.displayName![0];
     } else {
       return '??';
@@ -102,7 +98,6 @@ class FirebaseAuthentificationService {
       }
 
       await user?.reload();
-      print('User profile updated');
     } on FirebaseAuthException catch (e) {
       print('Error updating profile: ${e.code} - ${e.message}');
     } catch (e) {

@@ -134,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void sendNewPassword(String email) {
     // TODO: ajouter la logique pour renvoyer un password
-    print("Envoi d'un nouveau mot de passe à : $email");
   }
 
   @override

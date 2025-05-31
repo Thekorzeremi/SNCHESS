@@ -22,7 +22,9 @@ class TravelerCard extends StatelessWidget {
         width: 125,
         height: 90,
         decoration: BoxDecoration(
-          color: selected ? AppColors.secondary.withOpacity(0.4) : AppColors.card,
+          color: selected
+              ? AppColors.secondary.withOpacity(0.4)
+              : AppColors.card,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -40,7 +42,11 @@ class TravelerCard extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                     padding: EdgeInsets.all(2),
-                    child: Icon(selected ? Icons.check : Icons.add, color: selected ? Colors.white : AppColors.primary, size: 16),
+                    child: Icon(
+                      selected ? Icons.check : Icons.add,
+                      color: selected ? Colors.white : AppColors.primary,
+                      size: 16,
+                    ),
                   ),
                 ),
               ],

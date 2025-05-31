@@ -25,31 +25,50 @@ class _AdminState extends State<Admin> {
     {'key': 'verif', 'label': 'Verif'},
   ];
 
-  void _showEditDialog(BuildContext context, String entity, Map<String, dynamic> data, {void Function(Map<String, dynamic>)? onSave}) {
+  void _showEditDialog(
+    BuildContext context,
+    String entity,
+    Map<String, dynamic> data, {
+    void Function(Map<String, dynamic>)? onSave,
+  }) {
     showDialog(
       context: context,
-      builder: (context) => AdminEditDialog(
-        entity: entity,
-        data: data,
-        onSave: onSave,
-      ),
+      builder: (context) =>
+          AdminEditDialog(entity: entity, data: data, onSave: onSave),
     );
   }
 
-  void _showDeleteDialog(BuildContext context, String entity, dynamic data, VoidCallback onDeleteConfirmed) {
+  void _showDeleteDialog(
+    BuildContext context,
+    String entity,
+    dynamic data,
+    VoidCallback onDeleteConfirmed,
+  ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.card,
-        title: const Text('Confirmer la suppression', style: TextStyle(color: AppColors.white)),
-        content: const Text('Êtes-vous sûr de vouloir supprimer cet élément ?', style: TextStyle(color: AppColors.white)),
+        title: const Text(
+          'Confirmer la suppression',
+          style: TextStyle(color: AppColors.white),
+        ),
+        content: const Text(
+          'Êtes-vous sûr de vouloir supprimer cet élément ?',
+          style: TextStyle(color: AppColors.white),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler', style: TextStyle(color: AppColors.secondary)),
+            child: const Text(
+              'Annuler',
+              style: TextStyle(color: AppColors.secondary),
+            ),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, foregroundColor: AppColors.white),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+              foregroundColor: AppColors.white,
+            ),
             onPressed: () {
               Navigator.pop(context);
               onDeleteConfirmed();
@@ -75,14 +94,23 @@ class _AdminState extends State<Admin> {
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Email : ${user['email']}', style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+              Text(
+                'Email : ${user['email']}',
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           if (user['ticket'] != null)
             Row(
               children: [
                 const SizedBox(width: 32),
-                Text('Tickets : ${user['ticket'].length}', style: const TextStyle(color: AppColors.white)),
+                Text(
+                  'Tickets : ${user['ticket'].length}',
+                  style: const TextStyle(color: AppColors.white),
+                ),
               ],
             ),
         ],
@@ -105,23 +133,37 @@ class _AdminState extends State<Admin> {
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Nom : ${gare['name']}', style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+              Text(
+                'Nom : ${gare['name']}',
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Latitude : ${gare['latitude']}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Latitude : ${gare['latitude']}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Longitude : ${gare['longitude']}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Longitude : ${gare['longitude']}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
         ],
-        onEdit: () { _showEditDialog(context, 'gares', gare); },
+        onEdit: () {
+          _showEditDialog(context, 'gares', gare);
+        },
         onDelete: () {
           _showDeleteDialog(context, 'gares', gare, () {
             setState(() {
@@ -146,23 +188,37 @@ class _AdminState extends State<Admin> {
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Nom : ${tram['name']}', style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+              Text(
+                'Nom : ${tram['name']}',
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Type : ${tram['type']}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Type : ${tram['type']}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Statut : ${tram['status']}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Statut : ${tram['status']}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
         ],
-        onEdit: () { _showEditDialog(context, 'trams', tram); },
+        onEdit: () {
+          _showEditDialog(context, 'trams', tram);
+        },
         onDelete: () {
           _showDeleteDialog(context, 'trams', tram, () {
             setState(() {
@@ -176,10 +232,18 @@ class _AdminState extends State<Admin> {
 
   List<Widget> _buildVoyageCards() {
     return voyages.map((voyage) {
-
-      final tram = trams.firstWhere((t) => t['id'] == voyage['tramId'], orElse: () => {'name': 'N/A', 'type': ''});
-      final gareDepart = gares.firstWhere((g) => g['id'] == voyage['fromGareId'], orElse: () => {'name': 'N/A'});
-      final gareArrivee = gares.firstWhere((g) => g['id'] == voyage['toGareId'], orElse: () => {'name': 'N/A'});
+      final tram = trams.firstWhere(
+        (t) => t['id'] == voyage['tramId'],
+        orElse: () => {'name': 'N/A', 'type': ''},
+      );
+      final gareDepart = gares.firstWhere(
+        (g) => g['id'] == voyage['fromGareId'],
+        orElse: () => {'name': 'N/A'},
+      );
+      final gareArrivee = gares.firstWhere(
+        (g) => g['id'] == voyage['toGareId'],
+        orElse: () => {'name': 'N/A'},
+      );
       String date = voyage['departureDate'] ?? '';
       String heure = voyage['departureHour'] ?? '';
 
@@ -194,41 +258,64 @@ class _AdminState extends State<Admin> {
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Train : ${tram['name']} (${tram['type']})', style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
+              Text(
+                'Train : ${tram['name']} (${tram['type']})',
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Départ : ${gareDepart['name']}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Départ : ${gareDepart['name']}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Arrivée : ${gareArrivee['name']}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Arrivée : ${gareArrivee['name']}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Date : $date $heure', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Date : $date $heure',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Durée : ${formatDuration(voyage['duration'])}', style: const TextStyle(color: AppColors.white)),
+              Text(
+                'Durée : ${formatDuration(voyage['duration'])}',
+                style: const TextStyle(color: AppColors.white),
+              ),
             ],
           ),
           Row(
             children: [
               const SizedBox(width: 32),
-              Text('Prix : ${voyage['price']} €', style: const TextStyle(color: AppColors.secondary)),
+              Text(
+                'Prix : ${voyage['price']} €',
+                style: const TextStyle(color: AppColors.secondary),
+              ),
             ],
           ),
         ],
-        onEdit: () { _showEditDialog(context, 'voyages', voyage); },
+        onEdit: () {
+          _showEditDialog(context, 'voyages', voyage);
+        },
         onDelete: () {
           _showDeleteDialog(context, 'voyages', voyage, () {
             setState(() {
@@ -257,25 +344,40 @@ class _AdminState extends State<Admin> {
     void handleAdd() {
       if (selected == 'users') {
         final newUser = {'email': '', 'ticket': []};
-        _showEditDialog(context, 'users', newUser, onSave: (data) {
-          setState(() {
-            users[DateTime.now().millisecondsSinceEpoch.toString()] = data;
-          });
-        });
+        _showEditDialog(
+          context,
+          'users',
+          newUser,
+          onSave: (data) {
+            setState(() {
+              users[DateTime.now().millisecondsSinceEpoch.toString()] = data;
+            });
+          },
+        );
       } else if (selected == 'gares') {
         final newGare = {'name': '', 'latitude': '', 'longitude': ''};
-        _showEditDialog(context, 'gares', newGare, onSave: (data) {
-          setState(() {
-            gares.add(data);
-          });
-        });
+        _showEditDialog(
+          context,
+          'gares',
+          newGare,
+          onSave: (data) {
+            setState(() {
+              gares.add(data);
+            });
+          },
+        );
       } else if (selected == 'trams') {
         final newTram = {'name': '', 'type': '', 'status': ''};
-        _showEditDialog(context, 'trams', newTram, onSave: (data) {
-          setState(() {
-            trams.add(data);
-          });
-        });
+        _showEditDialog(
+          context,
+          'trams',
+          newTram,
+          onSave: (data) {
+            setState(() {
+              trams.add(data);
+            });
+          },
+        );
       } else if (selected == 'voyages') {
         final newVoyage = {
           'tramId': '',
@@ -286,11 +388,16 @@ class _AdminState extends State<Admin> {
           'duration': '',
           'price': '',
         };
-        _showEditDialog(context, 'voyages', newVoyage, onSave: (data) {
-          setState(() {
-            voyages.add(data);
-          });
-        });
+        _showEditDialog(
+          context,
+          'voyages',
+          newVoyage,
+          onSave: (data) {
+            setState(() {
+              voyages.add(data);
+            });
+          },
+        );
       }
     }
 
@@ -331,9 +438,7 @@ class _AdminState extends State<Admin> {
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(
-              child: AdminEntityList(children: entityCards),
-            ),
+            Expanded(child: AdminEntityList(children: entityCards)),
           ],
         ),
       ),

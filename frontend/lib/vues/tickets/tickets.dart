@@ -24,7 +24,8 @@ class _TicketsState extends State<Tickets> {
   }
 
   Future<void> fetchUserTickets() async {
-    final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+    final userInfo = FirebaseAuthentificationService()
+        .getCurrentUserInformation();
     final email = userInfo?['email'];
     if (email != null) {
       final tickets = await FirebaseDatabaseService().fetchUserTickets(email);
@@ -42,7 +43,6 @@ class _TicketsState extends State<Tickets> {
 
   @override
   Widget build(BuildContext context) {
-
     final now = DateTime.now();
     List<Map<String, dynamic>> filteredTickets = ticketList.where((ticket) {
       final trip = ticket['trip'];
@@ -144,181 +144,181 @@ class _TicketsState extends State<Tickets> {
               child: isLoading
                   ? Center(child: CircularProgressIndicator())
                   : filteredTickets.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.warning,
-                                color: AppColors.secondary,
-                                size: 48,
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'Aucun ticket à venir',
-                                style: TextStyle(color: AppColors.white),
-                              ),
-                            ],
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.warning,
+                            color: AppColors.secondary,
+                            size: 48,
                           ),
-                        )
-                      : ListView.builder(
-                          itemCount: filteredTickets.length,
-                          itemBuilder: (context, index) {
-                            final ticket = filteredTickets[index];
-                            final trip = ticket['trip'];
-                            final route = trip['route'];
-                            final from = route['fromStation'];
-                            final to = route['toStation'];
-                            final vehicle = trip['vehicle'];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Ticket(ticket: ticket),
-                                  ),
-                                );
-                              },
-                              child: Card(
-                                color: AppColors.card,
-                                margin: const EdgeInsets.symmetric(vertical: 8),
-                                child: Container(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            trip['name'],
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                          Text(
-                                            '${trip['price']} €',
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColors.secondary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.train,
-                                            color: AppColors.secondary,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            vehicle['name'],
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 16),
-                                          Text(
-                                            'Wagon: ${ticket['wagonNb']}  Place: ${ticket['seatNb']}',
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.location_on,
-                                            color: AppColors.secondary,
-                                            size: 18,
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            from['city'],
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            '→',
-                                            style: const TextStyle(
-                                              color: AppColors.secondary,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            to['city'],
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.access_time,
-                                            color: AppColors.secondary,
-                                            size: 18,
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            from['datetime'],
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            '-',
-                                            style: const TextStyle(
-                                              color: AppColors.secondary,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Text(
-                                            to['datetime'],
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.qr_code,
-                                            color: AppColors.secondary,
-                                            size: 18,
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Text(
-                                            ticket['qr_code'] ?? '',
-                                            style: const TextStyle(
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Aucun ticket à venir',
+                            style: TextStyle(color: AppColors.white),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredTickets.length,
+                      itemBuilder: (context, index) {
+                        final ticket = filteredTickets[index];
+                        final trip = ticket['trip'];
+                        final route = trip['route'];
+                        final from = route['fromStation'];
+                        final to = route['toStation'];
+                        final vehicle = trip['vehicle'];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Ticket(ticket: ticket),
                               ),
                             );
                           },
-                        ),
+                          child: Card(
+                            color: AppColors.card,
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: Container(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        trip['name'],
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${trip['price']} €',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.secondary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.train,
+                                        color: AppColors.secondary,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        vehicle['name'],
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Text(
+                                        'Wagon: ${ticket['wagonNb']}  Place: ${ticket['seatNb']}',
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.location_on,
+                                        color: AppColors.secondary,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        from['city'],
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        '→',
+                                        style: const TextStyle(
+                                          color: AppColors.secondary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        to['city'],
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.access_time,
+                                        color: AppColors.secondary,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        from['datetime'],
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        '-',
+                                        style: const TextStyle(
+                                          color: AppColors.secondary,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        to['datetime'],
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.qr_code,
+                                        color: AppColors.secondary,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        ticket['qr_code'] ?? '',
+                                        style: const TextStyle(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),

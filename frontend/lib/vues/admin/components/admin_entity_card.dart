@@ -31,13 +31,21 @@ class AdminEntityCard extends StatelessWidget {
             ),
             if (onEdit != null)
               IconButton(
-                icon: const Icon(Icons.edit, color: AppColors.secondary, size: 20),
+                icon: const Icon(
+                  Icons.edit,
+                  color: AppColors.secondary,
+                  size: 20,
+                ),
                 onPressed: onEdit,
                 tooltip: 'Editer',
               ),
             if (onDelete != null)
               IconButton(
-                icon: const Icon(Icons.delete, color: Colors.redAccent, size: 20),
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.redAccent,
+                  size: 20,
+                ),
                 onPressed: onDelete,
                 tooltip: 'Supprimer',
               ),
@@ -46,4 +54,4 @@ class AdminEntityCard extends StatelessWidget {
       ),
     );
   }
-} 
+}

@@ -27,7 +27,9 @@ class TravelAlertInfo extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(
                   children: [
                     Icon(Icons.sms_failed, color: Colors.pinkAccent, size: 28),
@@ -122,7 +124,10 @@ class TravelAlertDialog extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {},
-                    child: Text("Appeler le 31 17", style: TextStyle(color: Colors.black)),
+                    child: Text(
+                      "Appeler le 31 17",
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
                 SizedBox(width: 10),
@@ -136,7 +141,10 @@ class TravelAlertDialog extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {},
-                    child: Text("SMS au 31 17 7", style: TextStyle(color: AppColors.secondary)),
+                    child: Text(
+                      "SMS au 31 17 7",
+                      style: TextStyle(color: AppColors.secondary),
+                    ),
                   ),
                 ),
               ],
@@ -149,7 +157,11 @@ class TravelAlertDialog extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               "Service disponible 24h/24 - 7j/7",
-              style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
             ),
             SizedBox(height: 10),
             Text(

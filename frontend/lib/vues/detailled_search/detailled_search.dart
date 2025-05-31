@@ -14,7 +14,8 @@ class DetailledSearch extends StatefulWidget {
   State<DetailledSearch> createState() => _DetailledSearchState();
 }
 
-class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProviderStateMixin {
+class _DetailledSearchState extends State<DetailledSearch>
+    with SingleTickerProviderStateMixin {
   List<String> get garesList => gares.map((g) => g['name'] as String).toList();
 
   String? gareDepart;
@@ -104,7 +105,10 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                           ),
                           child: IconButton(
                             icon: AnimatedRotation(
-                              turns: _rotationAngle / (2 * 3.141592653589793), // OBLIGE DE ROTATE AVEC PI
+                              turns:
+                                  _rotationAngle /
+                                  (2 *
+                                      3.141592653589793), // OBLIGE DE ROTATE AVEC PI
                               duration: Duration(milliseconds: 300),
                               child: Icon(
                                 Icons.swap_vert,
@@ -116,7 +120,8 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                                 final tmp = gareDepart;
                                 gareDepart = gareArrivee;
                                 gareArrivee = tmp;
-                                _rotationAngle += 3.141592653589793; // Ajoute 180° (π radians) (OBLIGE DE ROTATE AVEC PI)
+                                _rotationAngle +=
+                                    3.141592653589793; // Ajoute 180° (π radians) (OBLIGE DE ROTATE AVEC PI)
                               });
                             },
                           ),
@@ -180,7 +185,9 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                                 context: context,
                                 initialDate: dateDepart ?? DateTime.now(),
                                 firstDate: DateTime.now(),
-                                lastDate: DateTime.now().add(Duration(days: 365)),
+                                lastDate: DateTime.now().add(
+                                  Duration(days: 365),
+                                ),
                                 builder: (context, child) => Theme(
                                   data: ThemeData.dark().copyWith(
                                     colorScheme: const ColorScheme.dark(
@@ -285,7 +292,8 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${FirebaseAuthentificationService().getCurrentUserInformation()?["displayName"]}',
+                            Text(
+                              '${FirebaseAuthentificationService().getCurrentUserInformation()?["displayName"]}',
                               style: TextStyle(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.bold,
@@ -299,7 +307,10 @@ class _DetailledSearchState extends State<DetailledSearch> with SingleTickerProv
                             ),
                             Text(
                               'Sans carte de fidélité',
-                              style: TextStyle(color: Colors.white70, fontSize: 14),
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
                             ),
                           ],
                         ),
@@ -440,7 +451,9 @@ class UserCardDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    FirebaseAuthentificationService().getCurrentUserInformation()?['displayName'] ?? '',
+                    FirebaseAuthentificationService()
+                            .getCurrentUserInformation()?['displayName'] ??
+                        '',
                     style: TextStyle(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,

@@ -69,7 +69,7 @@ class _TravelsState extends State<Travels> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                '${DateTime.now().hour >= 18 || DateTime.now().hour < 6 ? 'Bonsoir' : 'Bonjour'} ${FirebaseAuthentificationService().getCurrentUserInformation()?["displayName"] ?? widget.name},',
+              '${DateTime.now().hour >= 18 || DateTime.now().hour < 6 ? 'Bonsoir' : 'Bonjour'} ${FirebaseAuthentificationService().getCurrentUserInformation()?["displayName"] ?? widget.name},',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

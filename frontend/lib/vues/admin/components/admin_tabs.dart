@@ -5,7 +5,12 @@ class AdminTabs extends StatelessWidget {
   final String selected;
   final List<Map<String, String>> tabs;
   final void Function(String) onSelect;
-  const AdminTabs({super.key, required this.selected, required this.tabs, required this.onSelect});
+  const AdminTabs({
+    super.key,
+    required this.selected,
+    required this.tabs,
+    required this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,4 +42,4 @@ class AdminTabs extends StatelessWidget {
       }).toList(),
     );
   }
-} 
+}

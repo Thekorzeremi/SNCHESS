@@ -245,7 +245,9 @@ class FirebaseDatabaseService {
         return MapEntry(key.toString(), castMap(value));
       } else if (value is List) {
         return MapEntry(
-          key.toString(), value.map((e) => e is Map ? castMap(e) : e).toList());
+          key.toString(),
+          value.map((e) => e is Map ? castMap(e) : e).toList(),
+        );
       } else {
         return MapEntry(key.toString(), value);
       }
@@ -263,7 +265,7 @@ class FirebaseDatabaseService {
           final ticketMap = castMap(ticket as Map);
           print(ticketMap);
         }
-      } 
+      }
     }
     return [];
   }
@@ -277,10 +279,14 @@ class FirebaseDatabaseService {
         for (final user in users) {
           if (user == null) continue;
           final userMap = castMap(user as Map);
-          if ((userMap['email']?.toLowerCase()?.trim() ?? '') == email.toLowerCase().trim()) {
+          if ((userMap['email']?.toLowerCase()?.trim() ?? '') ==
+              email.toLowerCase().trim()) {
             final tickets = userMap['ticket'];
             if (tickets is List) {
-              return tickets.where((t) => t != null).map((e) => castMap(e as Map)).toList();
+              return tickets
+                  .where((t) => t != null)
+                  .map((e) => castMap(e as Map))
+                  .toList();
             } else if (tickets is Map) {
               return tickets.values.map((e) => castMap(e as Map)).toList();
             }

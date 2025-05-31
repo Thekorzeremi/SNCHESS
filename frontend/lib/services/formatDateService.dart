@@ -8,7 +8,10 @@ String getArrivalHour(String departure, String duration) {
   final durationParts = duration.split(':');
   int durationHours = int.parse(durationParts[0]);
   int durationMinutes = int.parse(durationParts[1]);
-  int arrivalHour = departureTime.hour + durationHours + ((departureTime.minute + durationMinutes) ~/ 60);
+  int arrivalHour =
+      departureTime.hour +
+      durationHours +
+      ((departureTime.minute + durationMinutes) ~/ 60);
   int arrivalMinute = (departureTime.minute + durationMinutes) % 60;
   return '${arrivalHour.toString().padLeft(2, '0')}:${arrivalMinute.toString().padLeft(2, '0')}';
 }
@@ -31,7 +34,9 @@ String formatDuration(dynamic duration) {
   if (totalMinutes >= 60) {
     int hours = totalMinutes ~/ 60;
     int minutes = totalMinutes % 60;
-    return minutes == 0 ? '${hours}h' : '${hours}h${minutes.toString().padLeft(2, '0')}';
+    return minutes == 0
+        ? '${hours}h'
+        : '${hours}h${minutes.toString().padLeft(2, '0')}';
   } else {
     return '${totalMinutes} min';
   }
