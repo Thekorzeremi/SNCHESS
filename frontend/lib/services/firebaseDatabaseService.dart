@@ -9,10 +9,10 @@ class FirebaseDatabaseService {
           "wagonNb": "",
           "qr_code": "",
           "trip": {
-            "name": "TGV de Paris à Marseille",
+            "name": "TGV de Paris à Lyon",
             "price": "88",
             "route": {
-              "name": "Paris à Marseille",
+              "name": "Paris à Lyon",
               "duration": "199",
               "fromStation": {
                 "datetime": "28/05/2025 15:29",
@@ -25,7 +25,7 @@ class FirebaseDatabaseService {
               },
               "toStation": {
                 "datetime": "28/05/2025 18:48",
-                "city": "Marseille",
+                "city": "Lyon",
                 "country": "FR",
                 "coordinate": {
                   "latitude": "43.2961743",
