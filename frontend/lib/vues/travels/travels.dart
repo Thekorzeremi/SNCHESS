@@ -4,7 +4,6 @@ import '../travel/travel.dart';
 import './components/search_bar.dart' as travels_components;
 import 'components/travel_card.dart';
 import '../detailled_search/detailled_search.dart';
-import '../../mocks/mock_data.dart';
 import '../../services/firebaseAuthentificationService.dart';
 import '../../services/firebaseDatabaseService.dart';
 
@@ -51,13 +50,15 @@ class _TravelsState extends State<Travels> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredVoyages = voyages.where((v) {
-      final tram = trams.firstWhere((t) => t['id'] == v['tramId']);
-      final gareDepart = gares.firstWhere((g) => g['id'] == v['fromGareId']);
-      final gareArrivee = gares.firstWhere((g) => g['id'] == v['toGareId']);
-      return tram['name'].toLowerCase().contains(_search) ||
-          gareDepart['name'].toLowerCase().contains(_search) ||
-          gareArrivee['name'].toLowerCase().contains(_search);
+    final filteredTickets = tickets.where((ticket) {
+      final trip = ticket['trip'] ?? {};
+      final route = trip['route'] ?? {};
+      final fromCity = route['fromStation']?['city']?.toLowerCase() ?? '';
+      final toCity = route['toStation']?['city']?.toLowerCase() ?? '';
+      final name = trip['name']?.toLowerCase() ?? '';
+      return fromCity.contains(_search) ||
+          toCity.contains(_search) ||
+          name.contains(_search);
     }).toList();
 
     return Scaffold(
@@ -103,47 +104,41 @@ class _TravelsState extends State<Travels> {
             ),
             SizedBox(height: 4),
             Expanded(
-              child: ListView.builder(
-                itemCount: filteredVoyages.length,
-                itemBuilder: (context, index) {
-                  final v = filteredVoyages[index];
-                  final tram = trams.firstWhere((t) => t['id'] == v['tramId']);
-                  final gareDepart = gares.firstWhere(
-                    (g) => g['id'] == v['fromGareId'],
-                  );
-                  final gareArrivee = gares.firstWhere(
-                    (g) => g['id'] == v['toGareId'],
-                  );
-                  final gareDepartCoords = gares.firstWhere(
-                    (g) => g['id'] == v['fromGareId'],
-                  );
-                  final gareArriveeCoords = gares.firstWhere(
-                    (g) => g['id'] == v['toGareId'],
-                  );
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: filteredTickets.length,
+                      itemBuilder: (context, index) {
+                        final ticket = filteredTickets[index];
+                        final trip = ticket['trip'] ?? {};
+                        final route = trip['route'] ?? {};
+                        final fromStation = route['fromStation'] ?? {};
+                        final toStation = route['toStation'] ?? {};
+                        final vehicle = trip['vehicle'] ?? {};
 
-                  return TravelCard(
-                    voyage: v,
-                    gareDepart: gareDepart,
-                    gareArrivee: gareArrivee,
-                    tram: tram,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Travel(
-                            travelData: v,
-                            gareDepart: gareDepart,
-                            gareArrivee: gareArrivee,
-                            tram: tram,
-                            gareDepartCoords: gareDepartCoords,
-                            gareArriveeCoords: gareArriveeCoords,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+                        return TravelCard(
+                          voyage: ticket,
+                          gareDepart: fromStation,
+                          gareArrivee: toStation,
+                          tram: vehicle,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Travel(
+                                  travelData: ticket,
+                                  gareDepart: fromStation,
+                                  gareArrivee: toStation,
+                                  tram: vehicle,
+                                  gareDepartCoords: fromStation['coordinate'],
+                                  gareArriveeCoords: toStation['coordinate'],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
             ),
           ],
         ),

@@ -19,17 +19,31 @@ class TravelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TimeOfDay dep = TimeOfDay(
-      hour: int.parse(voyage['departureHour'].split(':')[0]),
-      minute: int.parse(voyage['departureHour'].split(':')[1]),
-    );
-    List<String> d = voyage['duration'].split(':');
-    int addH = int.parse(d[0]);
-    int addM = int.parse(d[1]);
-    int arrH = dep.hour + addH + ((dep.minute + addM) ~/ 60);
-    int arrM = (dep.minute + addM) % 60;
-    String heureArrivee =
-        '${arrH.toString().padLeft(2, '0')}:${arrM.toString().padLeft(2, '0')}';
+    final trip = voyage['trip'] ?? {};
+    final route = trip['route'] ?? {};
+    final fromStation = route['fromStation'] ?? {};
+    final toStation = route['toStation'] ?? {};
+
+    final depDateTime = fromStation['datetime'] ?? '';
+    final arrDateTime = toStation['datetime'] ?? '';
+
+    String extractHour(String dt) {
+      if (dt.contains(' ')) {
+        return dt.split(' ').last;
+      }
+      return dt;
+    }
+
+    final departureHour = extractHour(depDateTime);
+    final arrivalHour = extractHour(arrDateTime);
+
+    String durationStr = '';
+    if (route['duration'] != null) {
+      int duration = int.tryParse(route['duration'].toString()) ?? 0;
+      int h = duration ~/ 60;
+      int m = duration % 60;
+      durationStr = '${h}h${m.toString().padLeft(2, '0')}';
+    }
 
     return GestureDetector(
       onTap: onTap,
@@ -46,12 +60,12 @@ class TravelCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        voyage['departureHour'],
+                        departureHour,
                         style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                       SizedBox(width: 12),
                       Text(
-                        gareDepart['name'],
+                        fromStation['city'] ?? '',
                         style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                     ],
@@ -59,12 +73,12 @@ class TravelCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        heureArrivee,
+                        arrivalHour,
                         style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                       SizedBox(width: 12),
                       Text(
-                        gareArrivee['name'],
+                        toStation['city'] ?? '',
                         style: TextStyle(fontSize: 16, color: AppColors.white),
                       ),
                     ],
@@ -72,7 +86,7 @@ class TravelCard extends StatelessWidget {
                 ],
               ),
               trailing: Text(
-                '${voyage['price']} €',
+                '${trip['price'] ?? ''} €',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.secondary,
@@ -88,12 +102,12 @@ class TravelCard extends StatelessWidget {
                   Icon(Icons.schedule, size: 18, color: AppColors.secondary),
                   SizedBox(width: 8),
                   Text(
-                    voyage['duration'],
+                    durationStr,
                     style: TextStyle(fontSize: 14, color: AppColors.white),
                   ),
                   SizedBox(width: 16),
                   Text(
-                    tram['type'],
+                    tram['type'] ?? '',
                     style: TextStyle(fontSize: 14, color: AppColors.white),
                   ),
                 ],

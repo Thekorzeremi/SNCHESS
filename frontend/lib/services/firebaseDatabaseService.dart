@@ -260,11 +260,15 @@ class FirebaseDatabaseService {
     if (snapshot.exists) {
       final tickets = snapshot.value;
       if (tickets is List) {
-        for (final ticket in tickets) {
-          if (ticket == null) continue;
-          final ticketMap = castMap(ticket as Map);
-          print(ticketMap);
-        }
+        return tickets
+            .where((ticket) => ticket != null)
+            .map((ticket) => castMap(ticket as Map))
+            .toList();
+      } else if (tickets is Map) {
+        return tickets.values
+            .where((ticket) => ticket != null)
+            .map((ticket) => castMap(ticket as Map))
+            .toList();
       }
     }
     return [];
