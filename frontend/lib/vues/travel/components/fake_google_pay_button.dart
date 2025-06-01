@@ -10,6 +10,7 @@ class FakeGooglePayButton extends StatelessWidget {
   final Map<String, dynamic> gareDepart;
   final Map<String, dynamic> gareArrivee;
   final Map<String, dynamic> tram;
+  final VoidCallback? onPaymentStart;
   const FakeGooglePayButton({
     super.key,
     required this.context,
@@ -17,41 +18,32 @@ class FakeGooglePayButton extends StatelessWidget {
     required this.gareDepart,
     required this.gareArrivee,
     required this.tram,
+    this.onPaymentStart,
   });
 
   void simulatePayment() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => Center(
-        child: Container(
-          width: 100,
-          height: 100,
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(0, 0, 0, 0),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: CircularProgressIndicator(color: Colors.white),
-        ),
-      ),
-    );
-
-    await Future.delayed(Duration(seconds: 2));
-
-    Navigator.of(context).pop();
-    Navigator.of(context).pop();
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const _SuccessDialog(),
-    );
-
-    await Future.delayed(Duration(seconds: 2));
-    Navigator.of(context).pop();
-
+    if (onPaymentStart != null) onPaymentStart!();
     try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => Center(
+          child: Container(
+            width: 100,
+            height: 100,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(0, 0, 0, 0),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: CircularProgressIndicator(color: Colors.white),
+          ),
+        ),
+      );
+
+      await Future.delayed(Duration(seconds: 2));
+      if (Navigator.of(context).canPop()) Navigator.of(context).pop(); // Ferme le loader
+
       final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
       final email = userInfo?['email'];
       final db = FirebaseDatabase.instance.ref();
@@ -93,22 +85,31 @@ class FakeGooglePayButton extends StatelessWidget {
           },
         },
       };
-      final ticketsRaw = userData['ticket'];
-      List<dynamic> tickets;
-      if (ticketsRaw is List) {
-        tickets = ticketsRaw.where((t) => t != null).toList();
-      } else if (ticketsRaw is Map) {
-        tickets = ticketsRaw.values.where((t) => t != null).toList();
-      } else {
+      List<dynamic> tickets = [];
+      if (userData['ticket'] == null) {
         tickets = [];
+      } else if (userData['ticket'] is List) {
+        tickets = (userData['ticket'] as List).where((t) => t != null).toList();
+      } else if (userData['ticket'] is Map) {
+        tickets = (userData['ticket'] as Map).values.where((t) => t != null).toList();
       }
       tickets.add(ticket);
       await db.child('fixtures/users/$userIndex/ticket').set(tickets);
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => const _SuccessDialog(),
+      );
+      await Future.delayed(Duration(seconds: 2));
+      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Billet acheté avec succès !')),
       );
     } catch (e) {
       print('Erreur lors de l\'achat du billet: $e');
+      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erreur lors de l\'achat du billet: $e')),
       );

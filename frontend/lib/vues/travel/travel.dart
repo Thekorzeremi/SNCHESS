@@ -105,6 +105,9 @@ class Travel extends StatelessWidget {
                         gareDepart: gareDepart,
                         gareArrivee: gareArrivee,
                         tram: tram,
+                        onPaymentStart: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),

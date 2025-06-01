@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../color.dart';
 import '../travels/components/travel_card.dart';
+import 'filtered_travel_details.dart';
 import '../../mocks/mock_data.dart';
 import '../detailled_search/firebase_station_utils.dart';
 import '../travel/travel.dart';
@@ -244,6 +245,27 @@ class _FilteredTravelsState extends State<FilteredTravels> {
                                       title: Text('${fromStation['city']} → ${toStation['city']}', style: TextStyle(color: AppColors.white)),
                                       subtitle: Text('Départ: ${fromStation['datetime']}\nArrivée: ${toStation['datetime']}\nPrix: ${trip['price']} €', style: TextStyle(color: Colors.white70)),
                                       trailing: Text(vehicle['name'] ?? '', style: TextStyle(color: AppColors.secondary)),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => Scaffold(
+                                              appBar: AppBar(
+                                                backgroundColor: AppColors.primary,
+                                                elevation: 0,
+                                                title: Text('Détail du trajet', style: TextStyle(color: AppColors.white)),
+                                                iconTheme: IconThemeData(color: AppColors.white),
+                                              ),
+                                              body: FilteredTravelDetails(
+                                                trip: Map<String, dynamic>.from(trip as Map),
+                                                fromStation: Map<String, dynamic>.from(fromStation as Map),
+                                                toStation: Map<String, dynamic>.from(toStation as Map),
+                                                vehicle: Map<String, dynamic>.from(vehicle as Map),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   );
                                 },
