@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/color.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '../../../services/firebaseAuthentificationService.dart';
+import 'dart:math';
 
 class FakeGooglePayButton extends StatelessWidget {
   final BuildContext context;
-  const FakeGooglePayButton({super.key, required this.context});
+  final Map<String, dynamic> travelData;
+  final Map<String, dynamic> gareDepart;
+  final Map<String, dynamic> gareArrivee;
+  final Map<String, dynamic> tram;
+  const FakeGooglePayButton({
+    super.key,
+    required this.context,
+    required this.travelData,
+    required this.gareDepart,
+    required this.gareArrivee,
+    required this.tram,
+  });
 
   void simulatePayment() async {
     showDialog(
@@ -37,8 +51,68 @@ class FakeGooglePayButton extends StatelessWidget {
     await Future.delayed(Duration(seconds: 2));
     Navigator.of(context).pop();
 
-    // TODO: ajouter le trajet à l'utilisateur (et le rediriger vers celui-ci ?)
-    // + supprimer le trajet de la liste ?
+    try {
+      final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+      final email = userInfo?['email'];
+      final db = FirebaseDatabase.instance.ref();
+      final usersSnapshot = await db.child('fixtures/users').get();
+      int? userIndex;
+      Map<dynamic, dynamic>? userData;
+      if (usersSnapshot.exists) {
+        final users = usersSnapshot.value as List<dynamic>;
+        for (int i = 0; i < users.length; i++) {
+          final user = users[i];
+          if (user != null && user['email'] == email) {
+            userIndex = i;
+            userData = user;
+            break;
+          }
+        }
+      }
+      if (userIndex == null || userData == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Utilisateur non trouvé')),
+        );
+        return;
+      }
+      final random = Random();
+      final qrCode = DateTime.now().millisecondsSinceEpoch.toString() + random.nextInt(9999).toString();
+      final seatNb = (random.nextInt(60) + 1).toString();
+      final wagonNb = (random.nextInt(8) + 1).toString();
+      final ticket = {
+        'qr_code': qrCode,
+        'seatNb': seatNb,
+        'wagonNb': wagonNb,
+        'trip': {
+          ...travelData['trip'],
+          'vehicle': tram,
+          'route': {
+            ...travelData['trip']['route'],
+            'fromStation': gareDepart,
+            'toStation': gareArrivee,
+          },
+        },
+      };
+      final ticketsRaw = userData['ticket'];
+      List<dynamic> tickets;
+      if (ticketsRaw is List) {
+        tickets = ticketsRaw.where((t) => t != null).toList();
+      } else if (ticketsRaw is Map) {
+        tickets = ticketsRaw.values.where((t) => t != null).toList();
+      } else {
+        tickets = [];
+      }
+      tickets.add(ticket);
+      await db.child('fixtures/users/$userIndex/ticket').set(tickets);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Billet acheté avec succès !')),
+      );
+    } catch (e) {
+      print('Erreur lors de l\'achat du billet: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur lors de l\'achat du billet: $e')),
+      );
+    }
   }
 
   @override
