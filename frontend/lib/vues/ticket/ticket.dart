@@ -162,21 +162,31 @@ class Ticket extends StatelessWidget {
                       final confirm = await showDialog<bool>(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Confirmation'),
-                          content: Text(
+                          backgroundColor: AppColors.primary,
+                          titleTextStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          contentTextStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16,
+                          ),
+                          title: const Text('Confirmation'),
+                          content: const Text(
                             'Es-tu sûr de vouloir annuler ce voyage ?',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Non', style: TextStyle(color: Colors.white)),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text('Oui', style: TextStyle(color: Colors.white)),
+                            ),
+                          ],
                         ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: Text('Non'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(true),
-                            child: Text('Oui'),
-                          ),
-                        ],
-                      ),
                     );
                     if (confirm == true) {
                       final userInfo = FirebaseAuthentificationService()
