@@ -27,13 +27,14 @@ class FilteredTravelDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: AppColors.primary),
-      padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FilteredTravelMap(fromStation: fromStation, toStation: toStation),
-          Row(
-            children: [
+          FilteredTravelMap(fromStation: fromStation, toStation: toStation, onBack: () => Navigator.pop(context),),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
               Icon(Icons.train, color: AppColors.secondary),
               SizedBox(width: 8),
               Text(
@@ -61,36 +62,40 @@ class FilteredTravelDetails extends StatelessWidget {
                 ),
               ),
             ],
+            ),
           ),
           SizedBox(height: 20),
-          SizedBox(
-            height: 300,
-            child: Stack(
-              children: [
-                Positioned(left: 66, top: 0, bottom: 32, child: StepLine()),
-                Positioned(
-                  top: 4,
-                  left: 0,
-                  right: 0,
-                  child: StepCircle(
-                    time: fromStation['datetime'] ?? '',
-                    title: fromStation['city'] ?? 'Ville inconnue',
-                    subtitle: 'Accès de plain-pied ou par ascenseur',
-                    isTop: true,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              height: 300,
+              child: Stack(
+                children: [
+                  Positioned(left: 66, top: 0, bottom: 32, child: StepLine()),
+                  Positioned(
+                    top: 4,
+                    left: 0,
+                    right: 0,
+                    child: StepCircle(
+                      time: fromStation['datetime'] ?? '',
+                      title: fromStation['city'] ?? 'Ville inconnue',
+                      subtitle: 'Accès de plain-pied ou par ascenseur',
+                      isTop: true,
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: 160,
-                  left: 0,
-                  right: 0,
-                  child: StepCircle(
-                    time: toStation['datetime'] ?? '',
-                    title: toStation['city'] ?? 'Ville inconnue',
-                    subtitle: 'Accès de plain-pied ou par ascenseur',
-                    isTop: false,
+                  Positioned(
+                    top: 160,
+                    left: 0,
+                    right: 0,
+                    child: StepCircle(
+                      time: toStation['datetime'] ?? '',
+                      title: toStation['city'] ?? 'Ville inconnue',
+                      subtitle: 'Accès de plain-pied ou par ascenseur',
+                      isTop: false,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           TravelCO2Info(co2Text: 'CO2 émis pour cet itinéraire : 1.7 kg'),
