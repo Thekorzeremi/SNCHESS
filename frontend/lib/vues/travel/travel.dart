@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/vues/travel/components/fake_google_pay_button.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:intl/intl.dart';
 import '../../color.dart';
 import './components/travel_map.dart';
 import './components/travel_details.dart';
 import './components/travel_co2_info.dart';
 import './components/travel_alert_info.dart';
 import './components/travel_buy_button.dart';
-import '../../services/formatDateService.dart';
 
 class Travel extends StatelessWidget {
   final Map<String, dynamic> travelData;
@@ -32,17 +32,29 @@ class Travel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LatLng depart = LatLng(
-      gareDepartCoords['latitude'],
-      gareDepartCoords['longitude'],
+      gareDepartCoords['latitude'] is double
+          ? gareDepartCoords['latitude']
+          : double.parse(gareDepartCoords['latitude'].toString()),
+      gareDepartCoords['longitude'] is double
+          ? gareDepartCoords['longitude']
+          : double.parse(gareDepartCoords['longitude'].toString()),
     );
     final LatLng arrivee = LatLng(
-      gareArriveeCoords['latitude'],
-      gareArriveeCoords['longitude'],
+      gareArriveeCoords['latitude'] is double
+          ? gareArriveeCoords['latitude']
+          : double.parse(gareArriveeCoords['latitude'].toString()),
+      gareArriveeCoords['longitude'] is double
+          ? gareArriveeCoords['longitude']
+          : double.parse(gareArriveeCoords['longitude'].toString()),
     );
-    final String arrivalHour = getArrivalHour(
-      travelData['departureHour'],
-      travelData['duration'],
-    );
+
+    final formatedArrivedTime =
+        travelData['trip']['route']['fromStation']['datetime'];
+    final String arrivalHour = formatedArrivedTime != null
+        ? TimeOfDay.fromDateTime(
+            DateFormat('dd/MM/yyyy HH:mm').parse(formatedArrivedTime),
+          ).format(context)
+        : '';
 
     return Scaffold(
       backgroundColor: AppColors.primary,

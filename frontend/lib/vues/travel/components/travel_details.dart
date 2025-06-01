@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/formatDateService.dart';
 import '../../../color.dart';
 import 'step_circle.dart';
 import 'step_line.dart';
@@ -48,7 +49,7 @@ class TravelDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  '${travelData['duration']}',
+                  '${formatDuration(travelData['trip']['route']['duration'])}',
                   style: TextStyle(
                     color: AppColors.white,
                     fontWeight: FontWeight.bold,
@@ -68,8 +69,8 @@ class TravelDetails extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: StepCircle(
-                    time: travelData['departureHour'],
-                    title: gareDepart['name'],
+                    time: gareDepart['datetime'],
+                    title: gareDepart['city'] ?? 'Ville inconnue',
                     subtitle: 'Accès de plain-pied ou par ascenseur',
                     isTop: true,
                   ),
@@ -79,8 +80,8 @@ class TravelDetails extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: StepCircle(
-                    time: arrivalHour,
-                    title: gareArrivee['name'],
+                    time: gareArrivee['datetime'],
+                    title: gareArrivee['city'] ?? 'Ville inconnue',
                     subtitle: 'Accès de plain-pied ou par ascenseur',
                     isTop: false,
                   ),
