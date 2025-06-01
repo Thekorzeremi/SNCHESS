@@ -6,10 +6,12 @@ import '../../color.dart';
 class FilteredTravelMap extends StatelessWidget {
   final Map<String, dynamic> fromStation;
   final Map<String, dynamic> toStation;
+  final VoidCallback? onBack;
   const FilteredTravelMap({
     super.key,
     required this.fromStation,
     required this.toStation,
+    this.onBack,
   });
 
   @override
@@ -114,6 +116,18 @@ class FilteredTravelMap extends StatelessWidget {
               ),
             ],
           ),
+          if (onBack != null)
+            Positioned(
+              top: 16,
+              left: 16,
+              child: CircleAvatar(
+                backgroundColor: Colors.black.withOpacity(0.5),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: onBack,
+                ),
+              ),
+            ),
         ],
       ),
     );
