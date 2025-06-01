@@ -194,43 +194,6 @@ class FirebaseDatabaseService {
                 },
               },
             },
-            "3": {
-              "seatNb": "36",
-              "wagonNb": "6",
-              "qr_code": "HDUZADKNKN32",
-              "trip": {
-                "name": "TGV de Feur à Quoi",
-                "price": "88",
-                "route": {
-                  "name": "Marseille à Paris",
-                  "duration": "199",
-                  "fromStation": {
-                    "datetime": "29/06/2025 15:29",
-                    "city": "Marseille",
-                    "country": "FR",
-                    "coordinate": {
-                      "latitude": "43.2961743",
-                      "longitude": "5.3699525",
-                    },
-                  },
-                  "toStation": {
-                    "datetime": "29/06/2025 18:48",
-                    "city": "Paris",
-                    "country": "FR",
-                    "coordinate": {
-                      "latitude": "48.8534951",
-                      "longitude": "2.3483915",
-                    },
-                  },
-                },
-                "vehicle": {
-                  "name": "TGV 6495",
-                  "type": "train",
-                  "status": "service",
-                  "nbOfWagon": "8",
-                },
-              },
-            },
           },
         },
       },

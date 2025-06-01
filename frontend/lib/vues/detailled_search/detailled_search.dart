@@ -6,6 +6,7 @@ import 'components/show_price.dart';
 import '../filtered_travels/filtered_travels.dart';
 import '../../mocks/mock_data.dart';
 import '../../services/firebaseAuthentificationService.dart';
+import 'firebase_station_utils.dart';
 
 class DetailledSearch extends StatefulWidget {
   const DetailledSearch({super.key});
@@ -85,10 +86,11 @@ class _DetailledSearchState extends State<DetailledSearch>
                                     ),
                                   ),
                             onTap: () async {
+                              final stations = await fetchStationsFromFirebase();
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
-                                  gares: garesList,
+                                  gares: stations['fromStations']!,
                                   onSelected: (gare) =>
                                       setState(() => gareDepart = gare),
                                   title: 'Sélectionnez la gare de départ',
@@ -151,10 +153,11 @@ class _DetailledSearchState extends State<DetailledSearch>
                                     ),
                                   ),
                             onTap: () async {
+                              final stations = await fetchStationsFromFirebase();
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
-                                  gares: garesList,
+                                  gares: stations['toStations']!,
                                   onSelected: (gare) =>
                                       setState(() => gareArrivee = gare),
                                   title: 'Sélectionnez la gare d\'arrivée',
