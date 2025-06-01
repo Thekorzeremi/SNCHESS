@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../color.dart';
+import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../services/firebaseAuthentificationService.dart';
 import '../../services/firebaseDatabaseService.dart';
@@ -10,6 +11,14 @@ class Ticket extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool _isUpcoming(String dateStr) {
+      try {
+        final date = DateFormat('dd/MM/yyyy HH:mm').parse(dateStr);
+        return date.isAfter(DateTime.now());
+      } catch (_) {
+        return false;
+      }
+    }
     final trip = ticket['trip'];
     final route = trip['route'];
     final from = route['fromStation'];
@@ -147,14 +156,15 @@ class Ticket extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                GestureDetector(
-                  onTap: () async {
-                    final confirm = await showDialog<bool>(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Confirmation'),
-                        content: Text(
-                          'Es-tu sûr de vouloir annuler ce voyage ?',
+                if (_isUpcoming(from['datetime']))
+                  GestureDetector(
+                    onTap: () async {
+                      final confirm = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Confirmation'),
+                          content: Text(
+                            'Es-tu sûr de vouloir annuler ce voyage ?',
                         ),
                         actions: [
                           TextButton(
@@ -169,26 +179,33 @@ class Ticket extends StatelessWidget {
                       ),
                     );
                     if (confirm == true) {
-  final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
-  final email = userInfo?['email'];
-  if (email == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Utilisateur non connecté')));
-    return;
-  }
-  final success = await FirebaseDatabaseService().deleteTicket(
-    email: email,
-    qrCode: ticket['qr_code'],
-  );
-  if (success) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Ticket annulé avec succès')));
-    Navigator.of(context).pop();
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Erreur lors de l\'annulation')));
-  }
-}
+                      final userInfo = FirebaseAuthentificationService()
+                          .getCurrentUserInformation();
+                      final email = userInfo?['email'];
+                      if (email == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Utilisateur non connecté')),
+                        );
+                        return;
+                      }
+                      final success = await FirebaseDatabaseService()
+                          .deleteTicket(
+                            email: email,
+                            qrCode: ticket['qr_code'],
+                          );
+                      if (success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Ticket annulé avec succès')),
+                        );
+                        Navigator.of(context).pop();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Erreur lors de l\'annulation'),
+                          ),
+                        );
+                      }
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
@@ -223,9 +240,9 @@ class Ticket extends StatelessWidget {
     if (d >= 60) {
       int h = d ~/ 60;
       int m = d % 60;
-      return m == 0 ? 'h}h' : 'h}h${m.toString().padLeft(2, '0')}';
+      return m == 0 ? '${h}h' : '${h}h${m.toString().padLeft(2, '0')}';
     } else {
-      return 'd} min';
+      return '${d} min';
     }
   }
 }

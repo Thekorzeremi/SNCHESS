@@ -304,39 +304,42 @@ class FirebaseDatabaseService {
   }
 
   Future<Map<String, List<String>>> fetchStationsFromFirebase() async {
-  final db = await FirebaseDatabase.instance
-      .ref()
-      .child('fixtures/available_tickets')
-      .get();
-  final Set<String> fromSet = {};
-  final Set<String> toSet = {};
-  if (db.exists) {
-    final value = db.value;
-    if (value is List) {
-      for (var t in value) {
-        if (t == null) continue;
-        final from = t['trip']['route']['fromStation']['city'] ?? '';
-        final to = t['trip']['route']['toStation']['city'] ?? '';
-        if (from.isNotEmpty) fromSet.add(from);
-        if (to.isNotEmpty) toSet.add(to);
+    final db = await FirebaseDatabase.instance
+        .ref()
+        .child('fixtures/available_tickets')
+        .get();
+    final Set<String> fromSet = {};
+    final Set<String> toSet = {};
+    if (db.exists) {
+      final value = db.value;
+      if (value is List) {
+        for (var t in value) {
+          if (t == null) continue;
+          final from = t['trip']['route']['fromStation']['city'] ?? '';
+          final to = t['trip']['route']['toStation']['city'] ?? '';
+          if (from.isNotEmpty) fromSet.add(from);
+          if (to.isNotEmpty) toSet.add(to);
+        }
+      } else if (value is Map) {
+        value.forEach((_, t) {
+          if (t == null) return;
+          final from = t['trip']['route']['fromStation']['city'] ?? '';
+          final to = t['trip']['route']['toStation']['city'] ?? '';
+          if (from.isNotEmpty) fromSet.add(from);
+          if (to.isNotEmpty) toSet.add(to);
+        });
       }
-    } else if (value is Map) {
-      value.forEach((_, t) {
-        if (t == null) return;
-        final from = t['trip']['route']['fromStation']['city'] ?? '';
-        final to = t['trip']['route']['toStation']['city'] ?? '';
-        if (from.isNotEmpty) fromSet.add(from);
-        if (to.isNotEmpty) toSet.add(to);
-      });
     }
+    return {
+      'fromStations': fromSet.toList()..sort(),
+      'toStations': toSet.toList()..sort(),
+    };
   }
-  return {
-    'fromStations': fromSet.toList()..sort(),
-    'toStations': toSet.toList()..sort(),
-  };
-}
 
-  Future<bool> deleteTicket({required String email, required String qrCode}) async {
+  Future<bool> deleteTicket({
+    required String email,
+    required String qrCode,
+  }) async {
     try {
       final db = FirebaseDatabase.instance.ref();
       final usersSnapshot = await db.child('fixtures/users').get();
@@ -376,4 +379,3 @@ class FirebaseDatabaseService {
     }
   }
 }
-

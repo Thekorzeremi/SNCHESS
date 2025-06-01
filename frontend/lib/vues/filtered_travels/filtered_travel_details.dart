@@ -30,38 +30,42 @@ class FilteredTravelDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FilteredTravelMap(fromStation: fromStation, toStation: toStation, onBack: () => Navigator.pop(context),),
+          FilteredTravelMap(
+            fromStation: fromStation,
+            toStation: toStation,
+            onBack: () => Navigator.pop(context),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-              Icon(Icons.train, color: AppColors.secondary),
-              SizedBox(width: 8),
-              Text(
-                vehicle['name'] ?? 'Train inconnu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              Spacer(),
-              Container(
-                margin: EdgeInsets.only(top: 40),
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.card,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  '${formatDuration(trip['route']?['duration'] ?? "0")}',
+                Icon(Icons.train, color: AppColors.secondary),
+                SizedBox(width: 8),
+                Text(
+                  vehicle['name'] ?? 'Train inconnu',
                   style: TextStyle(
-                    color: AppColors.white,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
                 ),
-              ),
-            ],
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(top: 40),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${formatDuration(trip['route']?['duration'] ?? "0")}',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 20),
