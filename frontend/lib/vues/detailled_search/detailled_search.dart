@@ -86,7 +86,8 @@ class _DetailledSearchState extends State<DetailledSearch>
                                     ),
                                   ),
                             onTap: () async {
-                              final stations = await fetchStationsFromFirebase();
+                              final stations =
+                                  await fetchStationsFromFirebase();
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
@@ -153,7 +154,8 @@ class _DetailledSearchState extends State<DetailledSearch>
                                     ),
                                   ),
                             onTap: () async {
-                              final stations = await fetchStationsFromFirebase();
+                              final stations =
+                                  await fetchStationsFromFirebase();
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(

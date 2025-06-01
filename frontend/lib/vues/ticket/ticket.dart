@@ -152,7 +152,9 @@ class Ticket extends StatelessWidget {
                       context: context,
                       builder: (context) => AlertDialog(
                         title: Text('Confirmation'),
-                        content: Text('Es-tu sûr de vouloir annuler ce voyage ?'),
+                        content: Text(
+                          'Es-tu sûr de vouloir annuler ce voyage ?',
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(false),
@@ -205,17 +207,18 @@ class Ticket extends StatelessWidget {
       return m == 0 ? 'h}h' : 'h}h${m.toString().padLeft(2, '0')}';
     } else {
       return 'd} min';
-    }   
+    }
   }
 
   Future<void> _deleteTicket(BuildContext context) async {
     try {
-      final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+      final userInfo = FirebaseAuthentificationService()
+          .getCurrentUserInformation();
       final email = userInfo?['email'];
       if (email == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Utilisateur non connecté')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Utilisateur non connecté')));
         return;
       }
       final db = FirebaseDatabase.instance.ref();
@@ -234,9 +237,9 @@ class Ticket extends StatelessWidget {
         }
       }
       if (userIndex == null || userData == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Utilisateur non trouvé')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Utilisateur non trouvé')));
         return;
       }
       final qrCode = ticket['qr_code'];
@@ -250,21 +253,20 @@ class Ticket extends StatelessWidget {
         }
       }
       if (ticketIndex == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Ticket non trouvé')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Ticket non trouvé')));
         return;
       }
       await db.child('fixtures/users/$userIndex/ticket/$ticketIndex').remove();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ticket annulé avec succès')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Ticket annulé avec succès')));
       Navigator.of(context).pop();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur lors de l\'annulation')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Erreur lors de l\'annulation')));
     }
   }
 }
-

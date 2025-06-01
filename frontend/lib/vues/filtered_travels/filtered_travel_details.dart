@@ -96,42 +96,42 @@ class FilteredTravelDetails extends StatelessWidget {
           TravelCO2Info(co2Text: 'CO2 émis pour cet itinéraire : 1.7 kg'),
           TravelAlertInfo(),
           TravelBuyButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  ),
-                  backgroundColor: Colors.white,
-                  builder: (_) => Container(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Paiement du billet',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                backgroundColor: Colors.white,
+                builder: (_) => Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Paiement du billet',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 20),
-                        FakeGooglePayButton(
-                          context: context,
-                          travelData: { 'trip': trip },
-                          gareDepart: fromStation,
-                          gareArrivee: toStation,
-                          tram: vehicle,
-                          onPaymentStart: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 20),
+                      FakeGooglePayButton(
+                        context: context,
+                        travelData: {'trip': trip},
+                        gareDepart: fromStation,
+                        gareArrivee: toStation,
+                        tram: vehicle,
+                        onPaymentStart: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

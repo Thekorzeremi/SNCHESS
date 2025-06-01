@@ -1,7 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 
 Future<Map<String, List<String>>> fetchStationsFromFirebase() async {
-  final db = await FirebaseDatabase.instance.ref().child('fixtures/available_tickets').get();
+  final db = await FirebaseDatabase.instance
+      .ref()
+      .child('fixtures/available_tickets')
+      .get();
   final Set<String> fromSet = {};
   final Set<String> toSet = {};
   if (db.exists) {
@@ -31,7 +34,10 @@ Future<Map<String, List<String>>> fetchStationsFromFirebase() async {
 }
 
 Future<List<Map<String, dynamic>>> fetchAvailableTickets() async {
-  final db = await FirebaseDatabase.instance.ref().child('fixtures/available_tickets').get();
+  final db = await FirebaseDatabase.instance
+      .ref()
+      .child('fixtures/available_tickets')
+      .get();
   final List<Map<String, dynamic>> tickets = [];
   if (db.exists) {
     final value = db.value;

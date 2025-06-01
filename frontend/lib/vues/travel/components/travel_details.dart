@@ -90,18 +90,18 @@ class TravelDetails extends StatelessWidget {
               ],
             ),
           ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24.0),
-          child: FakeGooglePayButton(
-            context: context,
-            travelData: travelData,
-            gareDepart: gareDepart,
-            gareArrivee: gareArrivee,
-            tram: tram,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24.0),
+            child: FakeGooglePayButton(
+              context: context,
+              travelData: travelData,
+              gareDepart: gareDepart,
+              gareArrivee: gareArrivee,
+              tram: tram,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
   }
 }

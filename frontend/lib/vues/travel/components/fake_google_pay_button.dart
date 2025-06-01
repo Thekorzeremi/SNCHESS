@@ -42,9 +42,11 @@ class FakeGooglePayButton extends StatelessWidget {
       );
 
       await Future.delayed(Duration(seconds: 2));
-      if (Navigator.of(context).canPop()) Navigator.of(context).pop(); // Ferme le loader
+      if (Navigator.of(context).canPop())
+        Navigator.of(context).pop(); // Ferme le loader
 
-      final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+      final userInfo = FirebaseAuthentificationService()
+          .getCurrentUserInformation();
       final email = userInfo?['email'];
       final db = FirebaseDatabase.instance.ref();
       final usersSnapshot = await db.child('fixtures/users').get();
@@ -62,13 +64,15 @@ class FakeGooglePayButton extends StatelessWidget {
         }
       }
       if (userIndex == null || userData == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Utilisateur non trouvé')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Utilisateur non trouvé')));
         return;
       }
       final random = Random();
-      final qrCode = DateTime.now().millisecondsSinceEpoch.toString() + random.nextInt(9999).toString();
+      final qrCode =
+          DateTime.now().millisecondsSinceEpoch.toString() +
+          random.nextInt(9999).toString();
       final seatNb = (random.nextInt(60) + 1).toString();
       final wagonNb = (random.nextInt(8) + 1).toString();
       final ticket = {
@@ -91,7 +95,9 @@ class FakeGooglePayButton extends StatelessWidget {
       } else if (userData['ticket'] is List) {
         tickets = (userData['ticket'] as List).where((t) => t != null).toList();
       } else if (userData['ticket'] is Map) {
-        tickets = (userData['ticket'] as Map).values.where((t) => t != null).toList();
+        tickets = (userData['ticket'] as Map).values
+            .where((t) => t != null)
+            .toList();
       }
       tickets.add(ticket);
       await db.child('fixtures/users/$userIndex/ticket').set(tickets);
@@ -104,9 +110,9 @@ class FakeGooglePayButton extends StatelessWidget {
       await Future.delayed(Duration(seconds: 2));
       if (Navigator.of(context).canPop()) Navigator.of(context).pop();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Billet acheté avec succès !')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Billet acheté avec succès !')));
     } catch (e) {
       print('Erreur lors de l\'achat du billet: $e');
       if (Navigator.of(context).canPop()) Navigator.of(context).pop();
