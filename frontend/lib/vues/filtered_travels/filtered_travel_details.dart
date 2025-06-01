@@ -6,6 +6,8 @@ import 'package:frontend/services/formatDateService.dart';
 import 'filtered_travel_map.dart';
 import '../travel/components/fake_google_pay_button.dart';
 import '../travel/components/travel_buy_button.dart';
+import '../travel/components/travel_co2_info.dart';
+import '../travel/components/travel_alert_info.dart';
 
 class FilteredTravelDetails extends StatelessWidget {
   final Map<String, dynamic> trip;
@@ -29,6 +31,7 @@ class FilteredTravelDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          FilteredTravelMap(fromStation: fromStation, toStation: toStation),
           Row(
             children: [
               Icon(Icons.train, color: AppColors.secondary),
@@ -59,8 +62,6 @@ class FilteredTravelDetails extends StatelessWidget {
               ),
             ],
           ),
-          // MAP
-          FilteredTravelMap(fromStation: fromStation, toStation: toStation),
           SizedBox(height: 20),
           SizedBox(
             height: 300,
@@ -92,9 +93,9 @@ class FilteredTravelDetails extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0),
-            child: TravelBuyButton(
+          TravelCO2Info(co2Text: 'CO2 émis pour cet itinéraire : 1.7 kg'),
+          TravelAlertInfo(),
+          TravelBuyButton(
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -131,7 +132,6 @@ class FilteredTravelDetails extends StatelessWidget {
                 );
               },
             ),
-          ),
         ],
       ),
     );
