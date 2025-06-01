@@ -6,7 +6,7 @@ import 'components/show_price.dart';
 import '../filtered_travels/filtered_travels.dart';
 import '../../mocks/mock_data.dart';
 import '../../services/firebaseAuthentificationService.dart';
-import 'firebase_station_utils.dart';
+import '../../services/firebaseDatabaseService.dart';
 
 class DetailledSearch extends StatefulWidget {
   const DetailledSearch({super.key});
@@ -26,8 +26,6 @@ class _DetailledSearchState extends State<DetailledSearch>
   bool isVoyageurSelected = false;
   bool isAnimalSelected = false;
   bool isVeloSelected = false;
-
-  // TODO: Ajouter la récupération des gares depuis Firebase RDB
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +85,7 @@ class _DetailledSearchState extends State<DetailledSearch>
                                   ),
                             onTap: () async {
                               final stations =
-                                  await fetchStationsFromFirebase();
+                                  await FirebaseDatabaseService().fetchStationsFromFirebase();
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(
@@ -155,7 +153,7 @@ class _DetailledSearchState extends State<DetailledSearch>
                                   ),
                             onTap: () async {
                               final stations =
-                                  await fetchStationsFromFirebase();
+                                  await FirebaseDatabaseService().fetchStationsFromFirebase();
                               await showDialog(
                                 context: context,
                                 builder: (context) => StationDialog(

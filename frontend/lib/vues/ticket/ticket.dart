@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../color.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../services/firebaseAuthentificationService.dart';
+import '../../services/firebaseDatabaseService.dart';
 
 class Ticket extends StatelessWidget {
   final Map<String, dynamic> ticket;
@@ -168,8 +169,26 @@ class Ticket extends StatelessWidget {
                       ),
                     );
                     if (confirm == true) {
-                      await _deleteTicket(context);
-                    }
+  final userInfo = FirebaseAuthentificationService().getCurrentUserInformation();
+  final email = userInfo?['email'];
+  if (email == null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Utilisateur non connecté')));
+    return;
+  }
+  final success = await FirebaseDatabaseService().deleteTicket(
+    email: email,
+    qrCode: ticket['qr_code'],
+  );
+  if (success) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Ticket annulé avec succès')));
+    Navigator.of(context).pop();
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Erreur lors de l\'annulation')));
+  }
+}
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
@@ -207,66 +226,6 @@ class Ticket extends StatelessWidget {
       return m == 0 ? 'h}h' : 'h}h${m.toString().padLeft(2, '0')}';
     } else {
       return 'd} min';
-    }
-  }
-
-  Future<void> _deleteTicket(BuildContext context) async {
-    try {
-      final userInfo = FirebaseAuthentificationService()
-          .getCurrentUserInformation();
-      final email = userInfo?['email'];
-      if (email == null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Utilisateur non connecté')));
-        return;
-      }
-      final db = FirebaseDatabase.instance.ref();
-      final usersSnapshot = await db.child('fixtures/users').get();
-      int? userIndex;
-      Map<dynamic, dynamic>? userData;
-      if (usersSnapshot.exists) {
-        final users = usersSnapshot.value as List<dynamic>;
-        for (int i = 0; i < users.length; i++) {
-          final user = users[i];
-          if (user != null && user['email'] == email) {
-            userIndex = i;
-            userData = user;
-            break;
-          }
-        }
-      }
-      if (userIndex == null || userData == null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Utilisateur non trouvé')));
-        return;
-      }
-      final qrCode = ticket['qr_code'];
-      final tickets = userData['ticket'] as List<dynamic>;
-      int? ticketIndex;
-      for (int i = 0; i < tickets.length; i++) {
-        final t = tickets[i];
-        if (t != null && t['qr_code'] == qrCode) {
-          ticketIndex = i;
-          break;
-        }
-      }
-      if (ticketIndex == null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Ticket non trouvé')));
-        return;
-      }
-      await db.child('fixtures/users/$userIndex/ticket/$ticketIndex').remove();
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Ticket annulé avec succès')));
-      Navigator.of(context).pop();
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Erreur lors de l\'annulation')));
     }
   }
 }

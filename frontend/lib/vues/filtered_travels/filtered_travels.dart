@@ -3,7 +3,7 @@ import '../../color.dart';
 import '../travels/components/travel_card.dart';
 import 'filtered_travel_details.dart';
 import '../../mocks/mock_data.dart';
-import '../detailled_search/firebase_station_utils.dart';
+import '../../services/firebaseDatabaseService.dart';
 import '../travel/travel.dart';
 import 'package:intl/intl.dart';
 import 'components/date_price_card.dart';
@@ -50,7 +50,7 @@ class _FilteredTravelsState extends State<FilteredTravels> {
       isLoading = true;
     });
     try {
-      final tickets = await fetchAvailableTickets();
+      final tickets = await FirebaseDatabaseService().fetchAvailableTickets();
       setState(() {
         availableTickets = tickets;
         isLoading = false;

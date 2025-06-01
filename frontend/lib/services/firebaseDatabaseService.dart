@@ -1,5 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 
+// TODO : Ajouter plein de fixtures
+
 class FirebaseDatabaseService {
   Future<void> loadFixturesDataInFirebaseDataBase() async {
     final firebaseDbFixtures = {
@@ -300,4 +302,78 @@ class FirebaseDatabaseService {
     }
     return [];
   }
+
+  Future<Map<String, List<String>>> fetchStationsFromFirebase() async {
+  final db = await FirebaseDatabase.instance
+      .ref()
+      .child('fixtures/available_tickets')
+      .get();
+  final Set<String> fromSet = {};
+  final Set<String> toSet = {};
+  if (db.exists) {
+    final value = db.value;
+    if (value is List) {
+      for (var t in value) {
+        if (t == null) continue;
+        final from = t['trip']['route']['fromStation']['city'] ?? '';
+        final to = t['trip']['route']['toStation']['city'] ?? '';
+        if (from.isNotEmpty) fromSet.add(from);
+        if (to.isNotEmpty) toSet.add(to);
+      }
+    } else if (value is Map) {
+      value.forEach((_, t) {
+        if (t == null) return;
+        final from = t['trip']['route']['fromStation']['city'] ?? '';
+        final to = t['trip']['route']['toStation']['city'] ?? '';
+        if (from.isNotEmpty) fromSet.add(from);
+        if (to.isNotEmpty) toSet.add(to);
+      });
+    }
+  }
+  return {
+    'fromStations': fromSet.toList()..sort(),
+    'toStations': toSet.toList()..sort(),
+  };
 }
+
+  Future<bool> deleteTicket({required String email, required String qrCode}) async {
+    try {
+      final db = FirebaseDatabase.instance.ref();
+      final usersSnapshot = await db.child('fixtures/users').get();
+      int? userIndex;
+      Map<dynamic, dynamic>? userData;
+      if (usersSnapshot.exists) {
+        final users = usersSnapshot.value as List<dynamic>;
+        for (int i = 0; i < users.length; i++) {
+          final user = users[i];
+          if (user != null && user['email'] == email) {
+            userIndex = i;
+            userData = user;
+            break;
+          }
+        }
+      }
+      if (userIndex == null || userData == null) {
+        return false;
+      }
+
+      final tickets = userData['ticket'] as List<dynamic>;
+      int? ticketIndex;
+      for (int i = 0; i < tickets.length; i++) {
+        final t = tickets[i];
+        if (t != null && t['qr_code'] == qrCode) {
+          ticketIndex = i;
+          break;
+        }
+      }
+      if (ticketIndex == null) {
+        return false;
+      }
+      await db.child('fixtures/users/$userIndex/ticket/$ticketIndex').remove();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+}
+
