@@ -91,27 +91,24 @@ class _FilteredTravelsState extends State<FilteredTravels> {
       orElse: () => <String, dynamic>{},
     )['id'];
 
-    final List<DateTime> days = visibleDays;
-
-    List<Map<String, dynamic>> daysWithPrice = days.map((date) {
-      final dateStr = DateFormat('yyyy-MM-dd').format(date);
-      final voyagesOfDay = voyages
-          .where(
-            (v) =>
-                v['fromGareId'] == gareDepartId &&
-                v['toGareId'] == gareArriveeId &&
-                v['departureDate'] == dateStr,
-          )
-          .toList();
-      double? minPrice;
-      if (voyagesOfDay.isNotEmpty) {
-        minPrice = voyagesOfDay
-            .map((v) => v['price'] as num)
-            .reduce((a, b) => a < b ? a : b)
-            .toDouble();
+    final Map<String, List<Map<String, dynamic>>> ticketsByDate = {};
+    for (final t in availableTickets) {
+      final from = t['trip']['route']['fromStation']['city']?.toLowerCase();
+      final to = t['trip']['route']['toStation']['city']?.toLowerCase();
+      if (from == widget.gareDepart.toLowerCase() && to == widget.gareArrivee.toLowerCase()) {
+        final depDate = t['trip']['route']['fromStation']['datetime'];
+        final depDateOnly = depDate != null && depDate.contains(' ') ? depDate.split(' ')[0] : '';
+        if (depDateOnly.isNotEmpty) {
+          ticketsByDate.putIfAbsent(depDateOnly, () => []).add(t);
+        }
       }
+    }
+    final List<Map<String, dynamic>> daysWithPrice = ticketsByDate.entries.map((e) {
+      final date = DateFormat('dd/MM/yyyy').parse(e.key);
+      final minPrice = e.value.map((t) => double.tryParse(t['trip']['price'].toString()) ?? 0).reduce((a, b) => a < b ? a : b);
       return {'date': date, 'minPrice': minPrice};
-    }).toList();
+    }).toList()
+      ..sort((a, b) => (a['date'] as DateTime).compareTo(b['date'] as DateTime));
 
     return Scaffold(
       appBar: AppBar(
