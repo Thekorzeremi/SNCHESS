@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../services/firebaseAuthentificationService.dart';
 import '../../services/firebaseDatabaseService.dart';
+import 'dart:convert';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class Ticket extends StatelessWidget {
   final Map<String, dynamic> ticket;
@@ -137,10 +139,22 @@ class Ticket extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.qr_code,
-                          color: AppColors.secondary,
-                          size: size.width / 1.7,
+                        QrImageView(
+                          data: jsonEncode({
+                            'qr_code': ticket['qr_code'],
+                            'wagon': ticket['wagonNb'],
+                            'place': ticket['seatNb'],
+                            'date_depart': from['datetime'],
+                            'ville_depart': from['city'],
+                            'date_arrivee': to['datetime'],
+                            'ville_arrivee': to['city'],
+                            'trajet': route['name'],
+                            'train': trip['name'],
+                            'prix': trip['price'],
+                          }),
+                          backgroundColor: AppColors.white,
+                          size: 200.0,
+                          version: QrVersions.auto,
                         ),
                         const SizedBox(height: 12),
                         Text(
