@@ -171,13 +171,16 @@ class _TicketsState extends State<Tickets> {
                         final to = route['toStation'];
                         final vehicle = trip['vehicle'];
                         return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            final result = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Ticket(ticket: ticket),
                               ),
                             );
+                            if (result == 'deleted') {
+                              fetchUserTickets();
+                            }
                           },
                           child: Card(
                             color: AppColors.card,

@@ -207,7 +207,7 @@ class Ticket extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Ticket annulé avec succès')),
                         );
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop('deleted');
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

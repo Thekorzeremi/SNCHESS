@@ -4,6 +4,7 @@ import '../travel/travel.dart';
 import './components/search_bar.dart' as travels_components;
 import 'components/travel_card.dart';
 import '../detailled_search/detailled_search.dart';
+import 'package:intl/intl.dart';
 import '../../services/firebaseAuthentificationService.dart';
 import '../../services/firebaseDatabaseService.dart';
 
@@ -53,12 +54,21 @@ class _TravelsState extends State<Travels> {
     final filteredTickets = tickets.where((ticket) {
       final trip = ticket['trip'] ?? {};
       final route = trip['route'] ?? {};
-      final fromCity = route['fromStation']?['city']?.toLowerCase() ?? '';
+      final fromStation = route['fromStation'] ?? {};
+      final fromCity = fromStation['city']?.toLowerCase() ?? '';
       final toCity = route['toStation']?['city']?.toLowerCase() ?? '';
       final name = trip['name']?.toLowerCase() ?? '';
-      return fromCity.contains(_search) ||
+      final dateStr = fromStation['datetime'] ?? '';
+      DateTime? date;
+      try {
+        date = DateFormat('dd/MM/yyyy HH:mm').parse(dateStr);
+      } catch (_) {
+        date = null;
+      }
+      final isFuture = date == null ? false : date.isAfter(DateTime.now());
+      return isFuture && (fromCity.contains(_search) ||
           toCity.contains(_search) ||
-          name.contains(_search);
+          name.contains(_search));
     }).toList();
 
     return Scaffold(
