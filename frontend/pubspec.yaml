@@ -46,7 +46,6 @@ dependencies:
   mobile_scanner: ^3.5.5
   flutter_launcher_icons: ^0.14.3
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
