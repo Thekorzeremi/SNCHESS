@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:437932690274:android:de63ce81fe5527647cfa3b",
         "android_client_info": {
-          "package_name": "com.example.frontend"
+          "package_name": "com.example.snct"
         }
       },
       "oauth_client": [],
@@ -29,7 +29,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:437932690274:android:f0a42c98eb17823f7cfa3b",
         "android_client_info": {
-          "package_name": "com.snchess.app"
+          "package_name": "com.snct.app"
         }
       },
       "oauth_client": [],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snchess/color.dart';
+import 'package:snct/color.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../../services/firebaseAuthentificationService.dart';
 import 'dart:math';

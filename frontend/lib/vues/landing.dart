@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snchess/color.dart';
-import 'package:snchess/vues/login.dart';
-import 'package:snchess/vues/register.dart';
+import 'package:snct/color.dart';
+import 'package:snct/vues/login.dart';
+import 'package:snct/vues/register.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key, this.successMessage = ''});
@@ -174,7 +174,7 @@ class LandingPage extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      "Avec votre compte SNCHESS, retrouvez tous vos voyages, abonnements et plus encore dans votre poche... Profitez de tous ces avantages en continuant !",
+                      "Avec votre compte SNCT, retrouvez tous vos voyages, abonnements et plus encore dans votre poche... Profitez de tous ces avantages en continuant !",
                       style: TextStyle(color: Colors.grey, fontSize: 16),
                     ),
                   ),

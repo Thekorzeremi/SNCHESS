@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:snchess/color.dart';
-import 'package:snchess/services/firebaseAuthentificationService.dart';
-import 'package:snchess/vues/landing.dart';
+import 'package:snct/color.dart';
+import 'package:snct/services/firebaseAuthentificationService.dart';
+import 'package:snct/vues/landing.dart';
 
 class BlockOtherFunctionalities extends StatelessWidget {
   const BlockOtherFunctionalities({super.key});

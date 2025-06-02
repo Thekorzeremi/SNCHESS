@@ -1559,7 +1559,7 @@ class FirebaseDatabaseService {
       },
       "users": {
         "1": {
-          "email": "test@snchess.com",
+          "email": "test@snct.com",
           "ticket": {
             "1": {
               "seatNb": "12",

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snchess/services/formatDateService.dart';
+import 'package:snct/services/formatDateService.dart';
 import '../../../color.dart';
 import 'step_circle.dart';
 import 'step_line.dart';

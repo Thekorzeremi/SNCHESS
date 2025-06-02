@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:snchess/color.dart';
-import 'package:snchess/vues/components/text_form_field.dart';
+import 'package:snct/color.dart';
+import 'package:snct/vues/components/text_form_field.dart';
 
 class BlockBenefits extends StatelessWidget {
   const BlockBenefits({super.key});

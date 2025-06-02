@@ -117,7 +117,6 @@ class TravelCard extends StatelessWidget {
                         tram['type'] ?? '',
                         style: TextStyle(fontSize: 14, color: AppColors.white),
                       ),
-
                     ],
                   ),
                   Row(

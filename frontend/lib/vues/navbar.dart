@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snchess/vues/landing.dart';
+import 'package:snct/vues/landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../color.dart';
 import 'tickets/tickets.dart';
@@ -35,7 +35,7 @@ class _NavbarState extends State<Navbar> {
 
       setState(() {
         isAuthenticated = user != null;
-        isAdmin = email == 'admin@snchess.com';
+        isAdmin = email == 'admin@snct.com';
         _buildWidgetOptions();
       });
     });
@@ -47,7 +47,7 @@ class _NavbarState extends State<Navbar> {
       final userInfo = FirebaseAuthentificationService()
           .getCurrentUserInformation();
       final email = userInfo?['email'] ?? '';
-      isAdmin = email == 'admin@snchess.com';
+      isAdmin = email == 'admin@snct.com';
     }
 
     _buildWidgetOptions();

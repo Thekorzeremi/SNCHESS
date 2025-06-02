@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:snchess/color.dart';
-import 'package:snchess/vues/components/text_form_field.dart';
-import 'package:snchess/vues/landing.dart';
+import 'package:snct/color.dart';
+import 'package:snct/vues/components/text_form_field.dart';
+import 'package:snct/vues/landing.dart';
 import 'package:ionicons/ionicons.dart';
 import '../services/firebaseAuthentificationService.dart';
 
@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "Un identifiant unique pour accéder à tous les espaces SNCHESS.",
+                    "Un identifiant unique pour accéder à tous les espaces SNCT.",
                     style: TextStyle(color: Colors.grey, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
