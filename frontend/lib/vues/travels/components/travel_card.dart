@@ -53,7 +53,7 @@ class TravelCard extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: Icon(Icons.train, color: AppColors.secondary, size: 42),
+              leading: Icon(Icons.tram, color: AppColors.secondary, size: 42),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

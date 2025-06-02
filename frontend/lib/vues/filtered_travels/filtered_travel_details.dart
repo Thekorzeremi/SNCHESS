@@ -39,7 +39,7 @@ class FilteredTravelDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                Icon(Icons.train, color: AppColors.secondary),
+                Icon(Icons.tram, color: AppColors.secondary),
                 SizedBox(width: 8),
                 Text(
                   vehicle['name'] ?? 'Train inconnu',

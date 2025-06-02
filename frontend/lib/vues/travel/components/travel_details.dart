@@ -31,7 +31,7 @@ class TravelDetails extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.train, color: AppColors.secondary),
+              Icon(Icons.tram, color: AppColors.secondary),
               SizedBox(width: 8),
               Text(
                 tram['name'],

@@ -216,7 +216,7 @@ class _TicketsState extends State<Tickets> {
                                   Row(
                                     children: [
                                       const Icon(
-                                        Icons.train,
+                                        Icons.tram,
                                         color: AppColors.secondary,
                                       ),
                                       const SizedBox(width: 8),

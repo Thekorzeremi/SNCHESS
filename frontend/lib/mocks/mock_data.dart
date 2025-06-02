@@ -359,7 +359,7 @@ final Map<String, dynamic> users = {
           },
           "vehicle": {
             "name": "TGV 8412",
-            "type": "train",
+            "type": "tram",
             "status": "service",
             "nbOfWagon": "8",
           },
@@ -390,7 +390,7 @@ final Map<String, dynamic> users = {
           },
           "vehicle": {
             "name": "TGV 8450",
-            "type": "train",
+            "type": "tram",
             "status": "service",
             "nbOfWagon": "8",
           },
@@ -421,7 +421,7 @@ final Map<String, dynamic> users = {
           },
           "vehicle": {
             "name": "TGV 8472",
-            "type": "train",
+            "type": "tram",
             "status": "service",
             "nbOfWagon": "8",
           },
@@ -452,7 +452,7 @@ final Map<String, dynamic> users = {
           },
           "vehicle": {
             "name": "TGV 8500",
-            "type": "train",
+            "type": "tram",
             "status": "service",
             "nbOfWagon": "8",
           },

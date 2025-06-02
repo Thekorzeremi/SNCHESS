@@ -47,7 +47,7 @@ class Ticket extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.train, color: AppColors.secondary, size: 48),
+                Icon(Icons.tram, color: AppColors.secondary, size: 48),
                 const SizedBox(height: 8),
                 Text(
                   trip['name'],
