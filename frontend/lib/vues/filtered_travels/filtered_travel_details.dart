@@ -81,7 +81,7 @@ class FilteredTravelDetails extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: StepCircle(
-                      time: fromStation['datetime'] ?? '',
+                      time: fromStation['datetime'].split(' ')[1],
                       title: fromStation['city'] ?? 'Ville inconnue',
                       subtitle: 'Accès de plain-pied ou par ascenseur',
                       isTop: true,
@@ -92,7 +92,7 @@ class FilteredTravelDetails extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: StepCircle(
-                      time: toStation['datetime'] ?? '',
+                      time: toStation['datetime'].split(' ')[1],
                       title: toStation['city'] ?? 'Ville inconnue',
                       subtitle: 'Accès de plain-pied ou par ascenseur',
                       isTop: false,

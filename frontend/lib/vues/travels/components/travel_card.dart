@@ -96,24 +96,43 @@ class TravelCard extends StatelessWidget {
             ),
             Divider(color: AppColors.primary),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 28),
+              padding: EdgeInsets.fromLTRB(28, 0, 28, 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.schedule, size: 18, color: AppColors.secondary),
-                  SizedBox(width: 8),
-                  Text(
-                    durationStr,
-                    style: TextStyle(fontSize: 14, color: AppColors.white),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.schedule,
+                        size: 18,
+                        color: AppColors.secondary,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        durationStr,
+                        style: TextStyle(fontSize: 14, color: AppColors.white),
+                      ),
+                      SizedBox(width: 16),
+                      Text(
+                        tram['type'] ?? '',
+                        style: TextStyle(fontSize: 14, color: AppColors.white),
+                      ),
+
+                    ],
                   ),
-                  SizedBox(width: 16),
-                  Text(
-                    tram['type'] ?? '',
-                    style: TextStyle(fontSize: 14, color: AppColors.white),
+                  Row(
+                    children: [
+                      Text(
+                        fromStation['datetime'].split(' ')[0] +
+                            ' - ' +
+                            toStation['datetime'].split(' ')[0],
+                        style: TextStyle(fontSize: 14, color: AppColors.white),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10),
           ],
         ),
       ),
