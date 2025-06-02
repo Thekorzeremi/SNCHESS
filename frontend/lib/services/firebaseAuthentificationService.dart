@@ -10,8 +10,10 @@ class FirebaseAuthentificationService {
     String lastName,
   ) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       await userCredential.user?.updateDisplayName('$firstName $lastName');
       await userCredential.user?.verifyBeforeUpdateEmail(
         userCredential.user!.email!,
@@ -32,10 +34,7 @@ class FirebaseAuthentificationService {
     String password,
   ) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await auth.signInWithEmailAndPassword(email: email, password: password);
       return true;
     } on FirebaseAuthException {
       return false;
@@ -43,7 +42,7 @@ class FirebaseAuthentificationService {
   }
 
   Map<String, String?>? getCurrentUserInformation() {
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = auth.currentUser;
     if (user != null) {
       return {
         'uid': user.uid,
@@ -56,7 +55,7 @@ class FirebaseAuthentificationService {
   }
 
   String getUserInitial() {
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = auth.currentUser;
     if (user != null &&
         user.displayName != null &&
         user.displayName!.isNotEmpty) {
@@ -68,7 +67,7 @@ class FirebaseAuthentificationService {
 
   void signOutCurrentUser() {
     try {
-      FirebaseAuth.instance.signOut();
+      auth.signOut();
     } catch (e) {
       print(e);
     }
@@ -81,7 +80,7 @@ class FirebaseAuthentificationService {
     String? lastName,
   }) async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
+      User? user = auth.currentUser;
 
       if (newEmail != null && newEmail.isNotEmpty) {
         await user?.verifyBeforeUpdateEmail(newEmail);
@@ -106,7 +105,7 @@ class FirebaseAuthentificationService {
   }
 
   Future<void> reauthenticate(String email, String password) async {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = auth.currentUser;
     final credential = EmailAuthProvider.credential(
       email: email,
       password: password,
@@ -118,7 +117,7 @@ class FirebaseAuthentificationService {
     required String email,
     required String password,
   }) async {
-    final user = FirebaseAuth.instance.currentUser;
+    final user = auth.currentUser;
 
     if (user != null) {
       final credential = EmailAuthProvider.credential(
@@ -127,6 +126,15 @@ class FirebaseAuthentificationService {
       );
       await user.reauthenticateWithCredential(credential);
       await user.delete();
+    }
+  }
+
+  Future<bool> resetPassword(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

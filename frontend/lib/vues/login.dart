@@ -132,8 +132,30 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void sendNewPassword(String email) {
-    // TODO: ajouter la logique pour renvoyer un password
+  void sendNewPassword(String email) async {
+    final result = await _authService.resetPassword(email);
+
+    if (result) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Un email de réinitialisation vous a été envoyé !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: AppColors.secondary,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Cette adresse email n'existe pas !",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
