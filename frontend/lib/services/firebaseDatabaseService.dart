@@ -379,7 +379,7 @@ class FirebaseDatabaseService {
     }
   }
 
-    Future<List<Map<String, dynamic>>> getUsers() async {
+  Future<List<Map<String, dynamic>>> getUsers() async {
     final ref = FirebaseDatabase.instance.ref("fixtures/users");
     final snapshot = await ref.get();
     final List<Map<String, dynamic>> users = [];

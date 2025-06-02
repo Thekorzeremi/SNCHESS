@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/vues/travel/components/fake_google_pay_button.dart';
+import 'package:snchess/vues/travel/components/fake_google_pay_button.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
 import '../../color.dart';

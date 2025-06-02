@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frontend/color.dart';
-import 'package:frontend/vues/profil/components/helps.dart/compensation_page.dart';
+import 'package:snchess/color.dart';
+import 'package:snchess/vues/profil/components/helps.dart/compensation_page.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

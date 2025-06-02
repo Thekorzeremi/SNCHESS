@@ -257,7 +257,7 @@ class _AdminState extends State<Admin> {
               ),
             ],
           ),
-        ]
+        ],
       );
     }).toList();
   }
@@ -279,7 +279,9 @@ class _AdminState extends State<Admin> {
       backgroundColor: AppColors.primary,
       body: SafeArea(
         child: _loading
-            ? const Center(child: CircularProgressIndicator(color: AppColors.secondary))
+            ? const Center(
+                child: CircularProgressIndicator(color: AppColors.secondary),
+              )
             : Column(
                 children: [
                   AdminTabs(
@@ -291,12 +293,17 @@ class _AdminState extends State<Admin> {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          _tabs.firstWhere((t) => t['key'] == selected)['label']!,
+                          _tabs.firstWhere(
+                            (t) => t['key'] == selected,
+                          )['label']!,
                           style: const TextStyle(
                             color: AppColors.white,
                             fontWeight: FontWeight.bold,

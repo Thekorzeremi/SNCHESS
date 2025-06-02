@@ -123,6 +123,7 @@ class _FilteredTravelsState extends State<FilteredTravels> {
         );
 
     return Scaffold(
+      backgroundColor: AppColors.primary,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,

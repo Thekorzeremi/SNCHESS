@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/color.dart';
+import 'package:snchess/color.dart';
 
 class MyInputField extends StatefulWidget {
   const MyInputField({

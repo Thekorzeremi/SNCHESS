@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/color.dart';
-import 'package:frontend/vues/components/text_form_field.dart';
-import 'package:frontend/vues/navbar.dart';
+import 'package:snchess/color.dart';
+import 'package:snchess/vues/components/text_form_field.dart';
+import 'package:snchess/vues/navbar.dart';
 import 'package:ionicons/ionicons.dart';
 import '../services/firebaseAuthentificationService.dart';
 

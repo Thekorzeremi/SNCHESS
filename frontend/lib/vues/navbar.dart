@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/vues/landing.dart';
+import 'package:snchess/vues/landing.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../color.dart';
 import 'tickets/tickets.dart';
 import 'profil/profil.dart';
 import 'travels/travels.dart';
+import 'verification/verification.dart';
 import 'admin/admin.dart';
 import '../services/firebaseAuthentificationService.dart';
 
@@ -58,6 +59,7 @@ class _NavbarState extends State<Navbar> {
       Tickets(),
       Profil(),
       if (isAdmin) Admin(),
+      if (isAdmin) Verification(),
     ];
   }
 
@@ -96,10 +98,11 @@ class _NavbarState extends State<Navbar> {
                 backgroundColor: AppColors.primary,
                 items: [
                   _buildNavItem(0, Icons.card_travel, 'Voyage'),
-                  _buildNavItem(1, Icons.qr_code_2, 'Tickets'),
+                  _buildNavItem(1, Icons.wallet, 'Tickets'),
                   _buildNavItem(2, Icons.person_2_outlined, 'Mon profil'),
                   if (isAdmin)
                     _buildNavItem(3, Icons.admin_panel_settings, 'Admin'),
+                  if (isAdmin) _buildNavItem(4, Icons.qr_code, 'Vérif'),
                 ],
                 currentIndex: _selectedIndex,
                 selectedItemColor: AppColors.secondary,

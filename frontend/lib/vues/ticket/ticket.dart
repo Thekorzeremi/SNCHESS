@@ -21,6 +21,7 @@ class Ticket extends StatelessWidget {
         return false;
       }
     }
+
     final trip = ticket['trip'];
     final route = trip['route'];
     final from = route['fromStation'];
@@ -193,58 +194,66 @@ class Ticket extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Non', style: TextStyle(color: Colors.white)),
+                              child: const Text(
+                                'Non',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(true),
-                              child: const Text('Oui', style: TextStyle(color: Colors.white)),
+                              child: const Text(
+                                'Oui',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ],
                         ),
-                    );
-                    if (confirm == true) {
-                      final userInfo = FirebaseAuthentificationService()
-                          .getCurrentUserInformation();
-                      final email = userInfo?['email'];
-                      if (email == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Utilisateur non connecté')),
-                        );
-                        return;
-                      }
-                      final success = await FirebaseDatabaseService()
-                          .deleteTicket(
-                            email: email,
-                            qrCode: ticket['qr_code'],
+                      );
+                      if (confirm == true) {
+                        final userInfo = FirebaseAuthentificationService()
+                            .getCurrentUserInformation();
+                        final email = userInfo?['email'];
+                        if (email == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Utilisateur non connecté')),
                           );
-                      if (success) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Ticket annulé avec succès')),
-                        );
-                        Navigator.of(context).pop('deleted');
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Erreur lors de l\'annulation'),
-                          ),
-                        );
+                          return;
+                        }
+                        final success = await FirebaseDatabaseService()
+                            .deleteTicket(
+                              email: email,
+                              qrCode: ticket['qr_code'],
+                            );
+                        if (success) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Ticket annulé avec succès'),
+                            ),
+                          );
+                          Navigator.of(context).pop('deleted');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Erreur lors de l\'annulation'),
+                            ),
+                          );
+                        }
                       }
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'Tu souhaites annuler ton voyage ?',
-                      style: TextStyle(
-                        color: AppColors.secondary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'Tu souhaites annuler ton voyage ?',
+                        style: TextStyle(
+                          color: AppColors.secondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
                 const SizedBox(height: 32),
               ],
             ),

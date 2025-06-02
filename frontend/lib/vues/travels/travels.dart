@@ -66,9 +66,10 @@ class _TravelsState extends State<Travels> {
         date = null;
       }
       final isFuture = date == null ? false : date.isAfter(DateTime.now());
-      return isFuture && (fromCity.contains(_search) ||
-          toCity.contains(_search) ||
-          name.contains(_search));
+      return isFuture &&
+          (fromCity.contains(_search) ||
+              toCity.contains(_search) ||
+              name.contains(_search));
     }).toList();
 
     return Scaffold(

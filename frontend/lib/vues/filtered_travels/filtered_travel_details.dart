@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../color.dart';
 import '../travel/components/step_circle.dart';
 import '../travel/components/step_line.dart';
-import 'package:frontend/services/formatDateService.dart';
+import 'package:snchess/services/formatDateService.dart';
 import 'filtered_travel_map.dart';
 import '../travel/components/fake_google_pay_button.dart';
 import '../travel/components/travel_buy_button.dart';

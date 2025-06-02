@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/color.dart';
-import 'package:frontend/vues/components/text_form_field.dart';
-import 'package:frontend/vues/profil/components/benefits/benefits.dart';
-import 'package:frontend/vues/profil/components/helps.dart/help.dart';
-import 'package:frontend/vues/profil/other_functionalities/other_functionalities.dart';
+import 'package:snchess/color.dart';
+import 'package:snchess/vues/components/text_form_field.dart';
+import 'package:snchess/vues/profil/components/benefits/benefits.dart';
+import 'package:snchess/vues/profil/components/helps.dart/help.dart';
+import 'package:snchess/vues/profil/other_functionalities/other_functionalities.dart';
 import 'package:ionicons/ionicons.dart';
 import '../../services/firebaseAuthentificationService.dart';
 

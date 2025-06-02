@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/color.dart';
-import 'package:frontend/vues/login.dart';
-import 'package:frontend/vues/register.dart';
+import 'package:snchess/color.dart';
+import 'package:snchess/vues/login.dart';
+import 'package:snchess/vues/register.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key, this.successMessage = ''});

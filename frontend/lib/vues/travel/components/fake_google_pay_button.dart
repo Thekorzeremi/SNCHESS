@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/color.dart';
+import 'package:snchess/color.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../../../services/firebaseAuthentificationService.dart';
 import 'dart:math';
@@ -42,8 +42,7 @@ class FakeGooglePayButton extends StatelessWidget {
       );
 
       await Future.delayed(Duration(seconds: 2));
-      if (Navigator.of(context).canPop())
-        Navigator.of(context).pop();
+      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
 
       final userInfo = FirebaseAuthentificationService()
           .getCurrentUserInformation();
@@ -64,15 +63,14 @@ class FakeGooglePayButton extends StatelessWidget {
         }
       }
       if (userIndex == null || userData == null) {
-        userIndex = usersSnapshot.exists ? (usersSnapshot.value as List).length : 0;
+        userIndex = usersSnapshot.exists
+            ? (usersSnapshot.value as List).length
+            : 0;
         await db.child('fixtures/users/$userIndex').set({
           'email': email,
           'ticket': [],
         });
-        userData = {
-          'email': email,
-          'ticket': [],
-        };
+        userData = {'email': email, 'ticket': []};
       }
       final random = Random();
       final qrCode =
