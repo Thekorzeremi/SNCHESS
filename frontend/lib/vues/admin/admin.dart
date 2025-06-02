@@ -35,7 +35,6 @@ class _AdminState extends State<Admin> {
     users = await _dbService.getUsers();
     voyages = await _dbService.getTrips();
     gares = await _dbService.getStations();
-    // Les trams sont les vehicles uniques des voyages
     final tramSet = <String, Map<String, dynamic>>{};
     for (final v in voyages) {
       final vehicle = v['trip']?['vehicle'];

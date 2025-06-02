@@ -43,7 +43,7 @@ class FakeGooglePayButton extends StatelessWidget {
 
       await Future.delayed(Duration(seconds: 2));
       if (Navigator.of(context).canPop())
-        Navigator.of(context).pop(); // Ferme le loader
+        Navigator.of(context).pop();
 
       final userInfo = FirebaseAuthentificationService()
           .getCurrentUserInformation();

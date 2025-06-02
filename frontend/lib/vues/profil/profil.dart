@@ -117,7 +117,6 @@ class _ProfilState extends State<Profil> {
         );
       }
 
-      // On vide les champs de mot de passe apres la mise à jour
       _currentPasswordController.clear();
       _passwordController.clear();
       _confirmPasswordController.clear();
