@@ -378,4 +378,54 @@ class FirebaseDatabaseService {
       return false;
     }
   }
+
+    Future<List<Map<String, dynamic>>> getUsers() async {
+    final ref = FirebaseDatabase.instance.ref("fixtures/users");
+    final snapshot = await ref.get();
+    final List<Map<String, dynamic>> users = [];
+    if (snapshot.exists) {
+      final val = snapshot.value;
+      if (val is List) {
+        for (final user in val) {
+          if (user != null) users.add(castMap(user as Map));
+        }
+      } else if (val is Map) {
+        for (final user in (val as Map).values) {
+          if (user != null) users.add(castMap(user as Map));
+        }
+      }
+    }
+    return users;
+  }
+
+  Future<List<Map<String, dynamic>>> getTrips() async {
+    final ref = FirebaseDatabase.instance.ref("fixtures/available_tickets");
+    final snapshot = await ref.get();
+    final List<Map<String, dynamic>> trips = [];
+    if (snapshot.exists) {
+      final val = snapshot.value;
+      if (val is List) {
+        for (final trip in val) {
+          if (trip != null) trips.add(castMap(trip as Map));
+        }
+      } else if (val is Map) {
+        for (final trip in (val as Map).values) {
+          if (trip != null) trips.add(castMap(trip as Map));
+        }
+      }
+    }
+    return trips;
+  }
+
+  Future<List<Map<String, dynamic>>> getStations() async {
+    final trips = await getTrips();
+    final Map<String, Map<String, dynamic>> stations = {};
+    for (final trip in trips) {
+      final from = trip['trip']?['route']?['fromStation'];
+      final to = trip['trip']?['route']?['toStation'];
+      if (from != null && from['city'] != null) stations[from['city']] = from;
+      if (to != null && to['city'] != null) stations[to['city']] = to;
+    }
+    return stations.values.toList();
+  }
 }

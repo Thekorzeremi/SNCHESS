@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../color.dart';
-import '../../mocks/mock_data.dart';
+import '../../services/firebaseDatabaseService.dart';
 import '../../services/formatDateService.dart';
 import 'components/admin_entity_card.dart';
 import 'components/admin_tabs.dart';
 import 'components/admin_entity_list.dart';
-import 'components/admin_edit_dialog.dart';
 
 class Admin extends StatefulWidget {
   const Admin({super.key});
@@ -15,6 +14,13 @@ class Admin extends StatefulWidget {
 }
 
 class _AdminState extends State<Admin> {
+  final FirebaseDatabaseService _dbService = FirebaseDatabaseService();
+  bool _loading = false;
+  List<Map<String, dynamic>> users = [];
+  List<Map<String, dynamic>> gares = [];
+  List<Map<String, dynamic>> voyages = [];
+  List<Map<String, dynamic>> trams = [];
+
   String selected = 'users';
 
   final List<Map<String, String>> _tabs = const [
@@ -22,66 +28,34 @@ class _AdminState extends State<Admin> {
     {'key': 'gares', 'label': 'Gares'},
     {'key': 'trams', 'label': 'Trams'},
     {'key': 'voyages', 'label': 'Voyages'},
-    {'key': 'verif', 'label': 'Verif'},
   ];
 
-  void _showEditDialog(
-    BuildContext context,
-    String entity,
-    Map<String, dynamic> data, {
-    void Function(Map<String, dynamic>)? onSave,
-  }) {
-    showDialog(
-      context: context,
-      builder: (context) =>
-          AdminEditDialog(entity: entity, data: data, onSave: onSave),
-    );
+  Future<void> _refreshData() async {
+    setState(() => _loading = true);
+    users = await _dbService.getUsers();
+    voyages = await _dbService.getTrips();
+    gares = await _dbService.getStations();
+    // Les trams sont les vehicles uniques des voyages
+    final tramSet = <String, Map<String, dynamic>>{};
+    for (final v in voyages) {
+      final vehicle = v['trip']?['vehicle'];
+      if (vehicle != null && vehicle['name'] != null) {
+        tramSet[vehicle['name']] = vehicle;
+      }
+    }
+    trams = tramSet.values.toList();
+    setState(() => _loading = false);
   }
 
-  void _showDeleteDialog(
-    BuildContext context,
-    String entity,
-    dynamic data,
-    VoidCallback onDeleteConfirmed,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.card,
-        title: const Text(
-          'Confirmer la suppression',
-          style: TextStyle(color: AppColors.white),
-        ),
-        content: const Text(
-          'Êtes-vous sûr de vouloir supprimer cet élément ?',
-          style: TextStyle(color: AppColors.white),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Annuler',
-              style: TextStyle(color: AppColors.secondary),
-            ),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent,
-              foregroundColor: AppColors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-              onDeleteConfirmed();
-            },
-            child: const Text('Supprimer'),
-          ),
-        ],
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _refreshData();
   }
 
   List<Widget> _buildUserCards() {
-    return users.entries.map((entry) {
+    return users.asMap().entries.map((entry) {
+      final index = entry.key + 1; // DB indexation commence à 1
       final user = entry.value;
       return AdminEntityCard(
         infoWidgets: [
@@ -114,8 +88,6 @@ class _AdminState extends State<Admin> {
               ],
             ),
         ],
-        onEdit: null,
-        onDelete: null,
       );
     }).toList();
   }
@@ -134,7 +106,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Nom : ${gare['name']}',
+                'Nom : ${gare['city'] ?? gare['name']}',
                 style: const TextStyle(
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
@@ -146,7 +118,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Latitude : ${gare['latitude']}',
+                'Latitude : ${gare['coordinate']?['latitude'] ?? gare['latitude']}',
                 style: const TextStyle(color: AppColors.white),
               ),
             ],
@@ -155,22 +127,14 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Longitude : ${gare['longitude']}',
+                'Longitude : ${gare['coordinate']?['longitude'] ?? gare['longitude']}',
                 style: const TextStyle(color: AppColors.white),
               ),
             ],
           ),
         ],
-        onEdit: () {
-          _showEditDialog(context, 'gares', gare);
-        },
-        onDelete: () {
-          _showDeleteDialog(context, 'gares', gare, () {
-            setState(() {
-              gares.remove(gare);
-            });
-          });
-        },
+        onEdit: null,
+        onDelete: null,
       );
     }).toList();
   }
@@ -216,37 +180,19 @@ class _AdminState extends State<Admin> {
             ],
           ),
         ],
-        onEdit: () {
-          _showEditDialog(context, 'trams', tram);
-        },
-        onDelete: () {
-          _showDeleteDialog(context, 'trams', tram, () {
-            setState(() {
-              trams.remove(tram);
-            });
-          });
-        },
       );
     }).toList();
   }
 
   List<Widget> _buildVoyageCards() {
-    return voyages.map((voyage) {
-      final tram = trams.firstWhere(
-        (t) => t['id'] == voyage['tramId'],
-        orElse: () => {'name': 'N/A', 'type': ''},
-      );
-      final gareDepart = gares.firstWhere(
-        (g) => g['id'] == voyage['fromGareId'],
-        orElse: () => {'name': 'N/A'},
-      );
-      final gareArrivee = gares.firstWhere(
-        (g) => g['id'] == voyage['toGareId'],
-        orElse: () => {'name': 'N/A'},
-      );
-      String date = voyage['departureDate'] ?? '';
-      String heure = voyage['departureHour'] ?? '';
-
+    return voyages.asMap().entries.map((entry) {
+      final index = entry.key + 1;
+      final voyage = entry.value;
+      final trip = voyage['trip'] ?? {};
+      final route = trip['route'] ?? {};
+      final vehicle = trip['vehicle'] ?? {};
+      final from = route['fromStation'] ?? {};
+      final to = route['toStation'] ?? {};
       return AdminEntityCard(
         infoWidgets: [
           Row(
@@ -259,7 +205,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Train : ${tram['name']} (${tram['type']})',
+                'Train : ${vehicle['name']} (${vehicle['type']})',
                 style: const TextStyle(
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
@@ -271,7 +217,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Départ : ${gareDepart['name']}',
+                'Départ : ${from['city']}',
                 style: const TextStyle(color: AppColors.white),
               ),
             ],
@@ -280,7 +226,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Arrivée : ${gareArrivee['name']}',
+                'Arrivée : ${to['city']}',
                 style: const TextStyle(color: AppColors.white),
               ),
             ],
@@ -289,7 +235,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Date : $date $heure',
+                'Date départ : ${from['datetime']}',
                 style: const TextStyle(color: AppColors.white),
               ),
             ],
@@ -298,7 +244,7 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Durée : ${formatDuration(voyage['duration'])}',
+                'Date arrivée : ${to['datetime']}',
                 style: const TextStyle(color: AppColors.white),
               ),
             ],
@@ -307,22 +253,12 @@ class _AdminState extends State<Admin> {
             children: [
               const SizedBox(width: 32),
               Text(
-                'Prix : ${voyage['price']} €',
+                'Prix : ${trip['price']} €',
                 style: const TextStyle(color: AppColors.secondary),
               ),
             ],
           ),
-        ],
-        onEdit: () {
-          _showEditDialog(context, 'voyages', voyage);
-        },
-        onDelete: () {
-          _showDeleteDialog(context, 'voyages', voyage, () {
-            setState(() {
-              voyages.remove(voyage);
-            });
-          });
-        },
+        ]
       );
     }).toList();
   }
@@ -330,7 +266,6 @@ class _AdminState extends State<Admin> {
   @override
   Widget build(BuildContext context) {
     List<Widget> entityCards = [];
-
     if (selected == 'users') {
       entityCards = _buildUserCards();
     } else if (selected == 'gares') {
@@ -341,106 +276,41 @@ class _AdminState extends State<Admin> {
       entityCards = _buildVoyageCards();
     }
 
-    void handleAdd() {
-      if (selected == 'users') {
-        final newUser = {'email': '', 'ticket': []};
-        _showEditDialog(
-          context,
-          'users',
-          newUser,
-          onSave: (data) {
-            setState(() {
-              users[DateTime.now().millisecondsSinceEpoch.toString()] = data;
-            });
-          },
-        );
-      } else if (selected == 'gares') {
-        final newGare = {'name': '', 'latitude': '', 'longitude': ''};
-        _showEditDialog(
-          context,
-          'gares',
-          newGare,
-          onSave: (data) {
-            setState(() {
-              gares.add(data);
-            });
-          },
-        );
-      } else if (selected == 'trams') {
-        final newTram = {'name': '', 'type': '', 'status': ''};
-        _showEditDialog(
-          context,
-          'trams',
-          newTram,
-          onSave: (data) {
-            setState(() {
-              trams.add(data);
-            });
-          },
-        );
-      } else if (selected == 'voyages') {
-        final newVoyage = {
-          'tramId': '',
-          'fromGareId': '',
-          'toGareId': '',
-          'departureDate': '',
-          'departureHour': '',
-          'duration': '',
-          'price': '',
-        };
-        _showEditDialog(
-          context,
-          'voyages',
-          newVoyage,
-          onSave: (data) {
-            setState(() {
-              voyages.add(data);
-            });
-          },
-        );
-      }
-    }
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin', style: TextStyle(color: AppColors.white)),
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: AppColors.white),
-      ),
-      body: Container(
-        color: AppColors.primary,
-        child: Column(
-          children: [
-            const SizedBox(height: 16),
-            AdminTabs(
-              selected: selected,
-              tabs: _tabs,
-              onSelect: (key) => setState(() => selected = key),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+      backgroundColor: AppColors.primary,
+      body: SafeArea(
+        child: _loading
+            ? const Center(child: CircularProgressIndicator(color: AppColors.secondary))
+            : Column(
                 children: [
-                  if (selected != 'users')
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        foregroundColor: AppColors.primary,
-                      ),
-                      onPressed: handleAdd,
-                      icon: const Icon(Icons.add),
-                      label: Text('Ajouter'),
+                  AdminTabs(
+                    selected: selected,
+                    tabs: _tabs,
+                    onSelect: (key) async {
+                      setState(() => selected = key);
+                      await _refreshData();
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _tabs.firstWhere((t) => t['key'] == selected)['label']!,
+                          style: const TextStyle(
+                            color: AppColors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Expanded(child: AdminEntityList(children: entityCards)),
                 ],
               ),
-            ),
-            const SizedBox(height: 8),
-            Expanded(child: AdminEntityList(children: entityCards)),
-          ],
-        ),
       ),
     );
   }
