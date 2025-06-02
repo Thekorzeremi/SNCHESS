@@ -64,10 +64,15 @@ class FakeGooglePayButton extends StatelessWidget {
         }
       }
       if (userIndex == null || userData == null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Utilisateur non trouvé')));
-        return;
+        userIndex = usersSnapshot.exists ? (usersSnapshot.value as List).length : 0;
+        await db.child('fixtures/users/$userIndex').set({
+          'email': email,
+          'ticket': [],
+        });
+        userData = {
+          'email': email,
+          'ticket': [],
+        };
       }
       final random = Random();
       final qrCode =
@@ -90,7 +95,7 @@ class FakeGooglePayButton extends StatelessWidget {
         },
       };
       List<dynamic> tickets = [];
-      if (userData['ticket'] == null) {
+      if (userData == null || userData['ticket'] == null) {
         tickets = [];
       } else if (userData['ticket'] is List) {
         tickets = (userData['ticket'] as List).where((t) => t != null).toList();
