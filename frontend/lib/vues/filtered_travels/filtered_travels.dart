@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../../color.dart';
 import '../travels/components/travel_card.dart';
 import 'filtered_travel_details.dart';
-import '../../mocks/mock_data.dart';
 import '../../services/firebaseDatabaseService.dart';
-import '../travel/travel.dart';
 import 'package:intl/intl.dart';
 import 'components/date_price_card.dart';
 import 'components/initial_search_button.dart';
@@ -86,15 +84,6 @@ class _FilteredTravelsState extends State<FilteredTravels> {
           to == widget.gareArrivee.toLowerCase() &&
           depDateOnly == selectedDateStr2;
     }).toList();
-
-    final gareDepartId = gares.firstWhere(
-      (g) => g['name'].toLowerCase() == widget.gareDepart.toLowerCase(),
-      orElse: () => <String, dynamic>{},
-    )['id'];
-    final gareArriveeId = gares.firstWhere(
-      (g) => g['name'].toLowerCase() == widget.gareArrivee.toLowerCase(),
-      orElse: () => <String, dynamic>{},
-    )['id'];
 
     final Map<String, List<Map<String, dynamic>>> ticketsByDate = {};
     for (final t in availableTickets) {
@@ -253,49 +242,35 @@ class _FilteredTravelsState extends State<FilteredTravels> {
                               final fromStation = route['fromStation'];
                               final toStation = route['toStation'];
                               final vehicle = trip['vehicle'];
-                              return Card(
-                                color: AppColors.card,
-                                child: ListTile(
-                                  title: Text(
-                                    '${fromStation['city']} → ${toStation['city']}',
-                                    style: TextStyle(color: AppColors.white),
-                                  ),
-                                  subtitle: Text(
-                                    'Départ: ${fromStation['datetime']}\nArrivée: ${toStation['datetime']}\nPrix: ${trip['price']} €',
-                                    style: TextStyle(color: Colors.white70),
-                                  ),
-                                  trailing: Text(
-                                    vehicle['name'] ?? '',
-                                    style: TextStyle(
-                                      color: AppColors.secondary,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => Scaffold(
-                                          body: FilteredTravelDetails(
-                                            trip: Map<String, dynamic>.from(
-                                              trip as Map,
-                                            ),
-                                            fromStation:
-                                                Map<String, dynamic>.from(
-                                                  fromStation as Map,
-                                                ),
-                                            toStation:
-                                                Map<String, dynamic>.from(
-                                                  toStation as Map,
-                                                ),
-                                            vehicle: Map<String, dynamic>.from(
-                                              vehicle as Map,
-                                            ),
+                              return TravelCard(
+                                voyage: t,
+                                gareDepart: fromStation,
+                                gareArrivee: toStation,
+                                tram: vehicle,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => Scaffold(
+                                        body: FilteredTravelDetails(
+                                          trip: Map<String, dynamic>.from(
+                                            trip as Map,
+                                          ),
+                                          fromStation:
+                                              Map<String, dynamic>.from(
+                                                fromStation as Map,
+                                              ),
+                                          toStation: Map<String, dynamic>.from(
+                                            toStation as Map,
+                                          ),
+                                          vehicle: Map<String, dynamic>.from(
+                                            vehicle as Map,
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),

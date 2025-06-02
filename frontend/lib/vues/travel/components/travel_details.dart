@@ -70,7 +70,7 @@ class TravelDetails extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: StepCircle(
-                    time: gareDepart['datetime'],
+                    time: gareDepart['datetime'].split(' ')[1],
                     title: gareDepart['city'] ?? 'Ville inconnue',
                     subtitle: 'Accès de plain-pied ou par ascenseur',
                     isTop: true,
@@ -81,7 +81,7 @@ class TravelDetails extends StatelessWidget {
                   left: 0,
                   right: 0,
                   child: StepCircle(
-                    time: gareArrivee['datetime'],
+                    time: gareArrivee['datetime'].split(' ')[1],
                     title: gareArrivee['city'] ?? 'Ville inconnue',
                     subtitle: 'Accès de plain-pied ou par ascenseur',
                     isTop: false,
